@@ -17,8 +17,8 @@
         "footer-0": {
           "type": "link_list",
           "settings": {
-            "heading": "Quick links",
-            "menu": "footer"
+            "heading": "Useful Links",
+            "menu": "quick-links"
           }
         },
         "footer-1": {
