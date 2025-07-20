@@ -194,8 +194,9 @@
         "column1": {
           "type": "column",
           "settings": {
-            "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "image": "shopify://shop_images/20240228_140336_b0dfa175-b417-4e74-866f-aae618a97468.jpg",
+            "title": "<strong>Mark | Owner</strong>",
+            "text": "<p>\"I've been in the bar and ale game for over 20 years and in nearly as many countries, I love what I do and am totally in my element when behind the bar\" </p>",
             "link_label": "",
             "link": ""
           }
@@ -203,8 +204,9 @@
         "column2": {
           "type": "column",
           "settings": {
-            "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "image": "shopify://shop_images/20250621_104700.jpg",
+            "title": "<strong>Sam | Bar Manager</strong>",
+            "text": "<p>\"I started as bar back several years, back with Mark, and have since worked my way up to Bar Manager, I have a product knowledge and passion that's hard to match\" </p>",
             "link_label": "",
             "link": ""
           }
@@ -238,7 +240,7 @@
         "columns_mobile": "2",
         "swipe_on_mobile": false,
         "padding_top": 52,
-        "padding_bottom": 36
+        "padding_bottom": 52
       }
     }
   },
