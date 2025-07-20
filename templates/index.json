@@ -55,14 +55,14 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "Talk about your brand",
+            "heading": "A litt about C&B",
             "heading_size": "h1"
           }
         },
         "text": {
           "type": "text",
           "settings": {
-            "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>"
+            "text": "<p>Craft & Berry, is Sheffield’s premier purveyor of proper<br/>beers, ales and gins, offering a wide and diverse selection, of tap, can, bottle<br/>and cask, we have something for every pallet, from cosmopolitan artisanal gins<br/>to orange stout and ales with an ABV so high, it’ll knock your socks off. Were<br/>situated in the heart of Sheffield’s vibrant Eccy road, so when your next down,<br/>pop in, pull up a stool and pick your poison, we promise you’ll not only enjoy<br/>your drink, but you’ll be served by the friendliest bar team you’ve ever met.</p>"
           }
         }
       },
