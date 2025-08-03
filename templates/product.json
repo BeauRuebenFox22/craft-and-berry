@@ -77,18 +77,9 @@
         "collapsible-row-2": {
           "type": "collapsible_tab",
           "settings": {
-            "heading": "Delivery",
+            "heading": "Delivery & Pickup",
             "icon": "none",
-            "content": "",
-            "page": ""
-          }
-        },
-        "collapsible-row-3": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Care Instructions",
-            "icon": "heart",
-            "content": "",
+            "content": "<p>Orders for delivery are usually shipped within 24 hours of the order being received. For in-store pick-up, orders are usually ready for collection within the hour. </p>",
             "page": ""
           }
         },
@@ -111,7 +102,6 @@
         "collapsible-row-0",
         "collapsible-row-1",
         "collapsible-row-2",
-        "collapsible-row-3",
         "share"
       ],
       "settings": {
