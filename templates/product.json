@@ -61,7 +61,7 @@
           "settings": {
             "heading": "Allergy Information",
             "icon": "none",
-            "content": "",
+            "content": "<p>{{ block.settings.page.metafields.custom.testing_two | metafield_tag }}</p>",
             "page": ""
           }
         },
