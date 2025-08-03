@@ -55,7 +55,7 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "A litt about C&B",
+            "heading": "A little about C&B",
             "heading_size": "h1"
           }
         },
@@ -123,7 +123,7 @@
     "featured_collection": {
       "type": "featured-collection",
       "settings": {
-        "collection": "peak-ales",
+        "collection": "abbeydale-brewery",
         "products_to_show": 8,
         "title": "What's Hot",
         "heading_size": "h0",
