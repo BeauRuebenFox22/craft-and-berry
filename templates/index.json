@@ -62,7 +62,7 @@
         "text": {
           "type": "text",
           "settings": {
-            "text": "<p>Craft & Berry, is Sheffield’s premier purveyor of proper<br/>beers, ales and gins, offering a wide and diverse selection, of tap, can, bottle<br/>and cask, we have something for every pallet, from cosmopolitan artisanal gins<br/>to orange stout and ales with an ABV so high, it’ll knock your socks off. Were<br/>situated in the heart of Sheffield’s vibrant Eccy road, so when your next down,<br/>pop in, pull up a stool and pick your poison, we promise you’ll not only enjoy<br/>your drink, but you’ll be served by the friendliest bar team you’ve ever met.</p>"
+            "text": "<p>Craft & Berry</p><p> Combines the best aspects of a bottle shop and a taproom. With six<br/>keg lines featuring ever-changing craft beers, over 400 different cans and<br/>bottles, and a selection of 70 artisan<br/>gins, rum, and vodka, there’s always<br/>something new to discover. The venue’s online shop provides access to live stock availability and the latest additions,<br/>including craft and real ale beer boxes, tonics, and snacks</p><p>. Situated at 369 Eccelsall Road, Sheffield, Craft & Berry is a<br/>beloved spot for locals and visitors alike. The welcoming atmosphere,<br/>knowledgeable staff, and extensive selection make it a go-to destination for<br/>anyone looking to explore the world of craft beer and artisan spirits.<br/></p>"
           }
         }
       },
@@ -196,7 +196,7 @@
           "settings": {
             "image": "shopify://shop_images/20240228_140336_b0dfa175-b417-4e74-866f-aae618a97468.jpg",
             "title": "<strong>Mark | Owner</strong>",
-            "text": "<p>\"I've been in the bar and ale game for over 20 years and in nearly as many countries, I love what I do and am totally in my element when behind the bar\" </p>",
+            "text": "<p>\"I've been in the bar and ale trade for over 20 years and in nearly as many countries, I love what I do and am totally in my element when behind the bar\" </p>",
             "link_label": "",
             "link": ""
           }
@@ -206,7 +206,7 @@
           "settings": {
             "image": "shopify://shop_images/20250621_104700.jpg",
             "title": "<strong>Sam | Bar Manager</strong>",
-            "text": "<p>\"I started as bar back several years, back with Mark, and have since worked my way up to Bar Manager, I have a product knowledge and passion that's hard to match\" </p>",
+            "text": "<p>\"I started  several years ago working at Craft & Berry  , and have since worked my way up to Bar Manager, I have a product knowledge and passion that's hard to match\" </p>",
             "link_label": "",
             "link": ""
           }
