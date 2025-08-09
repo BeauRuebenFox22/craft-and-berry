@@ -1,0 +1,14 @@
+{{ 'section-foxy-collection-banner.css' | asset_url | stylesheet_tag }}
+
+<div class="foxy-collection-banner">
+  <h1>{{ collection.title }}</h1>
+  <p>{{ collection.description }}</p>
+</div>
+{% schema %}
+{
+  "name": "Foxy Collection Banner",
+  "tag": "section",
+  "class": "section",
+  "settings": [{}]
+}
+{% endschema %}

@@ -1,0 +1,9 @@
+  div.foxy-collection-banner {
+    height: 100vh;
+    background: red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    clip-path: polygon(0 0, 100% 0, 100% 91%, 0% 100%);
+  }
