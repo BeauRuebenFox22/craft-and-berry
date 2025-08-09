@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "image_banner": {
@@ -6,21 +15,14 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "Image banner",
-            "heading_size": "h0"
-          }
-        },
-        "text": {
-          "type": "text",
-          "settings": {
-            "text": "Give customers details about the banner image(s) or content on the template.",
-            "text_style": "body"
+            "heading": "<strong>Craft Beer and Artisan Spirits </strong>",
+            "heading_size": "hxl"
           }
         },
         "button": {
           "type": "buttons",
           "settings": {
-            "button_label_1": "Shop all",
+            "button_label_1": "Shop Now",
             "button_link_1": "shopify://collections/all",
             "button_style_secondary_1": true,
             "button_label_2": "",
@@ -31,18 +33,19 @@
       },
       "block_order": [
         "heading",
-        "text",
         "button"
       ],
       "settings": {
+        "image": "shopify://shop_images/20230505_150633.jpg",
         "image_overlay_opacity": 40,
         "image_height": "large",
+        "image_behavior": "none",
         "desktop_content_position": "bottom-center",
-        "show_text_box": false,
         "desktop_content_alignment": "center",
+        "show_text_box": false,
         "color_scheme": "scheme-3",
-        "mobile_content_alignment": "center",
         "stack_images_on_mobile": false,
+        "mobile_content_alignment": "center",
         "show_text_below": false
       }
     },
@@ -52,14 +55,14 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "Talk about your brand",
+            "heading": "A little about C&B",
             "heading_size": "h1"
           }
         },
         "text": {
           "type": "text",
           "settings": {
-            "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.<\/p>"
+            "text": "<p>Craft & Berry</p><p> Combines the best aspects of a bottle shop and a taproom. With six<br/>keg lines featuring ever-changing craft beers, over 400 different cans and<br/>bottles, and a selection of 70 artisan<br/>gins, rum, and vodka, there’s always<br/>something new to discover. The venue’s online shop provides access to live stock availability and the latest additions,<br/>including craft and real ale beer boxes, tonics, and snacks</p><p>. Situated at 369 Eccelsall Road, Sheffield, Craft & Berry is a<br/>beloved spot for locals and visitors alike. The welcoming atmosphere,<br/>knowledgeable staff, and extensive selection make it a go-to destination for<br/>anyone looking to explore the world of craft beer and artisan spirits.<br/></p>"
           }
         }
       },
@@ -68,28 +71,79 @@
         "text"
       ],
       "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
         "color_scheme": "scheme-1",
         "full_width": true,
-        "padding_top": 40,
-        "padding_bottom": 0
+        "padding_top": 52,
+        "padding_bottom": 52
+      }
+    },
+    "collection_list_g4D9yc": {
+      "type": "collection-list",
+      "blocks": {
+        "featured_collection_FehcYH": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "apex-brewing"
+          }
+        },
+        "featured_collection_RdryzE": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "brew-york"
+          }
+        },
+        "featured_collection_AaxApG": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "barrier-brewing-co"
+          }
+        }
+      },
+      "block_order": [
+        "featured_collection_FehcYH",
+        "featured_collection_RdryzE",
+        "featured_collection_AaxApG"
+      ],
+      "name": "t:sections.collection-list.presets.name",
+      "settings": {
+        "title": "Popular brews",
+        "heading_size": "h0",
+        "image_ratio": "square",
+        "columns_desktop": 3,
+        "color_scheme": "",
+        "show_view_all": true,
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 52,
+        "padding_bottom": 52
       }
     },
     "featured_collection": {
       "type": "featured-collection",
       "settings": {
-        "title": "Featured products",
-        "heading_size": "h2",
-        "collection": "all",
+        "collection": "abbeydale-brewery",
         "products_to_show": 8,
+        "title": "What's Hot",
+        "heading_size": "h0",
+        "description": "<p>A sample of some of this months hottest and most popular beers from across various local and international breweries. </p>",
+        "show_description": false,
+        "description_style": "body",
         "columns_desktop": 4,
-        "color_scheme": "scheme-1",
+        "enable_desktop_slider": true,
+        "full_width": true,
         "show_view_all": false,
-        "swipe_on_mobile": false,
+        "view_all_style": "solid",
+        "color_scheme": "scheme-1",
         "image_ratio": "adapt",
+        "image_shape": "default",
         "show_secondary_image": true,
         "show_vendor": false,
         "show_rating": false,
+        "quick_add": "none",
         "columns_mobile": "2",
+        "swipe_on_mobile": false,
         "padding_top": 28,
         "padding_bottom": 36
       }
@@ -100,49 +154,38 @@
         "collection-0": {
           "type": "collection",
           "settings": {
-            "collection": ""
+            "collection": "socials-and-events"
           }
         },
         "product": {
           "type": "product",
           "settings": {
-            "product": "",
+            "product": "meet-the-distiller-friday-28th-november-2025",
             "second_image": false
           }
         },
-        "collection-1": {
-          "type": "collection",
+        "product_z4RfYy": {
+          "type": "product",
           "settings": {
-            "collection": ""
+            "product": "yorkshire-gin-tasting-evening-friday-19th-septemberl-2025",
+            "second_image": false
           }
         }
       },
       "block_order": [
         "collection-0",
         "product",
-        "collection-1"
+        "product_z4RfYy"
       ],
       "settings": {
-        "heading": "Multimedia collage",
-        "heading_size": "h2",
+        "heading": "What's on at C&B",
+        "heading_size": "h0",
         "desktop_layout": "left",
         "mobile_layout": "collage",
+        "card_styles": "product-card-wrapper",
         "color_scheme": "scheme-1",
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
-    "video": {
-      "type": "video",
-      "settings": {
-        "heading": "",
-        "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
-        "heading_size": "h1",
-        "description": "",
-        "full_width": false,
-        "color_scheme": "scheme-1",
-        "padding_top": 36,
-        "padding_bottom": 36
+        "padding_top": 52,
+        "padding_bottom": 52
       }
     },
     "multicolumn": {
@@ -151,8 +194,9 @@
         "column1": {
           "type": "column",
           "settings": {
-            "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+            "image": "shopify://shop_images/20240228_140336_b0dfa175-b417-4e74-866f-aae618a97468.jpg",
+            "title": "<strong>Mark | Owner</strong>",
+            "text": "<p>\"I've been in the bar and ale trade for over 20 years and in nearly as many countries, I love what I do and am totally in my element when behind the bar\" </p>",
             "link_label": "",
             "link": ""
           }
@@ -160,17 +204,9 @@
         "column2": {
           "type": "column",
           "settings": {
-            "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
-            "link_label": "",
-            "link": ""
-          }
-        },
-        "column3": {
-          "type": "column",
-          "settings": {
-            "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+            "image": "shopify://shop_images/20250621_104700.jpg",
+            "title": "<strong>Sam | Bar Manager</strong>",
+            "text": "<p>\"I started  several years ago working at Craft & Berry  , and have since worked my way up to Bar Manager, I have a product knowledge and passion that's hard to match\" </p>",
             "link_label": "",
             "link": ""
           }
@@ -178,33 +214,32 @@
       },
       "block_order": [
         "column1",
-        "column2",
-        "column3"
+        "column2"
       ],
       "settings": {
-        "title": "",
-        "heading_size": "h1",
-        "image_width": "third",
-        "image_ratio": "adapt",
-        "columns_desktop": 3,
-        "column_alignment": "center",
-        "background_style": "none",
+        "title": "Meet the team",
+        "heading_size": "h0",
+        "image_width": "half",
+        "image_ratio": "circle",
         "button_label": "",
         "button_link": "",
-        "swipe_on_mobile": false,
+        "columns_desktop": 2,
+        "column_alignment": "center",
+        "background_style": "none",
         "color_scheme": "scheme-1",
-        "columns_mobile": "1",
-        "padding_top": 36,
-        "padding_bottom": 36
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 52,
+        "padding_bottom": 52
       }
     }
   },
   "order": [
     "image_banner",
     "rich_text",
+    "collection_list_g4D9yc",
     "featured_collection",
     "collage",
-    "video",
     "multicolumn"
   ]
 }
