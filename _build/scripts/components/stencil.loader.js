@@ -1,2 +1,2 @@
-import { defineCustomElements } from "intravenous/loader";
+import { defineCustomElements } from 'intravenous/loader';
 defineCustomElements();
