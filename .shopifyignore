@@ -1,0 +1,8 @@
+# ignore Build assets
+babel.config.js
+postcss.config.js
+package.json
+package-lock.json
+webpack.config.js
+/_build/*
+/node_modules/*

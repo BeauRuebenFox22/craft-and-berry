@@ -64,10 +64,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/HerdAgency/shopify_oceanairuk_com"
+    "url": "https://github.com/BeauRuebenFox22/craft-and-berry"
   },
   "author": {
     "name": "Rueben Fox"
   },
-  "license": "UNLICENSED"
+  "license": "UNLICENSED",
+  "dependencies": {
+    "intravenous": "^4.2.10"
+  }
 }
