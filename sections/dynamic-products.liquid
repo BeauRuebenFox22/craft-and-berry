@@ -1,28 +1,30 @@
-<iv-dynamic-products
-  type="{{ section.settings.dynamic_products_sortKey }}"
-  limit="{{ section.settings.dynamic_products_limit }}"
-  {% if section.settings.dynamic_products_title != blank %}
-    componenttitle="{{- section.settings.dynamic_products_title | escape -}}"
-    titletag="{{ section.settings.dynamic_products_title_tag }}"
-  {% endif %}
-  collectionhandle="{{- section.settings.dynamic_products_collection | escape -}}"
-  requestedfields="{{- section.settings.dynamic_products_fields | escape -}}"
-  {% if section.settings.dynamic_products_carousel %}
-    carousel
-  {% endif %}
-  {% if section.settings.dynamic_products_cta %}
-    calltoaction
-  {% endif %}
-  {% if section.settings.dynamic_products_button_text != blank %}
-    buttontext="{{- section.settings.dynamic_products_button_text | escape -}}"
-  {% endif %}
-  {% if section.settings.dynamic_products_addtocart_text != blank %}
-    addtocarttext="{{- section.settings.dynamic_products_addtocart_text | escape -}}"
-  {% endif %}
-  {% if section.settings.dynamic_products_empty_string != blank %}
-    emptystring="{{- section.settings.dynamic_products_empty_string | escape -}}">
-  {% endif %}
-</iv-dynamic-products>
+<section class="shopify-section section">
+  <iv-dynamic-products
+    type="{{ section.settings.dynamic_products_sortKey }}"
+    limit="{{ section.settings.dynamic_products_limit }}"
+    {% if section.settings.dynamic_products_title != blank %}
+      componenttitle="{{- section.settings.dynamic_products_title | escape -}}"
+      titletag="{{ section.settings.dynamic_products_title_tag }}"
+    {% endif %}
+    collectionhandle="{{- section.settings.dynamic_products_collection | escape -}}"
+    requestedfields="{{- section.settings.dynamic_products_fields | escape -}}"
+    {% if section.settings.dynamic_products_carousel %}
+      carousel
+    {% endif %}
+    {% if section.settings.dynamic_products_cta %}
+      calltoaction
+    {% endif %}
+    {% if section.settings.dynamic_products_button_text != blank %}
+      buttontext="{{- section.settings.dynamic_products_button_text | escape -}}"
+    {% endif %}
+    {% if section.settings.dynamic_products_addtocart_text != blank %}
+      addtocarttext="{{- section.settings.dynamic_products_addtocart_text | escape -}}"
+    {% endif %}
+    {% if section.settings.dynamic_products_empty_string != blank %}
+      emptystring="{{- section.settings.dynamic_products_empty_string | escape -}}">
+    {% endif %}
+  </iv-dynamic-products>
+</section>
 
 {% schema %}
 {
