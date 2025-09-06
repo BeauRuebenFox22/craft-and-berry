@@ -28,6 +28,7 @@
 
     {% render 'meta-tags' %}
 
+    <script src="{{ 'component-stencil-loader.js' | asset_url }}"></script>
     <script src="{{ 'constants.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'pubsub.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
@@ -299,6 +300,7 @@
   </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
+    <iv-toast-container></iv-toast-container>
     {%- unless template.name == 'product' -%}
       <a class="skip-to-content-link button visually-hidden" href="#MainContent">
         {{ 'accessibility.skip_to_text' | t }}
