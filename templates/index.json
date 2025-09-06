@@ -242,7 +242,7 @@
         "dynamic_products_title": "Best Selling",
         "dynamic_products_title_tag": "h2",
         "dynamic_products_collection": "all",
-        "dynamic_products_fields": "title,handle,images",
+        "dynamic_products_fields": "title,images",
         "dynamic_products_carousel": false,
         "dynamic_products_cta": false,
         "dynamic_products_button_text": "View Product",
