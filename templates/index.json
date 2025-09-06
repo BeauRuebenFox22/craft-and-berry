@@ -232,6 +232,23 @@
         "padding_top": 52,
         "padding_bottom": 52
       }
+    },
+    "dynamic_products_aPKEWU": {
+      "type": "dynamic-products",
+      "name": "Foxy Dynamic Products",
+      "settings": {
+        "dynamic_products_sortKey": "BEST_SELLING",
+        "dynamic_products_limit": 6,
+        "dynamic_products_title": "Top Selling",
+        "dynamic_products_title_tag": "h2",
+        "dynamic_products_collection": "all",
+        "dynamic_products_fields": "title,handle,images",
+        "dynamic_products_carousel": false,
+        "dynamic_products_cta": true,
+        "dynamic_products_button_text": "View Product",
+        "dynamic_products_addtocart_text": "Add to Cart",
+        "dynamic_products_empty_string": "Nothing to see here"
+      }
     }
   },
   "order": [
@@ -240,6 +257,7 @@
     "collection_list_g4D9yc",
     "featured_collection",
     "collage",
-    "multicolumn"
+    "multicolumn",
+    "dynamic_products_aPKEWU"
   ]
 }
