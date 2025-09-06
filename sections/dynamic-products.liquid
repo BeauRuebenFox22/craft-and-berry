@@ -1,6 +1,6 @@
 <iv-dynamic-products
-  type="{{ settings.dynamic_products_sortKey }}"
-  limit="{{ settings.dynamic_products_limit }}"
+  type="{{ section.settings.dynamic_products_sortKey }}"
+  limit="{{ section.settings.dynamic_products_limit }}"
   {% if section.settings.dynamic_products_title != blank %}
     componenttitle="{{- section.settings.dynamic_products_title | escape -}}"
     titletag="{{ section.settings.dynamic_products_title_tag }}"
