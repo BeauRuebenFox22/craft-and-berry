@@ -1,11 +1,11 @@
 <iv-dynamic-products
-  type="{{- settings.dynamic_products_sortKey | escape -}}"
+  type="{{ settings.dynamic_products_sortKey }}"
   limit="{{ settings.dynamic_products_limit }}"
   {% if section.settings.dynamic_products_title != blank %}
     componenttitle="{{- section.settings.dynamic_products_title | escape -}}"
     titletag="{{ section.settings.dynamic_products_title_tag }}"
   {% endif %}
-  collectionhandle="{{- section.settings.dynamic_products_collection.handle | escape -}}"
+  collectionhandle="{{- section.settings.dynamic_products_collection | escape -}}"
   requestedfields="{{- section.settings.dynamic_products_fields | escape -}}"
   {% if section.settings.dynamic_products_carousel %}
     carousel
@@ -78,10 +78,11 @@
       ]
     },
     {
-      "type": "collection",
+      "type": "text",
       "id": "dynamic_products_collection",
       "info": "Choose which collection to use for the dynamic products components data.",
-      "label": "Dynamic Products Collection"
+      "label": "Dynamic Products Collection",
+      "default": "all"
     },
     {
       "type": "textarea",
