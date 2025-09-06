@@ -13,13 +13,13 @@
   {% if section.settings.dynamic_products_cta %}
     calltoaction
   {% endif %}
-  {% if section.settings.dynamic_products_button_text %}
+  {% if section.settings.dynamic_products_button_text != blank %}
     buttontext="{{- section.settings.dynamic_products_button_text | escape -}}"
   {% endif %}
-  {% if section.settings.dynamic_products_addtocart_text %}
+  {% if section.settings.dynamic_products_addtocart_text != blank %}
     addtocarttext="{{- section.settings.dynamic_products_addtocart_text | escape -}}"
   {% endif %}
-  {% if section.settings.dynamic_products_empty_string %}
+  {% if section.settings.dynamic_products_empty_string != blank %}
     emptystring="{{- section.settings.dynamic_products_empty_string | escape -}}">
   {% endif %}
 </iv-dynamic-products>
