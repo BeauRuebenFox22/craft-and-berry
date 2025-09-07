@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunkshopify_craft_and_berry=globalThis.webpackChunkshopify_craft_and_berry||[]).push([[529],{529:(s,r,n)=>{n.r(r),n.d(r,{iv_spinner:()=>h});var a=n(129);const h=class{constructor(s){(0,a.r)(this,s)}show=!1;render(){return this.show?(0,a.h)("div",{class:"iv-spinner"},(0,a.h)("span",{class:"spinner"})):null}};h.style=":host{display:block}"}}]);
