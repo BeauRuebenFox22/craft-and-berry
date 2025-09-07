@@ -71,6 +71,6 @@
   },
   "license": "UNLICENSED",
   "dependencies": {
-    "intravenous": "^4.2.15"
+    "intravenous": "^4.2.16"
   }
 }
