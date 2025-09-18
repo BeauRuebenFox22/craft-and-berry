@@ -141,11 +141,11 @@
       "type": "dynamic-products",
       "name": "Foxy Dynamic Products",
       "settings": {
-        "dynamic_products_sortKey": "RELEVANCE",
+        "dynamic_products_sortKey": "CREATED_AT",
         "dynamic_products_limit": 4,
         "dynamic_products_title": "Popular Picks",
         "dynamic_products_title_tag": "h2",
-        "dynamic_products_collection": "beer",
+        "dynamic_products_collection": "all",
         "dynamic_products_fields": "title,images",
         "dynamic_products_carousel": false,
         "dynamic_products_cta": false,
