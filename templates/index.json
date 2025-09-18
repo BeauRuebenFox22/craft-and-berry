@@ -128,7 +128,7 @@
         "dynamic_products_limit": 4,
         "dynamic_products_title": "Top Selling",
         "dynamic_products_title_tag": "h2",
-        "dynamic_products_collection": "beer",
+        "dynamic_products_collection": "all",
         "dynamic_products_fields": "title,images",
         "dynamic_products_carousel": false,
         "dynamic_products_cta": false,
