@@ -1,5 +1,6 @@
 <section class="page-width shopify-section section">
   <iv-dynamic-products
+    id="foxy-dynamic-products"
     type="{{ section.settings.dynamic_products_sortKey }}"
     limit="{{ section.settings.dynamic_products_limit }}"
     {% if section.settings.dynamic_products_title != blank %}
@@ -25,6 +26,12 @@
     {% endif %}
   </iv-dynamic-products>
 </section>
+
+<style>
+  #foxy-dynamic-products a {
+    color: #fff !important;
+  }
+</style>
 
 {% schema %}
 {
