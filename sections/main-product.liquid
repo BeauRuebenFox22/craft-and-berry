@@ -89,6 +89,12 @@
             {%- case block.type -%}
               {%- when '@app' -%}
                 {% render block %}
+              {%- when 'wishlist' -%}
+                {%- render 'foxy-wishlist',
+                  _product: product,
+                  _title: block.settings.wishlist_title,
+                  _fields: block.settings.wishlist_fields
+                -%}
               {%- when 'text' -%}
                 <p
                   class="product__text inline-richtext{% if block.settings.text_style == 'uppercase' %} caption-with-letter-spacing{% elsif block.settings.text_style == 'subtitle' %} subtitle{% endif %}"
@@ -746,6 +752,26 @@
   "blocks": [
     {
       "type": "@app"
+    },
+    {
+      "type": "wishlist",
+      "name": "wisthlist",
+      "settings": [
+        {
+          "type": "text",
+          "id": "wishlist_title",
+          "default": "Add to wishlist",
+          "info": "Defien the button text for the wishlist component.",
+          "label": "Component Title"
+        },
+        {
+          "type": "text",
+          "id": "wishlist_fields",
+          "default": "id,title,price,image,url",
+          "info": "Comma seperated field names, to use for the wishlist viewer.",
+          "label": "Wishlist Fields"
+        }
+      ]
     },
     {
       "type": "text",

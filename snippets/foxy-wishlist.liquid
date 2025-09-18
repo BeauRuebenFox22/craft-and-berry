@@ -1,0 +1,10 @@
+{% liquid
+  assign product_json = _product | json
+%}
+
+<iv-wishlist
+  buttoncontent="{{ _title }}"
+  productdata="{{- product_json -}}"
+  usefields="{{- _fields -}}"
+>
+</iv-wishlist>

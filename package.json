@@ -69,8 +69,5 @@
   "author": {
     "name": "Rueben Fox"
   },
-  "license": "UNLICENSED",
-  "dependencies": {
-    "intravenous": "^4.3.3"
-  }
+  "license": "UNLICENSED"
 }
