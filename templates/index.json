@@ -120,40 +120,6 @@
         "padding_bottom": 52
       }
     },
-    "dynamic_products_aPKEWU": {
-      "type": "dynamic-products",
-      "name": "Foxy Dynamic Products",
-      "settings": {
-        "dynamic_products_sortKey": "BEST_SELLING",
-        "dynamic_products_limit": 4,
-        "dynamic_products_title": "Top Selling",
-        "dynamic_products_title_tag": "h2",
-        "dynamic_products_collection": "beer",
-        "dynamic_products_fields": "title,images",
-        "dynamic_products_carousel": false,
-        "dynamic_products_cta": false,
-        "dynamic_products_button_text": "View Product",
-        "dynamic_products_addtocart_text": "Add to Cart",
-        "dynamic_products_empty_string": "Nothing to see here"
-      }
-    },
-    "dynamic_products_WdU44L": {
-      "type": "dynamic-products",
-      "name": "Foxy Dynamic Products",
-      "settings": {
-        "dynamic_products_sortKey": "RELEVANCE",
-        "dynamic_products_limit": 4,
-        "dynamic_products_title": "Popular Picks",
-        "dynamic_products_title_tag": "h2",
-        "dynamic_products_collection": "beer",
-        "dynamic_products_fields": "title,images",
-        "dynamic_products_carousel": false,
-        "dynamic_products_cta": false,
-        "dynamic_products_button_text": "View Product",
-        "dynamic_products_addtocart_text": "Add to Cart",
-        "dynamic_products_empty_string": "Nothing to see here"
-      }
-    },
     "collage": {
       "type": "collage",
       "blocks": {
@@ -244,8 +210,6 @@
     "image_banner",
     "rich_text",
     "collection_list_g4D9yc",
-    "dynamic_products_aPKEWU",
-    "dynamic_products_WdU44L",
     "collage",
     "multicolumn"
   ]
