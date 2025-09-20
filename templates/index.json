@@ -130,6 +130,7 @@
         "dynamic_products_title_tag": "h2",
         "dynamic_products_collection": "all",
         "dynamic_products_fields": "title, images",
+        "is_reversed": true,
         "dynamic_products_carousel": false,
         "dynamic_products_cta": false,
         "dynamic_products_button_text": "View",
