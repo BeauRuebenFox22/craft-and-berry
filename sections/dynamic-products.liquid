@@ -1,6 +1,9 @@
 <section class="page-width shopify-section section">
   <iv-dynamic-products
     id="foxy-dynamic-products"
+    {% if section.settings.is_reversed == true %}
+      reversed
+    {% endif %}
     type="{{ section.settings.dynamic_products_sortKey }}"
     limit="{{ section.settings.dynamic_products_limit }}"
     {% if section.settings.dynamic_products_title != blank %}
@@ -55,6 +58,13 @@
         { "value": "RELEVANCE", "label": "Relevance" }
       ]
     },
+    {
+      "type": "checkbox",
+      "id": "is_reversed",
+      "default": false,
+      "label": "Reverse Query",
+      "info": "This is used to reverse the order or the data returned by the API."
+    }
     {
       "type": "range",
       "id": "dynamic_products_limit",
