@@ -87,7 +87,7 @@
         "dynamic_products_limit": 6,
         "dynamic_products_title": "New in",
         "dynamic_products_title_tag": "h2",
-        "dynamic_products_collection": "all",
+        "dynamic_products_collection": "off-tap",
         "dynamic_products_fields": "title, images",
         "is_reversed": true,
         "dynamic_products_carousel": false,
