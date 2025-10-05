@@ -55,7 +55,7 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "A little about C&B",
+            "heading": "A little about Craft & Berry",
             "heading_size": "h1"
           }
         },
@@ -77,6 +77,24 @@
         "full_width": true,
         "padding_top": 52,
         "padding_bottom": 52
+      }
+    },
+    "dynamic_products_eCzdDK": {
+      "type": "dynamic-products",
+      "name": "Foxy Dynamic Products",
+      "settings": {
+        "dynamic_products_sortKey": "CREATED_AT",
+        "dynamic_products_limit": 6,
+        "dynamic_products_title": "New in",
+        "dynamic_products_title_tag": "h2",
+        "dynamic_products_collection": "off-tap",
+        "dynamic_products_fields": "title, images",
+        "is_reversed": true,
+        "dynamic_products_carousel": false,
+        "dynamic_products_cta": false,
+        "dynamic_products_button_text": "View",
+        "dynamic_products_addtocart_text": "Add to Cart",
+        "dynamic_products_empty_string": "Nothing to see here"
       }
     },
     "collection_list_g4D9yc": {
@@ -120,23 +138,6 @@
         "padding_bottom": 52
       }
     },
-    "dynamic_products_eCzdDK": {
-      "type": "dynamic-products",
-      "name": "Foxy Dynamic Products",
-      "settings": {
-        "dynamic_products_sortKey": "CREATED_AT",
-        "dynamic_products_limit": 4,
-        "dynamic_products_title": "New in",
-        "dynamic_products_title_tag": "h2",
-        "dynamic_products_collection": "all",
-        "dynamic_products_fields": "title, images",
-        "dynamic_products_carousel": false,
-        "dynamic_products_cta": false,
-        "dynamic_products_button_text": "View",
-        "dynamic_products_addtocart_text": "Add to Cart",
-        "dynamic_products_empty_string": "Nothing to see here"
-      }
-    },
     "collage": {
       "type": "collage",
       "blocks": {
@@ -149,14 +150,14 @@
         "product": {
           "type": "product",
           "settings": {
-            "product": "meet-the-distiller-friday-28th-november-2025",
+            "product": "beer-club-tasting-evening-friday-31st-oct-2025",
             "second_image": false
           }
         },
         "product_z4RfYy": {
           "type": "product",
           "settings": {
-            "product": "yorkshire-gin-tasting-evening-friday-19th-septemberl-2025",
+            "product": "yorkshire-gin-tasting-evening-friday-24th-oct-2025",
             "second_image": false
           }
         }
@@ -193,7 +194,7 @@
         "column2": {
           "type": "column",
           "settings": {
-            "image": "shopify://shop_images/20250824_123044.jpg",
+            "image": "shopify://shop_images/1000003940.jpg",
             "title": "<strong>Sam | Bar Manager</strong>",
             "text": "<p>\"I started  several years ago working at Craft & Berry  , and have since worked my way up to Bar Manager, I have a product knowledge and passion that's hard to match\" </p>",
             "link_label": "",
@@ -216,7 +217,7 @@
         "column_alignment": "center",
         "background_style": "none",
         "color_scheme": "scheme-1",
-        "columns_mobile": "2",
+        "columns_mobile": "1",
         "swipe_on_mobile": false,
         "padding_top": 52,
         "padding_bottom": 52
@@ -226,8 +227,8 @@
   "order": [
     "image_banner",
     "rich_text",
-    "collection_list_g4D9yc",
     "dynamic_products_eCzdDK",
+    "collection_list_g4D9yc",
     "collage",
     "multicolumn"
   ]
