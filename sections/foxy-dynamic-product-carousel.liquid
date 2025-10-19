@@ -1,0 +1,137 @@
+<section class="page-width shopify-section section">
+  <iv-dynamic-products-carousel
+    id="foxy-dynamic-products"
+    {% if section.settings.is_reversed == true %}
+      reversed
+    {% endif %}
+    type="{{ section.settings.dynamic_products_sortKey }}"
+    limit="{{ section.settings.dynamic_products_limit }}"
+    {% if section.settings.dynamic_products_title != blank %}
+      componenttitle="{{- section.settings.dynamic_products_title | escape -}}"
+      titletag="{{ section.settings.dynamic_products_title_tag }}"
+    {% endif %}
+    collectionhandle="{{- section.settings.dynamic_products_collection | escape -}}"
+    requestedfields="{{- section.settings.dynamic_products_fields | escape -}}"
+    {% if section.settings.dynamic_products_cta == true %}
+      calltoaction
+    {% endif %}
+    {% if section.settings.dynamic_products_button_text != blank %}
+      buttontext="{{- section.settings.dynamic_products_button_text | escape -}}"
+    {% endif %}
+    {% if section.settings.dynamic_products_addtocart_text != blank %}
+      addtocarttext="{{- section.settings.dynamic_products_addtocart_text | escape -}}"
+    {% endif %}
+    {% if section.settings.dynamic_products_empty_string != blank %}
+      emptystring="{{- section.settings.dynamic_products_empty_string | escape -}}">
+    {% endif %}
+  </iv-dynamic-products-carousel>
+</section>
+
+{% schema %}
+{
+  "name": "Foxy Dynamic Carousel",
+  "limit": 2,
+  "disabled_on": {
+    "templates": ["collection"]
+  },
+  "settings": [
+    {
+      "type": "select",
+      "id": "dynamic_products_sortKey",
+      "info": "Add a sort key to the dynamic products component. Defaults to best selling, if blank",
+      "label": "Sort Key",
+      "default": "BEST_SELLING",
+      "options": [
+        { "value": "BEST_SELLING", "label": "Best Selling" },
+        { "value": "TITLE", "label": "Title" },
+        { "value": "PRICE", "label": "Price" },
+        { "value": "CREATED", "label": "New in" },
+        { "value": "RELEVANCE", "label": "Relevance" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "dynamic_products_limit",
+      "label": "Number of Products to Show",
+      "default": 6,
+      "min": 1,
+      "max": 24,
+      "step": 1,
+      "info": "Set the number of products to show in the dynamic products component"
+    },
+    {
+      "type": "text",
+      "id": "dynamic_products_title",
+      "label": "Dynamic Products Title",
+      "info": "Add a title to the dynamic products component."
+    },
+    {
+      "type": "select",
+      "id": "dynamic_products_title_tag",
+      "info": "Determines the type of tag used for the dynamic products component title.",
+      "label": "Title Tag",
+      "default": "h2",
+      "options": [
+        { "value": "h1", "label": "h1" },
+        { "value": "h2", "label": "h2" },
+        { "value": "h3", "label": "h3" },
+        { "value": "h4", "label": "h4" },
+        { "value": "h5", "label": "h5" },
+        { "value": "h6", "label": "h6" }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "dynamic_products_collection",
+      "info": "Choose which collection to use for the dynamic products components data.",
+      "label": "Dynamic Products Collection",
+      "default": "all"
+    },
+    {
+      "type": "textarea",
+      "id": "dynamic_products_fields",
+      "label": "Dynamic Products Extra Fields",
+      "info": "Add any extra fields you want the dynamic products component to return, separated by commas. E.g. 'vendor,price'",
+      "default": "title,handle,images"
+    },
+    {
+      "type": "checkbox",
+      "id": "is_reversed",
+      "label": "Reverse Query Data",
+      "default": false,
+      "info": "This is used to reverse the order or the data returned by the API."
+    },
+    {
+      "type": "checkbox",
+      "id": "dynamic_products_cta",
+      "info": "This is used to determine if the entire card is clikcable.",
+      "label": "Enable Card Clickable",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "dynamic_products_button_text",
+      "label": "Dynamic Products Button Text",
+      "default": "View Product",
+      "info": "Set the text for the button, if blank, no button will exist."
+    },
+    {
+      "type": "text",
+      "id": "dynamic_products_addtocart_text",
+      "label": "Dynamic Products Add to Cart Text",
+      "default": "Add to Cart",
+      "info": "Set the add to cart button text, if blank, no button will exist."
+    },
+    {
+      "type": "text",
+      "id": "dynamic_products_empty_string",
+      "label": "Set the text that shows if dynamic products component has no products.",
+      "default": "Nothing to see here",
+      "info": "No Products Text"
+    }
+  ],
+  "presets": [{ 
+    "name": "Foxy Dynamic Carousel" 
+  }]
+}
+{% endschema %}
