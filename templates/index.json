@@ -83,14 +83,14 @@
       "type": "foxy-dynamic-product-carousel",
       "name": "Foxy Dynamic Carousel",
       "settings": {
-        "dynamic_products_sortKey": "CREATED",
+        "dynamic_products_sortKey": "CREATED_AT",
         "dynamic_products_limit": 24,
         "dynamic_products_title": "New In",
         "dynamic_products_title_tag": "h2",
         "dynamic_products_collection": "all",
         "dynamic_products_fields": "title,handle,images",
-        "is_reversed": false,
-        "dynamic_products_cta": true,
+        "is_reversed": true,
+        "dynamic_products_cta": false,
         "dynamic_products_button_text": "View Product",
         "dynamic_products_addtocart_text": "Add to Cart",
         "dynamic_products_empty_string": "Nothing to see here"
