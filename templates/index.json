@@ -83,7 +83,7 @@
       "type": "foxy-dynamic-product-carousel",
       "name": "Foxy Dynamic Carousel",
       "settings": {
-        "dynamic_products_sortKey": "BEST_SELLING",
+        "dynamic_products_sortKey": "TITLE",
         "dynamic_products_limit": 24,
         "dynamic_products_title": "New In",
         "dynamic_products_title_tag": "h2",
