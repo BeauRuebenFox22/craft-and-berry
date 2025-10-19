@@ -27,6 +27,12 @@
   </iv-dynamic-products-carousel>
 </section>
 
+<style>
+  #foxy-dynamic-products a {
+    color: #fff !important;
+  }
+</style>
+
 {% schema %}
 {
   "name": "Foxy Dynamic Carousel",
@@ -45,7 +51,8 @@
         { "value": "BEST_SELLING", "label": "Best Selling" },
         { "value": "TITLE", "label": "Title" },
         { "value": "PRICE", "label": "Price" },
-        { "value": "CREATED", "label": "New in" },
+        { "value": "CREATED_AT", "label": "New in" },
+        { "value": "CREATED", "label": "New in Fallback" },
         { "value": "RELEVANCE", "label": "Relevance" }
       ]
     },
@@ -130,8 +137,10 @@
       "info": "No Products Text"
     }
   ],
-  "presets": [{ 
-    "name": "Foxy Dynamic Carousel" 
-  }]
+  "presets": [
+    { 
+      "name": "Foxy Dynamic Carousel" 
+    }
+  ]
 }
 {% endschema %}

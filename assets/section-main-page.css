@@ -21,3 +21,8 @@
   width: 52.5rem;
   height: 52.5rem;
 }
+
+/* Drinks Menu Price Formatting */ 
+#menu-90825 span.price {
+  display: flex;
+}
