@@ -83,7 +83,7 @@
       "type": "dynamic-products",
       "name": "Foxy Dynamic Products",
       "settings": {
-        "dynamic_products_sortKey": "CREATED_AT",
+        "dynamic_products_sortKey": "CREATED",
         "dynamic_products_limit": 6,
         "dynamic_products_title": "New in",
         "dynamic_products_title_tag": "h2",
