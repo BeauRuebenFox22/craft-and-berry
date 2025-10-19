@@ -89,7 +89,7 @@
         "dynamic_products_title_tag": "h2",
         "dynamic_products_collection": "all",
         "dynamic_products_fields": "title,handle,images",
-        "is_reversed": false,
+        "is_reversed": true,
         "dynamic_products_cta": true,
         "dynamic_products_button_text": "View Product",
         "dynamic_products_addtocart_text": "Add to Cart",
