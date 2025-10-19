@@ -79,20 +79,19 @@
         "padding_bottom": 52
       }
     },
-    "dynamic_products_eCzdDK": {
-      "type": "dynamic-products",
-      "name": "Foxy Dynamic Products",
+    "foxy_dynamic_product_carousel_GfVzJh": {
+      "type": "foxy-dynamic-product-carousel",
+      "name": "Foxy Dynamic Carousel",
       "settings": {
         "dynamic_products_sortKey": "CREATED",
-        "dynamic_products_limit": 6,
-        "dynamic_products_title": "New in",
+        "dynamic_products_limit": 24,
+        "dynamic_products_title": "New In",
         "dynamic_products_title_tag": "h2",
-        "dynamic_products_collection": "off-tap",
-        "dynamic_products_fields": "title, images",
-        "is_reversed": true,
-        "dynamic_products_carousel": false,
-        "dynamic_products_cta": false,
-        "dynamic_products_button_text": "View",
+        "dynamic_products_collection": "all",
+        "dynamic_products_fields": "title,handle,images",
+        "is_reversed": false,
+        "dynamic_products_cta": true,
+        "dynamic_products_button_text": "View Product",
         "dynamic_products_addtocart_text": "Add to Cart",
         "dynamic_products_empty_string": "Nothing to see here"
       }
@@ -227,7 +226,7 @@
   "order": [
     "image_banner",
     "rich_text",
-    "dynamic_products_eCzdDK",
+    "foxy_dynamic_product_carousel_GfVzJh",
     "collection_list_g4D9yc",
     "collage",
     "multicolumn"
