@@ -3595,3 +3595,9 @@ details-disclosure > details {
     transform: translateX(100%) scaleX(0);
   }
 }
+
+/* Change for collections template card */ 
+div.card__media > div > img {
+  object-fit: contain;
+  object-position: center;
+}
