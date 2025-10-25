@@ -3597,7 +3597,7 @@ details-disclosure > details {
 }
 
 /* Change for collections template card */ 
-li.collection-list__item > div > div > div > div > div > img {
+#shopify-section-template--25671560528254__main img {
   object-fit: contain;
   object-position: center;
 }
