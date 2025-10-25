@@ -3597,7 +3597,7 @@ details-disclosure > details {
 }
 
 /* Change for collections template card */ 
-div.card__media > div > img {
+li.collection-list__item > div > div > div > div > div > img {
   object-fit: contain;
   object-position: center;
 }
