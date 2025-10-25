@@ -85,10 +85,11 @@
       "settings": {
         "dynamic_products_sortKey": "CREATED_AT",
         "dynamic_products_limit": 24,
+        "dynamic_products_exclusion_rule": "Draft",
         "dynamic_products_title": "New In",
         "dynamic_products_title_tag": "h2",
         "dynamic_products_collection": "all",
-        "dynamic_products_fields": "title,handle,images",
+        "dynamic_products_fields": "title,handle,images, productType",
         "is_reversed": true,
         "dynamic_products_cta": false,
         "dynamic_products_button_text": "View Product",
