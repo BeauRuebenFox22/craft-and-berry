@@ -1,6 +1,9 @@
 <section class="page-width shopify-section section">
   <iv-dynamic-products-carousel
     id="foxy-dynamic-products"
+    {% if section.settings.dynamic_products_exclusion_rule != blank%}
+      exclude="{{ section.settings.dynamic_products_exclusion_rule }}"
+    {% endif %}
     {% if section.settings.is_reversed == true %}
       reversed
     {% endif %}
@@ -65,6 +68,12 @@
       "max": 24,
       "step": 1,
       "info": "Set the number of products to show in the dynamic products component"
+    },
+    {
+      "type": "text",
+      "id": "dynamic_products_exclusion_rule",
+      "label": "Dynamic Products Exclusion",
+      "info": "This setting can be used to excluse products of a certain type."
     },
     {
       "type": "text",
