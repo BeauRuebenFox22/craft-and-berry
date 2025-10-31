@@ -147,13 +147,6 @@
             "collection": "socials-and-events"
           }
         },
-        "product": {
-          "type": "product",
-          "settings": {
-            "product": "",
-            "second_image": false
-          }
-        },
         "product_z4RfYy": {
           "type": "product",
           "settings": {
@@ -164,7 +157,6 @@
       },
       "block_order": [
         "collection-0",
-        "product",
         "product_z4RfYy"
       ],
       "settings": {
