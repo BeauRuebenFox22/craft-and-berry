@@ -152,11 +152,18 @@
           "settings": {
             "collection": "nailmaker-brewery"
           }
+        },
+        "featured_collection_gmnaNj": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "sheffield-distillery"
+          }
         }
       },
       "block_order": [
         "featured_collection_Na6c6W",
-        "featured_collection_DQR3Pw"
+        "featured_collection_DQR3Pw",
+        "featured_collection_gmnaNj"
       ],
       "name": "t:sections.collection-list.presets.name",
       "settings": {
