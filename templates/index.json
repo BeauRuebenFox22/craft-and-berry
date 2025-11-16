@@ -132,10 +132,44 @@
         "columns_desktop": 3,
         "color_scheme": "",
         "show_view_all": true,
-        "columns_mobile": "2",
-        "swipe_on_mobile": false,
+        "columns_mobile": "1",
+        "swipe_on_mobile": true,
         "padding_top": 52,
         "padding_bottom": 52
+      }
+    },
+    "collection_list_dM4mVe": {
+      "type": "collection-list",
+      "blocks": {
+        "featured_collection_Na6c6W": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "rare-bird"
+          }
+        },
+        "featured_collection_DQR3Pw": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "nailmaker-brewery"
+          }
+        }
+      },
+      "block_order": [
+        "featured_collection_Na6c6W",
+        "featured_collection_DQR3Pw"
+      ],
+      "name": "t:sections.collection-list.presets.name",
+      "settings": {
+        "title": "PopularDistilleries",
+        "heading_size": "h1",
+        "image_ratio": "square",
+        "columns_desktop": 3,
+        "color_scheme": "",
+        "show_view_all": true,
+        "columns_mobile": "1",
+        "swipe_on_mobile": true,
+        "padding_top": 36,
+        "padding_bottom": 36
       }
     },
     "collage": {
@@ -221,6 +255,7 @@
     "rich_text",
     "foxy_dynamic_product_carousel_GfVzJh",
     "collection_list_g4D9yc",
+    "collection_list_dM4mVe",
     "collage",
     "multicolumn"
   ]
