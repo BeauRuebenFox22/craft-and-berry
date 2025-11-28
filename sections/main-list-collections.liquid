@@ -23,12 +23,16 @@
       assign paginate_by = 28
     endif
   -%}
-  {%- paginate collections by paginate_by -%}
-    <ul
-      class="collection-list grid grid--{{ section.settings.columns_desktop }}-col-desktop grid--{{ section.settings.columns_mobile }}-col-tablet-down"
-      role="list"
-    >
-      {%- for collection in collections -%}
+  <ul
+    class="collection-list grid grid--{{ section.settings.columns_desktop }}-col-desktop grid--{{ section.settings.columns_mobile }}-col-tablet-down"
+    role="list"
+  >
+    {%- for collection in collections -%}
+      {% if collection.metafields.custom.foxy.value == 'Testing' %}
+        {% assign collection_type = collection.metafields.custom.collection_type.value[0] %}
+        <script>
+          alert('{{ collection_type }}');
+        </script>
         <li
           class="collection-list__item grid__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
           {% if settings.animations_reveal_on_scroll %}
@@ -42,10 +46,11 @@
             columns: 3
           %}
         </li>
-      {%- endfor -%}
-    </ul>
-    {% render 'pagination', paginate: paginate %}
-  {%- endpaginate -%}
+      {% else %}
+        {% continue %}
+      {% endif %}
+    {%- endfor -%}
+  </ul>
 </div>
 {% schema %}
 {
