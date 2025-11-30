@@ -1,0 +1,36 @@
+{% assign breweries = section.settings.breweries %}
+
+<h1>{{- section.settings.title | escape -}}</h1>
+
+{% paginate breweries by 2 %}
+  {% for brewery in breweries %}
+    {{- brewery.title -}}
+  {% endfor %}
+  {{- paginate | default_pagination -}}
+{% endpaginate %}
+
+{% schema %}
+{
+  "name": "Foxy Collection Banner",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Breweries"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "info": "Add a page title."
+    },
+    {
+      "type": "collection_list",
+      "id": "breweries",
+      "info": "Choose breweries to feature om this page.",
+      "label": "Breweries"
+    }
+  ]
+}
+{% endschema %}
