@@ -1,22 +1,30 @@
+{{ 'suppliers.css' | asset_url | stylesheet_tag }}
+
 {% assign breweries = section.settings.breweries %}
+{% assign count = section.settings.count %}
 
 <h1>{{- section.settings.title | escape -}}</h1>
-
-{% paginate breweries by 2 %}
-  {% for brewery in breweries %}
-    <a href="{{- brewery.url -}}">
-      {{ brewery.image.src | image_url: width: 200 | image_tag }}
-      {{- brewery.title -}}
-    </a>
-  {% endfor %}
-  {{- paginate | default_pagination -}}
+{% paginate breweries by count %}
+  <div class="suppliers-grid">
+    {% for brewery in breweries %}
+      <a href="{{- brewery.url -}}">
+        <div class="suppliers-content">
+          {{ brewery.image.src | image_url: width: 1200, height: 1200 | image_tag }}
+          <h3>{{- brewery.title -}}</h3>
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+  <div class="supppliers-pagination">
+    {{- paginate | default_pagination -}}
+  </div>
 {% endpaginate %}
 
 {% schema %}
 {
   "name": "Suppliers",
   "tag": "section",
-  "class": "section",
+  "class": "suppliers",
   "settings": [
     {
       "type": "header",
@@ -27,6 +35,13 @@
       "id": "title",
       "label": "Title",
       "info": "Add a page title."
+    },
+    {
+      "type": "number",
+      "id": "count",
+      "label": "How many per page",
+      "info": "Set the number of suppliers to show per page",
+      "default": 12
     },
     {
       "type": "collection_list",

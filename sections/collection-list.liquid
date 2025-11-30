@@ -2,6 +2,13 @@
 {{ 'component-card.css' | asset_url | stylesheet_tag }}
 {{ 'component-slider.css' | asset_url | stylesheet_tag }}
 
+{% liquid
+  assign show_all_button_applied = false
+  if section.settings.show_view_all == true or section.settings.show_breweries == true or section.settings.show_distileries
+    assign show_all_button_applied = true
+  endif
+%}
+
 {%- style -%}
   .section-{{ section.id }}-padding {
     padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
@@ -25,7 +32,7 @@
 -%}
 
 <div class="color-{{ section.settings.color_scheme }} gradient">
-  <div class="collection-list-wrapper page-width isolate{% if show_mobile_slider %} page-width-desktop{% endif %}{% if section.settings.title == blank %} no-heading{% endif %}{% if section.settings.show_view_all == false or section.blocks.size > collections.size %} no-mobile-link{% endif %} section-{{ section.id }}-padding">
+  <div class="collection-list-wrapper page-width isolate{% if show_mobile_slider %} page-width-desktop{% endif %}{% if section.settings.title == blank %} no-heading{% endif %}{% if show_all_button_applied == false or section.blocks.size > collections.size %} no-mobile-link{% endif %} section-{{ section.id }}-padding">
     {%- unless section.settings.title == blank -%}
       <div class="title-wrapper-with-link{% if show_mobile_slider %} title-wrapper--self-padded-tablet-down{% else %} title-wrapper--self-padded-mobile{% endif %} title-wrapper--no-top-margin">
         <h2
@@ -43,6 +50,26 @@
             aria-labelledby="ViewAll-{{ section.id }} SectionHeading-{{ section.id }}"
           >
             {{- 'sections.collection_list.view_all' | t -}}
+          </a>
+        {%- endif -%}
+
+        {%- if section.settings.show_breweries and show_mobile_slider -%}
+          <a
+            href="https://craftnberry.co.uk/pages/breweries"
+            class="link underlined-link large-up-hide{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+            aria-labelledby="ViewAll-{{ section.id }} SectionHeading-{{ section.id }}"
+          >
+            See all breweries
+          </a>
+        {%- endif -%}
+
+        {%- if section.settings.show_distileries and show_mobile_slider -%}
+          <a
+            href="https://craftnberry.co.uk/pages/distileries"
+            class="link underlined-link large-up-hide{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+            aria-labelledby="ViewAll-{{ section.id }} SectionHeading-{{ section.id }}"
+          >
+            See all breweries
           </a>
         {%- endif -%}
       </div>
@@ -113,7 +140,7 @@
       {%- endif -%}
     </slider-component>
 
-    {%- if section.settings.show_view_all and section.blocks.size < collections.size -%}
+    {%- if show_all_button_applied and section.blocks.size < collections.size -%}
       <div
         class="center collection-list-view-all{% if show_mobile_slider %} small-hide medium-hide{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
         {% if settings.animations_reveal_on_scroll %}
@@ -180,7 +207,7 @@
     {
       "type": "header",
       "content": "t:sections.collection-list.settings.header_layout.content"
-    },    
+    },
     {
       "type": "select",
       "id": "image_ratio",
@@ -222,7 +249,21 @@
       "id": "show_view_all",
       "default": false,
       "label": "t:sections.collection-list.settings.show_view_all.label",
-      "info": "t:sections.collection-list.settings.show_view_all.info"   
+      "info": "t:sections.collection-list.settings.show_view_all.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_breweries",
+      "default": false,
+      "label": "View All Breweries",
+      "info": "Show a button for all breweries."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_distileries",
+      "default": false,
+      "label": "View All Distileries",
+      "info": "Show a button for all distileries."
     },
     {
       "type": "header",
