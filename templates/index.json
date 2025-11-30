@@ -176,7 +176,7 @@
         "color_scheme": "",
         "show_view_all": false,
         "show_breweries": false,
-        "show_distileries": false,
+        "show_distileries": true,
         "columns_mobile": "1",
         "swipe_on_mobile": true,
         "padding_top": 36,
