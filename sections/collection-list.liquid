@@ -147,14 +147,36 @@
           data-cascade
         {% endif %}
       >
-        <a
-          href="{{ routes.collections_url }}"
-          class="button"
-          id="ViewAllButton-{{ section.id }}"
-          aria-labelledby="ViewAllButton-{{ section.id }} SectionHeading-{{ section.id }}"
-        >
-          {{- 'sections.collection_list.view_all' | t -}}
-        </a>
+        {% if section.settings.show_view_all %}
+          <a
+            href="{{ routes.collections_url }}"
+            class="button"
+            id="ViewAllButton-{{ section.id }}"
+            aria-labelledby="ViewAllButton-{{ section.id }} SectionHeading-{{ section.id }}"
+          >
+            {{- 'sections.collection_list.view_all' | t -}}
+          </a>
+        {% endif %}
+
+        {%- if section.settings.show_breweries -%}
+          <a
+            href="https://craftnberry.co.uk/pages/breweries"
+            class="link underlined-link large-up-hide{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+            aria-labelledby="ViewAll-{{ section.id }} SectionHeading-{{ section.id }}"
+          >
+            See all breweries
+          </a>
+        {%- endif -%}
+
+        {%- if section.settings.show_distileries -%}
+          <a
+            href="https://craftnberry.co.uk/pages/distileries"
+            class="link underlined-link large-up-hide{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+            aria-labelledby="ViewAll-{{ section.id }} SectionHeading-{{ section.id }}"
+          >
+            See all distileries
+          </a>
+        {%- endif -%}
       </div>
     {%- endif -%}
   </div>
