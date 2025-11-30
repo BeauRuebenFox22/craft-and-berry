@@ -4,20 +4,23 @@
 
 {% paginate breweries by 2 %}
   {% for brewery in breweries %}
-    {{- brewery.title -}}
+    <a href="{{- brewery.url -}}">
+      {{ brewery.image.src | image_url: width: 200 | image_tag }}
+      {{- brewery.title -}}
+    </a>
   {% endfor %}
   {{- paginate | default_pagination -}}
 {% endpaginate %}
 
 {% schema %}
 {
-  "name": "Foxy Collection Banner",
+  "name": "Suppliers",
   "tag": "section",
   "class": "section",
   "settings": [
     {
       "type": "header",
-      "content": "Breweries"
+      "content": "Suppliers"
     },
     {
       "type": "text",
