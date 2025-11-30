@@ -12,6 +12,39 @@
     "main": {
       "type": "main-suppliers",
       "settings": {
+        "title": "Distilleries",
+        "count": 12,
+        "breweries": [
+          "bashall-spirits",
+          "brindle-distillery",
+          "clarence-spirits",
+          "coastal-distillery",
+          "cooper-king",
+          "daisy-distillery",
+          "divine-gin",
+          "folklore-society-distillery",
+          "harrison-distillery",
+          "honey-spirits-co",
+          "hothams",
+          "j-p-adlam",
+          "jacqson",
+          "locksley-distilling-co",
+          "northern-fox",
+          "otterbeck-distillery",
+          "raisthorpe-manor",
+          "rare-bird",
+          "sheffield-distillery",
+          "sing-gin",
+          "sloemotion-distillery",
+          "the-artful-pour",
+          "the-captain-cook-distillery",
+          "the-gin-to-my-tonic",
+          "the-yorkshire-explorer-distillery",
+          "whittakers-distillery",
+          "yarm-distillery",
+          "yorkshire-dales-distillery",
+          "zymurgorium-distillery"
+        ]
       }
     }
   },
