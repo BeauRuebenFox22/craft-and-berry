@@ -3601,3 +3601,7 @@ details-disclosure > details {
   object-fit: contain;
   object-position: center;
 }
+
+#shopify-section-sections--25671560167806__header > sticky-header > header > nav > ul  {
+  font-size: 18px !important;
+}
