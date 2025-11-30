@@ -140,7 +140,7 @@
       {%- endif -%}
     </slider-component>
 
-    {%- if show_all_button_applied and section.blocks.size < collections.size -%}
+    {%- if section.blocks.size < collections.size -%}
       <div
         class="center collection-list-view-all{% if show_mobile_slider %} small-hide medium-hide{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
         {% if settings.animations_reveal_on_scroll %}
