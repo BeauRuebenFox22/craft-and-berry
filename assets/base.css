@@ -3605,3 +3605,7 @@ details-disclosure > details {
 #shopify-section-sections--25671560167806__header > sticky-header > header > nav > ul li a {
   font-size: 22px !important;
 }
+
+#shopify-section-sections--25671560167806__header > sticky-header > header > nav > ul li span {
+  font-size: 22px !important;
+}
