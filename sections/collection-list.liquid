@@ -2,13 +2,6 @@
 {{ 'component-card.css' | asset_url | stylesheet_tag }}
 {{ 'component-slider.css' | asset_url | stylesheet_tag }}
 
-{% liquid
-  assign show_all_button_applied = false
-  if section.settings.show_view_all == true or section.settings.show_breweries == true or section.settings.show_distileries
-    assign show_all_button_applied = true
-  endif
-%}
-
 {%- style -%}
   .section-{{ section.id }}-padding {
     padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
@@ -32,7 +25,7 @@
 -%}
 
 <div class="color-{{ section.settings.color_scheme }} gradient">
-  <div class="collection-list-wrapper page-width isolate{% if show_mobile_slider %} page-width-desktop{% endif %}{% if section.settings.title == blank %} no-heading{% endif %}{% if show_all_button_applied == false or section.blocks.size > collections.size %} no-mobile-link{% endif %} section-{{ section.id }}-padding">
+  <div class="collection-list-wrapper page-width isolate{% if show_mobile_slider %} page-width-desktop{% endif %}{% if section.settings.title == blank %} no-heading{% endif %}{% if section.settings.show_view_all == false or section.blocks.size > collections.size %} no-mobile-link{% endif %} section-{{ section.id }}-padding">
     {%- unless section.settings.title == blank -%}
       <div class="title-wrapper-with-link{% if show_mobile_slider %} title-wrapper--self-padded-tablet-down{% else %} title-wrapper--self-padded-mobile{% endif %} title-wrapper--no-top-margin">
         <h2
@@ -52,20 +45,20 @@
             {{- 'sections.collection_list.view_all' | t -}}
           </a>
         {%- endif -%}
-
         {%- if section.settings.show_breweries and show_mobile_slider -%}
           <a
             href="https://craftnberry.co.uk/pages/breweries"
+            id="ViewAll-{{ section.id }}"
             class="link underlined-link large-up-hide{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
             aria-labelledby="ViewAll-{{ section.id }} SectionHeading-{{ section.id }}"
           >
             See all breweries
           </a>
         {%- endif -%}
-
         {%- if section.settings.show_distileries and show_mobile_slider -%}
           <a
             href="https://craftnberry.co.uk/pages/distileries"
+            id="ViewAll-{{ section.id }}"
             class="link underlined-link large-up-hide{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
             aria-labelledby="ViewAll-{{ section.id }} SectionHeading-{{ section.id }}"
           >
@@ -157,26 +150,27 @@
             {{- 'sections.collection_list.view_all' | t -}}
           </a>
         {% endif %}
-
-        {%- if section.settings.show_breweries -%}
+        {% if section.settings.show_breweries %}
           <a
             href="https://craftnberry.co.uk/pages/breweries"
+            id="ViewAll-{{ section.id }}"
             class="link underlined-link large-up-hide{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
             aria-labelledby="ViewAll-{{ section.id }} SectionHeading-{{ section.id }}"
           >
             See all breweries
           </a>
-        {%- endif -%}
+        {% endif %}
 
-        {%- if section.settings.show_distileries -%}
+        {% if section.settings.show_distileries %}
           <a
             href="https://craftnberry.co.uk/pages/distileries"
+            id="ViewAll-{{ section.id }}"
             class="link underlined-link large-up-hide{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
             aria-labelledby="ViewAll-{{ section.id }} SectionHeading-{{ section.id }}"
           >
             See all distileries
           </a>
-        {%- endif -%}
+        {% endif %}
       </div>
     {%- endif -%}
   </div>
