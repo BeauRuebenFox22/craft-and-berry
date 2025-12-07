@@ -22,6 +22,15 @@
   if section.settings.swipe_on_mobile and section.blocks.size > columns_mobile_int
     assign show_mobile_slider = true
   endif
+
+  assign view_all_link = ''
+  if section.settings.show_view_all
+    assign view_all_link = routes.collections_url
+  elsif section.settings.show_breweries
+    assign view_all_link = 'https://craftnberry.co.uk/pages/breweries'
+  elsif section.settings.show_distileries
+    assign view_all_link = 'https://craftnberry.co.uk/pages/distileries'
+  endif
 -%}
 
 <div class="color-{{ section.settings.color_scheme }} gradient">
@@ -34,10 +43,9 @@
         >
           {{ section.settings.title }}
         </h2>
-
         {%- if section.settings.show_view_all and show_mobile_slider -%}
           <a
-            href="{{ routes.collections_url }}"
+            href="{{ view_all_link }}"
             id="ViewAll-{{ section.id }}"
             class="link underlined-link large-up-hide{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
             aria-labelledby="ViewAll-{{ section.id }} SectionHeading-{{ section.id }}"
@@ -45,29 +53,8 @@
             {{- 'sections.collection_list.view_all' | t -}}
           </a>
         {%- endif -%}
-        {%- if section.settings.show_breweries and show_mobile_slider -%}
-          <a
-            href="https://craftnberry.co.uk/pages/breweries"
-            id="ViewAll-{{ section.id }}"
-            class="link underlined-link large-up-hide{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
-            aria-labelledby="ViewAll-{{ section.id }} SectionHeading-{{ section.id }}"
-          >
-            See all breweries
-          </a>
-        {%- endif -%}
-        {%- if section.settings.show_distileries and show_mobile_slider -%}
-          <a
-            href="https://craftnberry.co.uk/pages/distileries"
-            id="ViewAll-{{ section.id }}"
-            class="link underlined-link large-up-hide{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
-            aria-labelledby="ViewAll-{{ section.id }} SectionHeading-{{ section.id }}"
-          >
-            See all distileries
-          </a>
-        {%- endif -%}
       </div>
     {%- endunless -%}
-
     <slider-component class="slider-mobile-gutter{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       <ul
         class="collection-list contains-card contains-card--collection{% if settings.card_style == 'standard' %} contains-card--standard{% endif %} grid grid--{{ section.settings.columns_desktop }}-col-desktop grid--{{ section.settings.columns_mobile }}-col-tablet-down{% if section.settings.swipe_on_mobile %} slider slider--tablet grid--peek{% endif %} collection-list--{{ section.blocks.size }}-items"
@@ -132,7 +119,6 @@
         </div>
       {%- endif -%}
     </slider-component>
-
     {%- if section.blocks.size < collections.size -%}
       <div
         class="center collection-list-view-all{% if show_mobile_slider %} small-hide medium-hide{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
@@ -142,33 +128,12 @@
       >
         {% if section.settings.show_view_all %}
           <a
-            href="{{ routes.collections_url }}"
+            href="{{ view_all_link }}"
             class="button"
             id="ViewAllButton-{{ section.id }}"
             aria-labelledby="ViewAllButton-{{ section.id }} SectionHeading-{{ section.id }}"
           >
             {{- 'sections.collection_list.view_all' | t -}}
-          </a>
-        {% endif %}
-        {% if section.settings.show_breweries %}
-          <a
-            href="https://craftnberry.co.uk/pages/breweries"
-            id="ViewAll-{{ section.id }}"
-            class="link underlined-link large-up-hide{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
-            aria-labelledby="ViewAll-{{ section.id }} SectionHeading-{{ section.id }}"
-          >
-            See all breweries
-          </a>
-        {% endif %}
-
-        {% if section.settings.show_distileries %}
-          <a
-            href="https://craftnberry.co.uk/pages/distileries"
-            id="ViewAll-{{ section.id }}"
-            class="link underlined-link large-up-hide{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
-            aria-labelledby="ViewAll-{{ section.id }} SectionHeading-{{ section.id }}"
-          >
-            See all distileries
           </a>
         {% endif %}
       </div>
