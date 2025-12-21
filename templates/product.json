@@ -61,6 +61,17 @@
           "settings": {
             "share_label": "Share"
           }
+        },
+        "metadata_mCFPUR": {
+          "type": "metadata",
+          "settings": {
+            "foxy_md_labels": "Allergy Information, Dietary Considerations, Delivery & Pickup",
+            "foxy_md_allow_multiple": true,
+            "foxy_md_start_open": true,
+            "foxy_md_layout": "vertical",
+            "foxy_md_content_placement": "below",
+            "foxy_md_icon": "chevron-down-outline"
+          }
         }
       },
       "block_order": [
@@ -72,7 +83,8 @@
         "quantity_selector",
         "buy_buttons",
         "description",
-        "share"
+        "share",
+        "metadata_mCFPUR"
       ],
       "settings": {
         "enable_sticky_info": true,
