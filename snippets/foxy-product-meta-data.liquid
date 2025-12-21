@@ -5,13 +5,10 @@
   if label_count > 0
     assign label_check = true
   endif
-  assign pill_settings = ''
-  if _pill_borders == true
-    assign pill_settings = pill_settings | append: 'bordered '
-    assign pill_settings = pill_settings | append: 'roundedcorners="' | append: _pill_rounded_borders | append: '" '
-  endif
-  assign pill_settings = pill_settings | append: 'externalspacing="' | append: _pill_external_spacing | append: '" '
-  assign pill_settings = pill_settings | append: 'internalspacing="' | append: _pill_internal_spacing | append: '" '
+  assign pill_external = _pill_external_spacing
+  assign pill_internal = _pill_internal_spacing
+  assign pill_rounded = _pill_rounded_borders
+  assign pill_bordered = _pill_borders
 %}
 
 {% if label_check == true %}
@@ -32,7 +29,18 @@
         <iv-pill
           label="abv"
           content="{{- product.metafields.custom_fields.abv | escape -}}%"
-          {{ pill_settings | strip }}
+          {% if pill_bordered %}
+            bordered
+          {% endif %}
+          {% if pill_rounded != blank and pill_rounded != 'none' %}
+            roundedcorners="{{ pill_rounded }}"
+          {% endif %}
+          {% if pill_external != blank %}
+            externalspacing="{{ pill_external }}"
+          {% endif %}
+          {% if pill_internal != blank %}
+            internalspacing="{{ pill_internal }}"
+          {% endif %}
         >
         </iv-pill>
       {% endif %}
@@ -40,7 +48,18 @@
         <iv-pill
           label="size"
           content="{{- product.metafields.custom_fields.size | escape -}}"
-          {{ pill_settings | strip }}
+          {% if pill_bordered %}
+            bordered
+          {% endif %}
+          {% if pill_rounded != blank and pill_rounded != 'none' %}
+            roundedcorners="{{ pill_rounded }}"
+          {% endif %}
+          {% if pill_external != blank %}
+            externalspacing="{{ pill_external }}"
+          {% endif %}
+          {% if pill_internal != blank %}
+            internalspacing="{{ pill_internal }}"
+          {% endif %}
         >
         </iv-pill>
       {% endif %}
@@ -48,7 +67,18 @@
         <iv-pill
           label="style"
           content="{{- product.metafields.custom_fields.style | escape -}}"
-          {{ pill_settings | strip }}
+          {% if pill_bordered %}
+            bordered
+          {% endif %}
+          {% if pill_rounded != blank and pill_rounded != 'none' %}
+            roundedcorners="{{ pill_rounded }}"
+          {% endif %}
+          {% if pill_external != blank %}
+            externalspacing="{{ pill_external }}"
+          {% endif %}
+          {% if pill_internal != blank %}
+            internalspacing="{{ pill_internal }}"
+          {% endif %}
         >
         </iv-pill>
       {% endif %}
@@ -56,7 +86,18 @@
         <iv-pill
           label="location"
           content="{{- product.metafields.custom_fields.location | escape -}}"
-          {{ pill_settings | strip }}
+          {% if pill_bordered %}
+            bordered
+          {% endif %}
+          {% if pill_rounded != blank and pill_rounded != 'none' %}
+            roundedcorners="{{ pill_rounded }}"
+          {% endif %}
+          {% if pill_external != blank %}
+            externalspacing="{{ pill_external }}"
+          {% endif %}
+          {% if pill_internal != blank %}
+            internalspacing="{{ pill_internal }}"
+          {% endif %}
         >
         </iv-pill>
       {% endif %}
