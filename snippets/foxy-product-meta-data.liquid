@@ -5,14 +5,13 @@
   if label_count > 0
     assign label_check = true
   endif
-
   assign pill_settings = ''
   if _pill_borders == true
     assign pill_settings = pill_settings | append: 'bordered '
-    assign pill_settings = pill_settings | append: 'roundedcorners = {{ _pill_rounded_borders }} '
+    assign pill_settings = pill_settings | append: 'roundedcorners="' | append: _pill_rounded_borders | append: '" '
   endif
-  assign pill_settings = pill_settings | append: 'externalspacing = {{ _pill_external_spacing }} '
-  assign pill_settings = pill_settings | append: 'internalspacing = {{ _pill_internal_spacing }} '
+  assign pill_settings = pill_settings | append: 'externalspacing="' | append: _pill_external_spacing | append: '" '
+  assign pill_settings = pill_settings | append: 'internalspacing="' | append: _pill_internal_spacing | append: '" '
 %}
 
 {% if label_check == true %}
