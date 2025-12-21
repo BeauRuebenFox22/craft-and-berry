@@ -65,12 +65,19 @@
         "metadata_mCFPUR": {
           "type": "metadata",
           "settings": {
-            "foxy_md_labels": "Allergy Information, Dietary Considerations, Delivery & Pickup",
+            "foxy_md_labels": "Product Info, Allergy Information, Dietary Considerations, Delivery & Pickup",
             "foxy_md_allow_multiple": true,
             "foxy_md_start_open": true,
             "foxy_md_layout": "vertical",
             "foxy_md_content_placement": "below",
-            "foxy_md_icon": "chevron-down-outline"
+            "foxy_md_icon": "chevron-down-outline",
+            "foxy_md_pill_bordered": true,
+            "foxy_md_pill_internal_spacing": "medium",
+            "foxy_md_pill_external_spacing": "small",
+            "foxy_md_pill_rounded_corners": "medium",
+            "foxy_md_pill_bgcolor": "#ffffff",
+            "foxy_md_pill_textcolor": "#000000",
+            "foxy_md_pill_bordercolor": "#000000"
           }
         }
       },
