@@ -89,6 +89,15 @@
             {%- case block.type -%}
               {%- when '@app' -%}
                 {% render block %}
+              {%- when 'metadata' -%}
+                {% render 'foxy-product-meta-data',
+                  _labels: block.settings.foxy_md_labels,
+                  _allow_multiple: block.settings.foxy_md_allow_multiple,
+                  _start_open: block.settings.foxy_md_start_open,
+                  _layout: block.settings.foxy_md_layout,
+                  _content_placement: block.settings.foxy_md_content_placement,
+                  _icon: block.settings.foxy_md_icon
+                %}
               {%- when 'wishlist' -%}
                 {%- render 'foxy-wishlist',
                   _product: product,
@@ -752,6 +761,89 @@
   "blocks": [
     {
       "type": "@app"
+    },
+    {
+      "type": "metadata",
+      "name": "Foxy Metadata",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Metadata settings",
+          "info": "Used to configure the layout and content of the metadata accordion."
+        },
+        {
+          "type": "text",
+          "id": "foxy_md_labels",
+          "label": "Metadata Labels",
+          "info": "These provide the button titles used in the accordion, use a comma to seperate values.",
+          "default": "Allergy Information, Dietary Considerations, Delivery & Pickup"
+        },
+        {
+          "type": "checkbox",
+          "id": "foxy_md_allow_multiple",
+          "label": "Allow Multipel",
+          "info": "This is used to determin if multiple pannels can be open at once.",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "foxy_md_start_open",
+          "label": "Start Open",
+          "info": "This is used to determin if the first pannel starts in an open state.",
+          "default": true
+        },
+        {
+          "type": "select",
+          "id": "foxy_md_layout",
+          "label": "Accordion Layout",
+          "info": "This is used to determine the overall layout of the accordion",
+          "options": [
+            {
+              "label": "Vertical",
+              "value": "vertical"
+            },
+            {
+              "label": "Horizontal",
+              "value": "horizontal"
+            }
+          ],
+          "default": "vertical"
+        },
+        {
+          "type": "select",
+          "id": "foxy_md_content_placement",
+          "label": "Accordion Content Placement",
+          "info": "This is used to determine the content placement for the accordion.",
+          "options": [
+            {
+              "label": "Right",
+              "value": "right"
+            },
+            {
+              "label": "Below",
+              "value": "below"
+            }
+          ],
+          "default": "below"
+        },
+        {
+          "type": "select",
+          "id": "foxy_md_icon",
+          "label": "Accordion Icon",
+          "info": "This is used to determine the icon used by the accordion.",
+          "options": [
+            {
+              "label": "Down Arrow",
+              "value": "chevron-down-outline"
+            },
+            {
+              "label": "Plus",
+              "value": "add-outline"
+            }
+          ],
+          "default": "chevron-down-outline"
+        }
+      ]
     },
     {
       "type": "wishlist",

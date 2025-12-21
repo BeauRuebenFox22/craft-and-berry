@@ -1,0 +1,30 @@
+{% liquid
+  assign label_check = false
+  assign labels = _labels | split: ','
+  assign label_count = labels | size
+  if label_count > 0
+    assign label_check = true
+  endif
+%}
+
+<h1>{{ label_check }}</h1>
+
+{% if label_check == true %}
+  <iv-accordion
+    labels="{{- _labels | escape -}}"
+    {% if _allow_multiple == true %}
+      allowmultiple
+    {% endif %}
+    {% if _start_open == true %}
+      startopen
+    {% endif %}
+    acordionlayout="{{ _layout }}"
+    contentplacement="{{ _content_placement }}"
+    dropdownicon="{{ _icon }}"
+  >
+    <div slot="panel-0">Pannel 1</div>
+    <div slot="panel-1">Pannel 2</div>
+    <div slot="panel-2">Pannel 3</div>
+    <div slot="panel-3">Pannel 4</div>
+  </iv-accordion>
+{% endif %}

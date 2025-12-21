@@ -56,33 +56,6 @@
           "type": "description",
           "settings": {}
         },
-        "collapsible-row-0": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Allergy Information",
-            "icon": "none",
-            "content": "",
-            "page": ""
-          }
-        },
-        "collapsible-row-1": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Dietary Considerations",
-            "icon": "none",
-            "content": "",
-            "page": ""
-          }
-        },
-        "collapsible-row-2": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Delivery & Pickup",
-            "icon": "none",
-            "content": "<p>Orders for delivery are usually shipped within 24 hours of the order being received. For in-store pick-up, orders are usually ready for collection within the hour. </p>",
-            "page": ""
-          }
-        },
         "share": {
           "type": "share",
           "settings": {
@@ -99,9 +72,6 @@
         "quantity_selector",
         "buy_buttons",
         "description",
-        "collapsible-row-0",
-        "collapsible-row-1",
-        "collapsible-row-2",
         "share"
       ],
       "settings": {
