@@ -96,7 +96,14 @@
                   _start_open: block.settings.foxy_md_start_open,
                   _layout: block.settings.foxy_md_layout,
                   _content_placement: block.settings.foxy_md_content_placement,
-                  _icon: block.settings.foxy_md_icon
+                  _icon: block.settings.foxy_md_icon,
+                  _pill_borders: {{ block.settings.foxy_md_pill_bordered }},
+                  _pill_internal_spacing: {{ block.settings.foxy_md_pill_internal_spacing }},
+                  _pill_external_spacing: {{ block.settings.foxy_md_pill_external_spacing }},
+                  _pill_rounded_borders: {{ block.settings.foxy_md_pill_rounded_corners }},
+                  _pill_bg_color: block.settings.foxy_md_pill_bg_color,
+                  _pill_text_color: block.settings.foxy_md_pill_text_color,
+                  _pill_border_color: block.settings.foxy_md_pill_border_color
                 %}
               {%- when 'wishlist' -%}
                 {%- render 'foxy-wishlist',
@@ -772,11 +779,15 @@
           "info": "Used to configure the layout and content of the metadata accordion."
         },
         {
+          "type": "header",
+          "content": "Accordion Settings"
+        },
+        {
           "type": "text",
           "id": "foxy_md_labels",
           "label": "Metadata Labels",
           "info": "These provide the button titles used in the accordion, use a comma to seperate values.",
-          "default": "Allergy Information, Dietary Considerations, Delivery & Pickup"
+          "default": "Product Info, Allergy Information, Dietary Considerations, Delivery & Pickup"
         },
         {
           "type": "checkbox",
@@ -842,6 +853,109 @@
             }
           ],
           "default": "chevron-down-outline"
+        },
+        {
+          "type": "header",
+          "content": "Pill Settings"
+        },
+        {
+          "type": "checkbox",
+          "id": "foxy_md_pill_bordered",
+          "label": "Bordered",
+          "info": "This is used to determine if the accordion pills have borders.",
+          "default": true
+        },
+        {
+          "type": "select",
+          "id": "foxy_md_pill_internal_spacing",
+          "label": "Pill Internal Spacing",
+          "info": "This is used to determine the internal spacing of the accordion pills.",
+          "options": [
+            {
+              "label": "Small",
+              "value": "small"
+            },
+            {
+              "label": "Medium",
+              "value": "medium"
+            },
+            {
+              "label": "Large",
+              "value": "large"
+            }
+          ],
+          "default": "medium"
+        },
+        {
+          "type": "select",
+          "id": "foxy_md_pill_external_spacing",
+          "label": "Pill External Spacing",
+          "info": "This is used to determine the external spacing of the accordion pills.",
+          "options": [
+            {
+              "label": "None",
+              "value": "none"
+            },
+            {
+              "label": "Small",
+              "value": "small"
+            },
+            {
+              "label": "Medium",
+              "value": "medium"
+            },
+            {
+              "label": "Large",
+              "value": "large"
+            }
+          ],
+          "default": "small"
+        },
+        {
+          "type": "select",
+          "id": "foxy_md_pill_rounded_corners",
+          "label": "Pill Rounded Corners",
+          "info": "This is used to determine the rounded corner size of the accordion pills.",
+          "options": [
+            {
+              "label": "None",
+              "value": "none"
+            },
+            {
+              "label": "Small",
+              "value": "small"
+            },
+            {
+              "label": "Medium",
+              "value": "medium"
+            },
+            {
+              "label": "Large",
+              "value": "large"
+            }
+          ],
+          "default": "medium"
+        },
+        {
+          "type": "color",
+          "id": "foxy_md_pill_bgcolor",
+          "label": "Pill Background Color",
+          "info": "This is used to determine the background color of the accordion pills.",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "foxy_md_pill_textcolor",
+          "label": "Pill Text Color",
+          "info": "This is used to determine the text color of the accordion pills.",
+          "default": "#000000"
+        },
+        {
+          "type": "color",
+          "id": "foxy_md_pill_bordercolor",
+          "label": "Pill Border Color",
+          "info": "This is used to determine the border color of the accordion pills.",
+          "default": "#000000"
         }
       ]
     },

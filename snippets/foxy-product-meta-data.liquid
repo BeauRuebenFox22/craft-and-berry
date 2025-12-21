@@ -5,6 +5,14 @@
   if label_count > 0
     assign label_check = true
   endif
+
+  assign pill_settings = ''
+  if _pill_borders == true
+    assign pill_settings = pill_settings | append: 'bordered '
+    assign pill_settings = pill_settings | append: 'roundedcorners = {{ _pill_rounded_borders }} '
+  endif
+  assign pill_settings = pill_settings | append: 'externalspacing = {{ _pill_external_spacing }} '
+  assign pill_settings = pill_settings | append: 'internalspacing = {{ _pill_internal_spacing }} '
 %}
 
 {% if label_check == true %}
@@ -20,8 +28,78 @@
     contentplacement="{{ _content_placement }}"
     dropdownicon="{{ _icon }}"
   >
-    <div slot="panel-0">Information pending.</div>
-    <div slot="panel-1">Information pending.</div>
-    <div slot="panel-2">Information pending.</div>
+    <div slot="panel-1">
+      {% if product.metafields.custom_fields.abv != blank %}
+        <iv-pill
+          label="abv"
+          content="{{- product.metafields.custom_fields.abv | escape -}}%"
+          {{ pill_settings | strip }}
+        >
+        </iv-pill>
+      {% endif %}
+      {% if product.metafields.custom_fields.size != blank %}
+        <iv-pill
+          label="size"
+          content="{{- product.metafields.custom_fields.size | escape -}}"
+          {{ pill_settings | strip }}
+        >
+        </iv-pill>
+      {% endif %}
+      {% if product.metafields.custom_fields.style != blank %}
+        <iv-pill
+          label="style"
+          content="{{- product.metafields.custom_fields.style | escape -}}"
+          {{ pill_settings | strip }}
+        >
+        </iv-pill>
+      {% endif %}
+      {% if product.metafields.custom_fields.location != blank %}
+        <iv-pill
+          label="location"
+          content="{{- product.metafields.custom_fields.location | escape -}}"
+          {{ pill_settings | strip }}
+        >
+        </iv-pill>
+      {% endif %}
+    </div>
+    <div slot="panel-2">
+      {% assign allergy_info = product.metafields.custom_fields.allergy_info %}
+      {% if allergy_info != blank %}
+        {{ allergy_info }}
+      {% else %}
+        <p>No allergy information available for this product.</p>
+      {% endif %}
+    </div>
+    <div slot="panel-3">
+      {% assign is_vegetarian = product.metafields.custom_fields.vegetarian %}
+      {% assign is_vegan = product.metafields.custom_fields.vegan %}
+      {% assign is_gluten_free = product.metafields.custom_fields.gluten_free %}
+      {% if is_vegetarian == true %}
+        <iv-pill label="Vegetarian" content="Yes"></iv-pill>
+      {% else %}
+        <iv-pill label="Vegetarian" content="No"></iv-pill>
+      {% endif %}
+      {% if is_vegan == true %}
+        <iv-pill label="Vegan" content="Yes"></iv-pill>
+      {% else %}
+        <iv-pill label="Vegan" content="No"></iv-pill>
+      {% endif %}
+      {% if is_gluten_free == true %}
+        <iv-pill label="Gluten Free" content="Yes"></iv-pill>
+      {% else %}
+        <iv-pill label="Gluten Free" content="No"></iv-pill>
+      {% endif %}
+    </div>
+    <div slot="panel-4">
+      <p>No specific shipping information is available for this product at this time.</p>
+    </div>
   </iv-accordion>
 {% endif %}
+
+<style>
+  :root {
+    --iv-pill-bgcolor: {{ _pill_bg_color }};
+    --iv-pill-textcolor: {{ _pill_text_color }};
+    --iv-pill-bordercolor: {{ _pill_border_color }};
+  }
+</style>
