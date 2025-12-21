@@ -7,8 +7,6 @@
   endif
 %}
 
-<h1>{{ label_check }}</h1>
-
 {% if label_check == true %}
   <iv-accordion
     labels="{{- _labels | escape -}}"
@@ -22,9 +20,8 @@
     contentplacement="{{ _content_placement }}"
     dropdownicon="{{ _icon }}"
   >
-    <div slot="panel-0">Pannel 1</div>
-    <div slot="panel-1">Pannel 2</div>
-    <div slot="panel-2">Pannel 3</div>
-    <div slot="panel-3">Pannel 4</div>
+    <div slot="panel-0">Information pending.</div>
+    <div slot="panel-1">Information pending.</div>
+    <div slot="panel-2">Information pending.</div>
   </iv-accordion>
 {% endif %}
