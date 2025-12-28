@@ -40,104 +40,93 @@
 		return date.toLocaleDateString('en-GB', { weekday: 'long' });
 	};
 
-	function buildClosureWeekdays(section) {
+	// Format date for notes/tooltips
+	function formatDate(date) {
+		return date.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
+	};
+
+	// Compute Monday-start current week range
+	function getCurrentWeekRange(today = new Date()) {
+		const d = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+		const jsDay = d.getDay(); // 0=Sun..6=Sat
+		const mondayOffset = jsDay === 0 ? -6 : 1 - jsDay; // move to Monday
+		const start = new Date(d);
+		start.setDate(d.getDate() + mondayOffset);
+		const end = new Date(start);
+		end.setDate(start.getDate() + 6);
+		start.setHours(0, 0, 0, 0);
+		end.setHours(23, 59, 59, 999);
+		return { start, end };
+	};
+
+	function buildClosuresForYear(section) {
 		const ds = section.dataset;
 		const now = new Date();
 		const year = now.getFullYear();
-		const holidays = [
-			{ id: 'christmas_eve', enabled: parseBool(ds.christmasEve) },
-			{ id: 'christmas_day', enabled: parseBool(ds.christmasDay) },
-			{ id: 'boxing_day', enabled: parseBool(ds.boxingDay) },
-			{ id: 'new_years_eve', enabled: parseBool(ds.newYearsEve) },
-			{ id: 'new_years_day', enabled: parseBool(ds.newYearsDay) },
+		const fixed = [
+			{ id: 'christmas_eve', enabled: parseBool(ds.christmasEve), label: 'Christmas Eve' },
+			{ id: 'christmas_day', enabled: parseBool(ds.christmasDay), label: 'Christmas Day' },
+			{ id: 'boxing_day', enabled: parseBool(ds.boxingDay), label: 'Boxing Day' },
+			{ id: 'new_years_eve', enabled: parseBool(ds.newYearsEve), label: "New Year's Eve" },
+			{ id: 'new_years_day', enabled: parseBool(ds.newYearsDay), label: "New Year's Day" },
 		];
 
-		const dates = [];
-		holidays.forEach(({ id, enabled }) => {
+		const closures = [];
+		fixed.forEach(({ id, enabled, label }) => {
 			if (!enabled) return;
 			const d = holidayDateForYear(id, year);
-			if (d) dates.push({ date: d, label: id.replace(/_/g, ' ') });
+			if (d) closures.push({ date: d, label });
 		});
 
 		const bankEnabled = parseBool(ds.bankHolidays);
 		const bankDates = parseDateList(ds.bankHolidayDates);
-		if(bankEnabled && bankDates.length) {
-			bankDates.forEach((d) => dates.push({ date: d, label: 'bank holiday' }));
+		if (bankEnabled) {
+			bankDates.forEach((d) => closures.push({ date: d, label: 'Bank Holiday' }));
 		};
-
-		const map = new Map();
-		dates.forEach(({ date, label }) => {
-			const wk = weekdayName(date);
-			const entry = map.get(wk) || { reasons: new Set(), dates: [] };
-			entry.reasons.add(label);
-			entry.dates.push(date);
-			map.set(wk, entry);
-		});
-		return map;
+		return closures; // Array<{date:Date,label:string}>
 	};
 
-	function markRowsClosed(section, weekdayClosures) {
+	function filterClosuresForWeek(closures, { start, end }) {
+		return closures.filter((c) => c.date >= start && c.date <= end);
+	};
+
+	function markRowsClosedForWeek(section, closuresThisWeek) {
 		const table = section.querySelector('.opening-times-table');
 		if(!table) return;
 		const rows = Array.from(table.querySelectorAll('tr')).slice(1);
-		rows.forEach((tr) => {
-			const dayCell = tr.querySelector('td:first-child');
+		closuresThisWeek.forEach((closure) => {
+			const day = weekdayName(closure.date);
+			const tr = rows.find((row) => row.querySelector('td:first-child')?.textContent.trim() === day);
+			if(!tr) return;
 			const openCell = tr.querySelector('td:nth-child(2)');
 			const closeCell = tr.querySelector('td:nth-child(3)');
-			if(!dayCell || !openCell || !closeCell) return;
-			const dayName = dayCell.textContent.trim();
-			const closureInfo = weekdayClosures.get(dayName);
-			if(!closureInfo) return;
+			if(!openCell || !closeCell) return;
 			tr.classList.add('closed');
-			const reasons = Array.from(closureInfo.reasons).join(', ');
-			if(!/^closed$/i.test(openCell.textContent.trim())) {
-				openCell.textContent = 'Closed';
-			};
-			if(!/^closed$/i.test(closeCell.textContent.trim())) {
-				closeCell.textContent = 'Closed';
-			};
-			tr.setAttribute('title', `Closed for: ${reasons}`);
+			if(!/^closed$/i.test(openCell.textContent.trim())) openCell.textContent = 'Closed';
+			if(!/^closed$/i.test(closeCell.textContent.trim())) closeCell.textContent = 'Closed';
+			tr.setAttribute('title', `Closed on ${formatDate(closure.date)} (${closure.label})`);
 		});
 	};
 
-	function renderExceptionsNote(section, weekdayClosures) {
+	function renderExceptionsNoteForWeek(section, closuresThisWeek) {
 		const noteEl = section.querySelector('.exceptions-note');
 		if(!noteEl) return;
-		const ds = section.dataset;
-		const bankEnabled = parseBool(ds.bankHolidays);
-		const bankDates = parseDateList(ds.bankHolidayDates);
-
-		const parts = [];
-		const fixedNames = ['christmas_eve', 'christmas_day', 'boxing_day', 'new_years_eve', 'new_years_day'];
-		fixedNames.forEach((id) => {
-			const key = id.replace(/_/g, '');
-			if(parseBool(ds[key])) {
-				parts.push(id.replace(/_/g, ' '));
-			}
-		});
-
-		if(bankEnabled) {
-			if(bankDates.length) {
-				parts.push(`bank holidays (${bankDates.length} configured)`);
-			} else {
-				parts.push('bank holidays');
-			};
-		};
-
-		if(!parts.length) {
+		if(!closuresThisWeek.length) {
 			noteEl.textContent = '';
 			return;
 		};
-
-		noteEl.textContent = `Exceptions: Closed on ${parts.join(', ')}.`;
+		const text = closuresThisWeek.map((c) => `${c.label} (${formatDate(c.date)})`).join(', ');
+		noteEl.textContent = `Exceptions this week: ${text}.`;
 	};
 
 	document.addEventListener('DOMContentLoaded', () => {
 		const section = document.querySelector('.foxy-opening-times');
 		if(!section) return;
-		const weekdayClosures = buildClosureWeekdays(section);
-		markRowsClosed(section, weekdayClosures);
-		renderExceptionsNote(section, weekdayClosures);
+		const week = getCurrentWeekRange();
+		const closures = buildClosuresForYear(section);
+		const closuresThisWeek = filterClosuresForWeek(closures, week);
+		markRowsClosedForWeek(section, closuresThisWeek);
+		renderExceptionsNoteForWeek(section, closuresThisWeek);
 	});
 
 })();

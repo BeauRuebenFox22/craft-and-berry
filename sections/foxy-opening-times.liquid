@@ -1,5 +1,8 @@
 <link rel="stylesheet" href="{{ 'foxy-opening-times.css' | asset_url }}">
-<script src="{{ 'foxy-opening-times.js' | asset_url }}" defer></script>
+
+{% unless section.settings.disable_dynamic_script %}
+  <script src="{{ 'foxy-opening-times.js' | asset_url }}" defer></script>
+{% endunless %}
 
 <section
   class="foxy-opening-times"
@@ -74,6 +77,13 @@
       "id": "title",
       "label": "Section Title",
       "default": "Opening Times"
+    },
+    {
+      "type": "checkbox",
+      "id": "disable_dynamic_script",
+      "label": "Disable Dynamic Script",
+      "info": "This turns of the dynamic script, as it's experimental, it's worth providing a fallback if it misbehaves. If disabled, defualt opening times will be used.",
+      "default": false
     },
     {
       "type": "header",
