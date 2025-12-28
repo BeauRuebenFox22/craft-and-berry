@@ -332,6 +332,10 @@
       {{ content_for_layout }}
     </main>
 
+    {% if settings.enable_opening_times_section %}
+      {% section 'foxy-opening-times' %}
+    {% endif %}
+
     {% sections 'footer-group' %}
 
     <ul hidden>

@@ -8,6 +8,18 @@
     "theme_support_url": "https://support.shopify.com/"
   },
   {
+    "name": "Opening Times",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_opening_times_section",
+        "label": "Enable Opening Times Section",
+        "info": "Toggle to enable or disable the Opening Times section on your website.",
+        "default": true
+      }
+    ]
+  },
+  {
     "name": "t:settings_schema.logo.name",
     "settings": [
       {

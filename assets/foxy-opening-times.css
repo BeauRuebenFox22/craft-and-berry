@@ -1,0 +1,108 @@
+/* Foxy Opening Times — Chalkboard styling */
+
+/* Section wrapper: white background, padding/margins */
+.foxy-opening-times {
+	background: #ffffff;
+	padding: 2rem 1rem;
+	margin: 2rem 0;
+}
+
+/* Chalkboard container (table wrapper) */
+.foxy-opening-times .container {
+	position: relative;
+	width: 100%;
+	margin: 0 auto;
+	padding: 1.25rem 1rem;
+	border-radius: 12px;
+
+	/* Chalkboard base */
+	background-color: #1b1c1a; /* deep charcoal */
+	background-image:
+		radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+		repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.02) 0 2px, rgba(255, 255, 255, 0) 2px 4px);
+	background-size: 3px 3px, 100% 100%;
+	color: #f5f5f5;
+
+	/* Soft inner glow and edge wear */
+	box-shadow:
+		inset 0 0 80px rgba(255, 255, 255, 0.03),
+		inset 0 0 12px rgba(0, 0, 0, 0.6),
+		0 8px 18px rgba(0, 0, 0, 0.08);
+}
+
+/* Chalky hand-drawn border overlay */
+.foxy-opening-times .container::before {
+	content: "";
+	position: absolute;
+	inset: 6px;
+	border: 2px solid rgba(255, 255, 255, 0.25);
+	border-radius: 10px;
+	opacity: 0.6;
+	pointer-events: none;
+}
+
+/* Optional subtle diagonal chalk smudges */
+.foxy-opening-times .container::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: repeating-linear-gradient(
+		-35deg,
+		rgba(255, 255, 255, 0.015) 0 12px,
+		rgba(255, 255, 255, 0) 12px 24px
+	);
+	opacity: 0.8;
+	mix-blend-mode: screen;
+	pointer-events: none;
+	border-radius: inherit;
+}
+
+/* Title: slightly chalky look */
+.foxy-opening-times .section-title {
+	color: #f5f5f5;
+	margin: 0 0 1rem;
+	font-weight: 600;
+	letter-spacing: 0.02em;
+	text-shadow: 0 0 1px rgba(255, 255, 255, 0.35), 0 0 2px rgba(255, 255, 255, 0.15);
+}
+
+/* Table layout */
+.foxy-opening-times .opening-times-table {
+	width: 100%;
+	border-collapse: separate;
+	border-spacing: 0;
+}
+
+.foxy-opening-times .opening-times-table th,
+.foxy-opening-times .opening-times-table td {
+	color: #f6f6f6;
+	padding: 0.75rem 1rem;
+	vertical-align: middle;
+	text-shadow: 0 0 1px rgba(255, 255, 255, 0.35), 0 0 2px rgba(255, 255, 255, 0.15);
+}
+
+.foxy-opening-times .opening-times-table th {
+	font-weight: 700;
+	border-bottom: 2px dashed rgba(255, 255, 255, 0.35);
+}
+
+.foxy-opening-times .opening-times-table tr + tr td {
+	border-top: 1px dashed rgba(255, 255, 255, 0.25);
+}
+
+/* Responsive width: mobile full; tablet/desktop centered at ~60–70% */
+@media (min-width: 750px) {
+	.foxy-opening-times {
+		padding: 3rem 0;
+	}
+	.foxy-opening-times .container {
+		max-width: 70%;
+	}
+}
+
+@media (min-width: 1100px) {
+	.foxy-opening-times .container {
+		max-width: 60%;
+	}
+}
+

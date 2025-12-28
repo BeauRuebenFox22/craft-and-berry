@@ -1,0 +1,237 @@
+<link rel="stylesheet" href="{{ 'foxy-opening-times.css' | asset_url }}">
+<script src="{{ 'foxy-opening-times.js' | asset_url }}" defer></script>
+
+<section
+  class="foxy-opening-times"
+  data-christmas-eve="{{ section.settings.christmas_eve }}"
+  data-christmas-day="{{ section.settings.christmas_day }}"
+  data-boxing-day="{{ section.settings.boxing_day }}"
+  data-new-years-eve="{{ section.settings.new_years_eve }}"
+  data-new-years-day="{{ section.settings.new_years_day }}"
+  data-bank-holidays="{{ section.settings.bank_holidays }}"
+  data-bank-holiday-dates="{{ section.settings.bank_holiday_dates | default: '' }}"
+>
+  <div class="container">
+    <h2 class="section-title">
+      {{ section.settings.title }}
+    </h2>
+    <table class="opening-times-table">
+      <tr>
+        <th>Day</th>
+        <th>Opening Time</th>
+        <th>Closing Time</th>
+      </tr>
+      <tr>
+        <td>Monday</td>
+        <td>{{ section.settings.opening_time_monday }}</td>
+        <td>{{ section.settings.closing_time_monday }}</td>
+      </tr>
+      <tr>
+        <td>Tuesday</td>
+        <td>{{ section.settings.opening_time_tuesday }}</td>
+        <td>{{ section.settings.closing_time_tuesday }}</td>
+      </tr>
+      <tr>
+        <td>Wednesday</td>
+        <td>{{ section.settings.opening_time_wednesday }}</td>
+        <td>{{ section.settings.closing_time_wednesday }}</td>
+      </tr>
+      <tr>
+        <td>Thursday</td>
+        <td>{{ section.settings.opening_time_thursday }}</td>
+        <td>{{ section.settings.closing_time_thursday }}</td>
+      </tr>
+      <tr>
+        <td>Friday</td>
+        <td>{{ section.settings.opening_time_friday }}</td>
+        <td>{{ section.settings.closing_time_friday }}</td>
+      </tr>
+      <tr>
+        <td>Saturday</td>
+        <td>{{ section.settings.opening_time_saturday }}</td>
+        <td>{{ section.settings.closing_time_saturday }}</td>
+      </tr>
+      <tr>
+        <td>Sunday</td>
+        <td>{{ section.settings.opening_time_sunday }}</td>
+        <td>{{ section.settings.closing_time_sunday }}</td>
+      </tr>
+    </table>
+    <div class="exceptions-note" aria-live="polite"></div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Foxy Opening Times",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Opening Times"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Opening Times"
+    },
+    {
+      "type": "header",
+      "content": "Holidays"
+    },
+    {
+      "type": "checkbox",
+      "id": "christmas_eve",
+      "label": "Closed on Christmas Eve",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "christmas_day",
+      "label": "Closed on Christmas Day",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "boxing_day",
+      "label": "Closed on Boxing Day",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "new_years_eve",
+      "label": "Closed on New Year's Eve",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "new_years_day",
+      "label": "Closed on New Year's Day",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "bank_holidays",
+      "label": "Closed on Bank Holidays",
+      "default": true
+    },
+    {
+      "type": "textarea",
+      "id": "bank_holiday_dates",
+      "label": "Bank Holiday Dates (YYYY-MM-DD, comma-separated)",
+      "info": "Optional: Provide specific bank holiday dates to mark as closed.",
+      "visible_if": "{{ section.settings.bank_holidays == true }}"
+    },
+    {
+      "type": "header",
+      "content": "Monday"
+    },
+    {
+      "type": "text",
+      "id": "opening_time_monday",
+      "label": "Openig Time",
+      "default": "Closed"
+    },
+    {
+      "type": "text",
+      "id": "closing_time_monday",
+      "label": "Closing Time",
+      "default": "Closed"
+    },
+    {
+      "type": "header",
+      "content": "Tuesday"
+    },
+    {
+      "type": "text",
+      "id": "opening_time_tuesday",
+      "label": "Openig Time",
+      "default": "11AM"
+    },
+    {
+      "type": "text",
+      "id": "closing_time_tuesday",
+      "label": "Closing Time",
+      "default": "7PM"
+    },
+    {
+      "type": "header",
+      "content": "Wednesday"
+    },
+    {
+      "type": "text",
+      "id": "opening_time_wednesday",
+      "label": "Openig Time",
+      "default": "11AM"
+    },
+    {
+      "type": "text",
+      "id": "closing_time_wednesday",
+      "label": "Closing Time",
+      "default": "7PM"
+    },
+    {
+      "type": "header",
+      "content": "Thursday"
+    },
+    {
+      "type": "text",
+      "id": "opening_time_thursday",
+      "label": "Openig Time",
+      "default": "Closed"
+    },
+    {
+      "type": "text",
+      "id": "closing_time_thursday",
+      "label": "Closing Time",
+      "default": "Closed"
+    },
+    {
+      "type": "header",
+      "content": "Friday"
+    },
+    {
+      "type": "text",
+      "id": "opening_time_friday",
+      "label": "Openig Time",
+      "default": "11AM"
+    },
+    {
+      "type": "text",
+      "id": "closing_time_friday",
+      "label": "Closing Time",
+      "default": "10PM"
+    },
+    {
+      "type": "header",
+      "content": "Saturday"
+    },
+    {
+      "type": "text",
+      "id": "opening_time_saturday",
+      "label": "Openig Time",
+      "default": "11AM"
+    },
+    {
+      "type": "text",
+      "id": "closing_time_saturday",
+      "label": "Closing Time",
+      "default": "10PM"
+    },
+    {
+      "type": "header",
+      "content": "Sunday"
+    },
+    {
+      "type": "text",
+      "id": "opening_time_sunday",
+      "label": "Openig Time"
+    },
+    {
+      "type": "text",
+      "id": "closing_time_sunday",
+      "label": "Closing Time"
+    }
+  ]
+}
+{% endschema %}
