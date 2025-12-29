@@ -139,6 +139,7 @@
         "type": "foxy-opening-times",
         "settings": {
           "title": "Opening Times",
+          "disable_dynamic_script": false,
           "christmas_eve": false,
           "christmas_day": true,
           "boxing_day": true,
@@ -159,7 +160,7 @@
           "opening_time_saturday": "11AM",
           "closing_time_saturday": "10PM",
           "opening_time_sunday": "11am",
-          "closing_time_sunday": "4pm"
+          "closing_time_sunday": "6pm"
         }
       }
     },
