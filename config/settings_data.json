@@ -139,6 +139,7 @@
         "type": "foxy-opening-times",
         "settings": {
           "title": "Opening Times",
+          "disable_dynamic_script": false,
           "christmas_eve": false,
           "christmas_day": true,
           "boxing_day": true,
@@ -148,18 +149,18 @@
           "bank_holiday_dates": "",
           "opening_time_monday": "Closed",
           "closing_time_monday": "Closed",
-          "opening_time_tuesday": "11AM",
-          "closing_time_tuesday": "7PM",
+          "opening_time_tuesday": "Closed",
+          "closing_time_tuesday": "Closed",
           "opening_time_wednesday": "11AM",
-          "closing_time_wednesday": "Late",
-          "opening_time_thursday": "Closed",
-          "closing_time_thursday": "Closed",
+          "closing_time_wednesday": "7PM",
+          "opening_time_thursday": "11AM",
+          "closing_time_thursday": "7PM",
           "opening_time_friday": "11AM",
           "closing_time_friday": "10PM",
           "opening_time_saturday": "11AM",
           "closing_time_saturday": "10PM",
           "opening_time_sunday": "11am",
-          "closing_time_sunday": "4pm"
+          "closing_time_sunday": "6pm"
         }
       }
     },

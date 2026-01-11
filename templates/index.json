@@ -191,18 +191,10 @@
           "settings": {
             "collection": "socials-and-events"
           }
-        },
-        "product_z4RfYy": {
-          "type": "product",
-          "settings": {
-            "product": "meet-the-distiller-friday-28th-november-2025",
-            "second_image": false
-          }
         }
       },
       "block_order": [
-        "collection-0",
-        "product_z4RfYy"
+        "collection-0"
       ],
       "settings": {
         "heading": "What's on at C&B",
