@@ -1,0 +1,16 @@
+<iv-age-verify
+  minage="{{ settings.minimum_age }}"
+  verificationmethod="{{ settings.verification_method }}"
+  cookiedays="{{ settings.cookie_days }}"
+  verificationtitle="{{ settings.verification_title }}"
+  {% if settings.verification_image %}
+    verificationimage
+  {% endif %}
+></iv-age-verify>
+
+<style>
+  :root {
+    --iv-age-verify-padding: {{ settings.verification_padding }};
+    --iv-age-verify-image: {{ settings.verification_image.src }};
+  }
+</style>

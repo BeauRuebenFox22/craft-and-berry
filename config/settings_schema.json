@@ -8,6 +8,88 @@
     "theme_support_url": "https://support.shopify.com/"
   },
   {
+    "name": "Age Verification Settings",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_foxy_age_verify",
+        "label": "Enable Foxy Age Verification",
+        "info": "This will enable the new verification method, and it will be used on the site",
+        "default": false
+      },
+      {
+        "type": "number",
+        "id": "minimum_age",
+        "label": "Set Minimum Age",
+        "info": "This is the minimum age required for verification. Users below this age will not be able to access the site.",
+        "default": 18,
+        "visible_if": "{{ settings.enable_foxy_age_verify }}"
+      },
+      {
+        "type": "select",
+        "id": "verification_method",
+        "label": "Verification Method",
+        "info": "Choose how a customer verifies their age.",
+        "options": [
+          {
+            "label": "Numeric Input",
+            "value": "age"
+          },
+          {
+            "label": "Date of Birth",
+            "value": "date"
+          },
+          {
+            "label": "Confirmation",
+            "value": "boolean"
+          }
+        ],
+        "default": "age",
+        "visible_if": "{{ settings.enable_foxy_age_verify }}"
+      },
+      {
+        "type": "number",
+        "id": "cookie_days",
+        "label": "How Long Verification Lasts (Days)",
+        "info": "Once a customer has been verified, this setting will determine how long that verification lasts for.",
+        "default": 7,
+        "visible_if": "{{ settings.enable_foxy_age_verify }}"
+      },
+      {
+        "type": "header",
+        "content": "Age Verification Styles",
+        "visible_if": "{{ settings.enable_foxy_age_verify }}"
+      },
+      {
+        "type": "text",
+        "id": "verification_title",
+        "label": "Title",
+        "info": "Adds a title to the age verification modal.",
+        "default": "You must be over 18 to enter this site.",
+        "visible_if": "{{ settings.enable_foxy_age_verify }}"
+      },
+      {
+        "type": "image_picker",
+        "id": "verification_image",
+        "label": "Image",
+        "info": "Set a background image on the verification modal",
+        "visible_if": "{{ settings.enable_foxy_age_verify }}"
+      },
+      {
+        "type": "range",
+        "id": "verification_padding",
+        "label": "Padding",
+        "info": "Adds space around the verification modal content.",
+        "min": 0,
+        "max": 75,
+        "default": 30,
+        "step": 1,
+        "unit": "px",
+        "visible_if": "{{ settings.enable_foxy_age_verify }}"
+      }
+    ]
+  },
+  {
     "name": "Opening Times",
     "settings": [
       {
