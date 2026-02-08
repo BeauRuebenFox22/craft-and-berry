@@ -10,6 +10,7 @@
 {
   "current": {
     "enable_foxy_age_verify": true,
+    "verification_image": "shopify://shop_images/beer-can-and-glass-with-spill-reflection.jpg",
     "logo": "shopify://shop_images/logo.jpg",
     "logo_width": 90,
     "type_header_font": "mono",
