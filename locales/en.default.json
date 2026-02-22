@@ -40,6 +40,13 @@
       "reset": "Clear search term"
     },
     "cart": {
+      "discounts": {
+        "applied": "Discount applied",
+        "rejected": "Discount rejected",
+        "title": "Discounts",
+        "placeholder": "Enter discount code",
+        "apply": "Apply"
+      },
       "view": "View cart ({{ count }})",
       "view_empty_cart": "View cart",
       "item_added": "Item added to your cart"

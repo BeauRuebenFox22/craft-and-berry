@@ -8,6 +8,33 @@
     "theme_support_url": "https://support.shopify.com/"
   },
   {
+    "name": "Shop Discounts",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_discounts",
+        "label": "Enable Discounts",
+        "info": "This will add a discount code form to the cart page, which users can use, to apply discount codes to their order.",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_discount_bar",
+        "label": "Enable Discount Bar",
+        "info": "This shows how close a customer is, to hitting a threshold to qualify for a discount.",
+        "default": false,
+      },
+      {
+        "type": "number",
+        "id": "discount_threshold",
+        "label": "Discount Threshold",
+        "info": "Set the threshold to qualify for you active discount, the amount needs to match with that set in your discount.",
+        "default": 100,
+        "visible_if": "{{ settings.enable_discount_bar }}"
+      }
+    ]
+  },
+  {
     "name": "Age Verification Settings",
     "settings": [
       {

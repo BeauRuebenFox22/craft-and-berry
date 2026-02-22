@@ -1,0 +1,38 @@
+{% if settings.enable_discounts == true %}
+  <script src="{{ 'foxy-discounts.js' | asset_url }}" async></script>
+  <link rel="stylesheet" href="{{ 'foxy-discounts.css' | asset_url }}">
+
+  <div class="page-width">
+    <foxy-discount-applier
+      data-applied-message="{{ 'general.cart.discounts.applied' | t }}"
+      data-rejected-message="{{ 'general.cart.discounts.rejected' | t }}"
+    >
+      <div class="foxy-discount-container">
+        <div class="foxy-discount-header">
+          <h2 class="foxy-discount-title">
+            {{ 'general.cart.discounts.title' | t }}
+          </h2>
+        </div>
+        <form id="apply-voucher-form" class="foxy-discount-form">
+          <div class="foxy-discount-row">
+            <input
+              id="discount-input"
+              class="foxy-discount-input"
+              type="text"
+              name="discount"
+              placeholder="{{ 'general.cart.discounts.placeholder' | t }}"
+              value=""
+            >
+            <button
+              type="submit"
+              class="button button-cart-secondary"
+            >
+              {{ 'general.cart.discounts.apply' | t }}
+            </button>
+          </div>
+          <span id="discount-feedback" class="foxy-discount-feedback hidden"></span>
+        </form>
+      </div>
+    </foxy-discount-applier>
+  </div>
+{% endif %}
