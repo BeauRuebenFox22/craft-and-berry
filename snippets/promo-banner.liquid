@@ -1,0 +1,216 @@
+<div
+  class="promo-banner"
+  style="background-color: {{ promo_bg | default: settings.promo_banner_bg_color }}; color: {{ promo_text_color | default: settings.promo_banner_text_color }};"
+  data-promo-banner-threshold="{{ promo_threshold | default: settings.promo_banner_threshold }}"
+  data-promo-banner-complete-text="{{ promo_complete_text | default: settings.promo_banner_complete_text }}"
+>
+  <div class="promo-banner-inner">
+    <div class="promo-banner-msg">
+      {{ promo_message | default: settings.promo_banner_msg }}
+    </div>
+    <div class="promo-banner-progress" role="status" aria-live="polite">
+      <div class="promo-banner-progress-bar-outer">
+        <div class="promo-banner-progress-bar-inner"></div>
+      </div>
+      <div class="promo-banner-progress-text"></div>
+    </div>
+  </div>
+</div>
+
+{% comment %}
+  Inline styles for promo progress banner.
+  TODO: move to dedicated asset once design is finalized.
+{% endcomment %}
+<style id="promo-banner-styles">
+  .promo-banner {
+    color: var(--color-foreground, #111827);
+    padding: 0.85rem 1.25rem;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    max-width: 100%;
+  }
+
+  .promo-banner-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 1.25rem;
+  }
+
+  .promo-banner-msg {
+    font-size: 1.05rem;
+    font-weight: 500;
+    text-align: center;
+  }
+
+  .promo-banner-progress {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .promo-banner-progress-bar-outer {
+    position: relative;
+    width: 100%;
+    height: 6px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.35);
+    overflow: hidden;
+  }
+
+  .promo-banner-progress-bar-inner {
+    --promo-progress: 0%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: var(--promo-progress);
+    max-width: 100%;
+    background: linear-gradient(90deg, #f97316, #ec4899);
+    border-radius: inherit;
+    transition: width 200ms ease-out;
+  }
+
+  .promo-banner-progress-text {
+    font-size: 0.9rem;
+    text-align: center;
+    opacity: 0.9;
+  }
+
+  .promo-banner.promo-banner--complete .promo-banner-progress-bar-inner {
+    background: linear-gradient(90deg, #22c55e, #14b8a6);
+  }
+
+  .promo-banner.promo-banner--complete .promo-banner-progress-text {
+    font-weight: 600;
+  }
+</style>
+
+{% comment %}
+  Inline script for promo progress banner.
+  Uses cart API (/cart.js) and cartUpdate pub/sub event to stay in sync.
+  TODO: move to dedicated asset once behavior is stable.
+{% endcomment %}
+<script>
+  (function () {
+    if (window.__promoBannerInitialized) return;
+    window.__promoBannerInitialized = true;
+
+    function getPromoBanners() {
+      return Array.prototype.slice.call(document.querySelectorAll('.promo-banner'));
+    }
+
+    function parseThreshold(banner) {
+      var raw = banner.getAttribute('data-promo-banner-threshold');
+      if (!raw) return 0;
+      var value = parseFloat(raw.replace(',', '.'));
+      return isNaN(value) ? 0 : value;
+    }
+
+    function formatMoney(cents) {
+      try {
+        if (typeof Shopify !== 'undefined' && typeof Shopify.formatMoney === 'function') {
+          if (window.theme && window.theme.moneyFormat) {
+            return Shopify.formatMoney(cents, window.theme.moneyFormat);
+          }
+          return Shopify.formatMoney(cents);
+        }
+      } catch (e) {}
+
+      var value = (cents / 100).toFixed(2);
+      return value;
+    }
+
+    function updateBannerForCart(banner, cart) {
+      if (!banner || !cart) return;
+
+      var thresholdUnits = parseThreshold(banner); // theme currency units (e.g. 50 = $50)
+      if (!thresholdUnits) return;
+
+      var cartTotalUnits = (cart.total_price || 0) / 100;
+      var progress = thresholdUnits > 0 ? cartTotalUnits / thresholdUnits : 0;
+      progress = Math.max(0, Math.min(1, progress));
+
+      var barInner = banner.querySelector('.promo-banner-progress-bar-inner');
+      var textEl = banner.querySelector('.promo-banner-progress-text');
+
+      if (barInner) {
+        var percent = (progress * 100).toFixed(0) + '%';
+        barInner.style.setProperty('--promo-progress', percent);
+        barInner.style.width = percent;
+      }
+
+      if (!textEl) return;
+
+      var remainingUnits = Math.max(0, thresholdUnits - cartTotalUnits);
+      var completeText = banner.getAttribute('data-promo-banner-complete-text');
+
+      if (remainingUnits <= 0) {
+        banner.classList.add('promo-banner--complete');
+        textEl.textContent = completeText || 'You have unlocked this promotion.';
+      } else {
+        banner.classList.remove('promo-banner--complete');
+        var remainingCents = Math.round(remainingUnits * 100);
+        var thresholdCents = Math.round(thresholdUnits * 100);
+
+        var remainingFormatted = formatMoney(remainingCents);
+        var thresholdFormatted = formatMoney(thresholdCents);
+
+        textEl.textContent =
+          'Spend ' + remainingFormatted + ' more (of ' + thresholdFormatted + ') to unlock this offer.';
+      }
+    }
+
+    function fetchCartAndUpdate(banner) {
+      if (!banner || !window.fetch) return;
+
+      fetch(window.routes && window.routes.cart_url ? window.routes.cart_url + '.js' : '/cart.js')
+        .then(function (res) {
+          if (!res.ok) throw new Error('Cart request failed');
+          return res.json();
+        })
+        .then(function (cart) {
+          updateBannerForCart(banner, cart);
+        })
+        .catch(function (e) {
+          console && console.warn && console.warn('Promo banner cart fetch failed', e);
+        });
+    }
+
+    function initFromCurrentCart() {
+      var banners = getPromoBanners();
+      if (!banners.length) return;
+
+      banners.forEach(function (banner) {
+        fetchCartAndUpdate(banner);
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initFromCurrentCart);
+    } else {
+      initFromCurrentCart();
+    }
+
+    if (typeof subscribe === 'function' && typeof PUB_SUB_EVENTS !== 'undefined') {
+      subscribe(PUB_SUB_EVENTS.cartUpdate, function (event) {
+        var cart = event && event.cartData ? event.cartData : null;
+        var hasTotal = cart && typeof cart.total_price === 'number';
+        var banners = getPromoBanners();
+        if (!banners.length) return;
+
+        banners.forEach(function (banner) {
+          if (hasTotal) {
+            updateBannerForCart(banner, cart);
+          } else {
+            fetchCartAndUpdate(banner);
+          }
+        });
+      });
+    }
+  })();
+</script>

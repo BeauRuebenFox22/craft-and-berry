@@ -118,6 +118,10 @@
                 >
                   {{- block.settings.text -}}
                 </p>
+
+              {%- when 'promo-banner' -%}
+                {% render 'promo-banner' %}
+
               {%- when 'title' -%}
                 <div class="product__title" {{ block.shopify_attributes }}>
                   <h1>{{ product.title | escape }}</h1>
@@ -768,6 +772,10 @@
   "blocks": [
     {
       "type": "@app"
+    },
+    {
+      "type": "promo-banner",
+      "name": "Promo Banner"
     },
     {
       "type": "metadata",
