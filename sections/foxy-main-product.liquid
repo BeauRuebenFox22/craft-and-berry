@@ -104,9 +104,8 @@
              <div class="foxy-pdp__form" {{ block.shopify_attributes }}>
                 {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
                   <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-                  
                   <div class="foxy-pdp__quantity-row">
-                    <input type="number" name="quantity" class="foxy-pdp__qty-input" value="1" min="1">
+                    {% render 'foxy-quantity-selector', value: 1 %}
                     <button type="submit" name="add" class="foxy-pdp__btn foxy-pdp__btn--add" {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}>
                       {%- if product.selected_or_first_available_variant.available -%}
                         {{ 'products.product.add_to_cart' | t | default: 'Add to Cart' }}
@@ -115,7 +114,6 @@
                       {%- endif -%}
                     </button>
                   </div>
-                  
                   {%- if block.settings.show_dynamic_checkout -%}
                     {{ form | payment_button }}
                   {%- endif -%}
