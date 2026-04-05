@@ -64,18 +64,18 @@
       ],
       "settings": {}
     },
-    "complementary-products": {
-      "type": "foxy-complementary-products",
-      "settings": {
-        "heading": "People who bought also bought",
-        "products_to_show": 4,
-        "columns_desktop": 4,
-        "image_ratio": "square",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false
-      }
-    },
+    // "complementary-products": {
+    //   "type": "foxy-complementary-products",
+    //   "settings": {
+    //     "heading": "People who bought also bought",
+    //     "products_to_show": 4,
+    //     "columns_desktop": 4,
+    //     "image_ratio": "square",
+    //     "show_secondary_image": true,
+    //     "show_vendor": false,
+    //     "show_rating": false
+    //   }
+    // },
     "related-products": {
       "type": "foxy-related-products",
       "settings": {
@@ -91,7 +91,7 @@
   },
   "order": [
     "main",
-    "complementary-products",
+    // "complementary-products",
     "related-products"
   ]
 }
