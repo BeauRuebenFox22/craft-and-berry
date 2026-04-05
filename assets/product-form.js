@@ -67,7 +67,7 @@ if (!customElements.get('product-form')) {
             }
 
             const startMarker = CartPerformance.createStartingMarker('add:wait-for-subscribers');
-            if (!this.error)
+            if (!this.error) {
               publish(PUB_SUB_EVENTS.cartUpdate, {
                 source: 'product-form',
                 productVariantId: formData.get('id'),
@@ -75,6 +75,17 @@ if (!customElements.get('product-form')) {
               }).then(() => {
                 CartPerformance.measureFromMarker('add:wait-for-subscribers', startMarker);
               });
+
+              // Trigger Intravenous Toast
+              const ivToast = document.querySelector('iv-toast-container');
+              if (ivToast) {
+                const toastData = { message: 'Succesfully added product to cart!', type: 'success' };
+                if (typeof ivToast.addToast === 'function') ivToast.addToast(toastData);
+                else if (typeof ivToast.showToast === 'function') ivToast.showToast(toastData);
+                else if (typeof ivToast.push === 'function') ivToast.push(toastData);
+                else document.dispatchEvent(new CustomEvent('iv-toast', { detail: toastData }));
+              }
+            }
             this.error = false;
             const quickAddModal = this.closest('quick-add-modal');
             if (quickAddModal) {

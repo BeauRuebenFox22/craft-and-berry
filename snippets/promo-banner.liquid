@@ -1,9 +1,4 @@
-<div
-  class="promo-banner"
-  style="background-color: {{ promo_bg | default: settings.promo_banner_bg_color }}; color: {{ promo_text_color | default: settings.promo_banner_text_color }};"
-  data-promo-banner-threshold="{{ promo_threshold | default: settings.promo_banner_threshold }}"
-  data-promo-banner-complete-text="{{ promo_complete_text | default: settings.promo_banner_complete_text }}"
->
+<div class="promo-banner" data-promo-banner-threshold="{{ promo_threshold | default: settings.promo_banner_threshold }}" data-promo-banner-complete-text="{{ promo_complete_text | default: settings.promo_banner_complete_text }}">
   <div class="promo-banner-inner">
     <div class="promo-banner-msg">
       {{ promo_message | default: settings.promo_banner_msg }}
@@ -17,19 +12,9 @@
   </div>
 </div>
 
-{% comment %}
-  Inline styles for promo progress banner.
-  TODO: move to dedicated asset once design is finalized.
-{% endcomment %}
 <style id="promo-banner-styles">
+
   .promo-banner {
-    color: var(--color-foreground, #111827);
-    padding: 0.85rem 1.25rem;
-    border-radius: 999px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
     max-width: 100%;
   }
 
@@ -70,7 +55,7 @@
     bottom: 0;
     width: var(--promo-progress);
     max-width: 100%;
-    background: linear-gradient(90deg, #f97316, #ec4899);
+    background: linear-gradient(90deg, #e616f9, #470367);
     border-radius: inherit;
     transition: width 200ms ease-out;
   }
@@ -90,11 +75,6 @@
   }
 </style>
 
-{% comment %}
-  Inline script for promo progress banner.
-  Uses cart API (/cart.js) and cartUpdate pub/sub event to stay in sync.
-  TODO: move to dedicated asset once behavior is stable.
-{% endcomment %}
 <script>
   (function () {
     if (window.__promoBannerInitialized) return;

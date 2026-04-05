@@ -1,0 +1,139 @@
+<div class="foxy-upsell-section foxy-upsell-section--complementary">
+  <product-recommendations
+    class="page-width"
+    data-url="{{ routes.product_recommendations_url }}?limit={{ section.settings.products_to_show }}&intent=complementary"
+    data-section-id="{{ section.id }}"
+    data-product-id="{{ product.id }}"
+  >
+    {% if recommendations.performed and recommendations.products_count > 0 %}
+      <h2 class="foxy-upsell__heading">
+        {{ section.settings.heading | default: 'People who bought also bought' }}
+      </h2>
+      <ul
+        class="grid product-grid grid--{{ section.settings.columns_desktop }}-col-desktop grid--2-col-tablet-down"
+        role="list"
+      >
+        {% assign skip_card_product_styles = false %}
+        {% for recommendation in recommendations.products %}
+          <li class="grid__item">
+            {% render 'card-product',
+              card_product: recommendation,
+              media_aspect_ratio: section.settings.image_ratio,
+              show_secondary_image: section.settings.show_secondary_image,
+              show_vendor: section.settings.show_vendor,
+              show_rating: section.settings.show_rating,
+              skip_styles: skip_card_product_styles
+            %}
+          </li>
+          {%- assign skip_card_product_styles = true -%}
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </product-recommendations>
+</div>
+
+<style>
+  /* Use the exact same styles as foxy-related-products but wrap to section if needed */
+  .foxy-upsell-section--complementary {
+    background-color: var(--foxy-bg, #09090b);
+    color: var(--foxy-text, #f8fafc);
+    padding: 2rem 2rem 4rem 2rem;
+  }
+  .foxy-upsell-section--complementary .foxy-upsell__heading {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    text-align: center;
+    background: -webkit-linear-gradient(45deg, #fff, var(--foxy-accent, #a855f7));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .foxy-upsell-section--complementary .card-wrapper {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+  .foxy-upsell-section--complementary .card-wrapper:hover {
+    transform: translateY(-5px);
+    border-color: var(--foxy-accent, #a855f7);
+  }
+  .foxy-upsell-section--complementary .card__information {
+    padding: 1.5rem;
+  }
+  .foxy-upsell-section--complementary .card-information__text {
+    color: #fff;
+  }
+  .foxy-upsell-section--complementary .price {
+    color: var(--foxy-accent, #a855f7);
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Foxy Complementary",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "People who bought also bought",
+      "label": "Heading"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "default": 4,
+      "label": "Products to show"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 4,
+      "label": "Columns on desktop"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "options": [
+        {"value": "adapt", "label": "Adapt to image"},
+        {"value": "portrait", "label": "Portrait"},
+        {"value": "square", "label": "Square"}
+      ],
+      "default": "adapt",
+      "label": "Image ratio"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_secondary_image",
+      "default": true,
+      "label": "Show second image on hover"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "default": false,
+      "label": "Show vendor"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "default": false,
+      "label": "Show product rating"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Foxy Complementary"
+    }
+  ]
+}
+{% endschema %}

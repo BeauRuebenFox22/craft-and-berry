@@ -1,0 +1,346 @@
+<section class="foxy-pdp color-scheme-background" id="FoxyProduct-{{ section.id }}" data-section="{{ section.id }}" data-product-id="{{ product.id }}">
+  {{ 'foxy-pdp.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'foxy-pdp.js' | asset_url }}" defer></script>
+
+  <div class="foxy-pdp__container">
+    <!-- MEDIA CAROUSEL (LEFT) -->
+    <div class="foxy-pdp__media">
+      {%- assign media_count = product.media.size -%}
+      {%- if media_count > 0 -%}
+        <div class="foxy-pdp__carousel">
+          {%- for media in product.media -%}
+            <div class="foxy-pdp__slide" data-index="{{ forloop.index0 }}">
+              {%- if media.media_type == 'image' -%}
+                {{ media | image_url: width: 1400 | image_tag: loading: 'lazy', alt: media.alt | escape }}
+              {%- else -%}
+                {{ media | media_tag }}
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        </div>
+        
+        {%- if media_count > 1 -%}
+          <button class="foxy-pdp__nav-btn foxy-pdp__nav-btn--prev" aria-label="Previous image">
+             <span style="display:inline-block; transform: rotate(90deg);">{%- render 'icon-caret' -%}</span>
+          </button>
+          <button class="foxy-pdp__nav-btn foxy-pdp__nav-btn--next" aria-label="Next image">
+             <span style="display:inline-block; transform: rotate(-90deg);">{%- render 'icon-caret' -%}</span>
+          </button>
+          <div class="foxy-pdp__dots">
+            {%- for media in product.media -%}
+              <button class="foxy-pdp__dot{% if forloop.first %} active{% endif %}" aria-label="Go to image {{ forloop.index }}"></button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      {%- else -%}
+        <!-- Fallback if no media -->
+        <div class="foxy-pdp__carousel">
+          <div class="foxy-pdp__slide">
+             {{ 'product-1' | placeholder_svg_tag }}
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+
+    <!-- PRODUCT INFO OVERLAY (RIGHT) -->
+    <div class="foxy-pdp__info">
+      {%- assign product_form_id = 'product-form-' | append: section.id -%}
+      
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when '@app' -%}
+            {% render block %}
+            
+          {%- when 'vendor' -%}
+            <div class="foxy-pdp__vendor" {{ block.shopify_attributes }}>
+              {{ product.vendor }}
+            </div>
+            
+          {%- when 'title' -%}
+            <h1 class="foxy-pdp__title" {{ block.shopify_attributes }}>
+              {{ product.title | escape }}
+            </h1>
+            
+          {%- when 'price' -%}
+             <div class="foxy-pdp__price" {{ block.shopify_attributes }}>
+              {%- render 'price', product: product, use_variant: true, price_class: 'price--large' -%}
+            </div>
+            
+          {%- when 'description' -%}
+            {%- if product.description != blank -%}
+              <div class="foxy-pdp__description rte" {{ block.shopify_attributes }}>
+                {{ product.description }}
+              </div>
+            {%- endif -%}
+            
+          {%- when 'variant_picker' -%}
+            {%- unless product.has_only_default_variant -%}
+              <div class="foxy-pdp__variants" {{ block.shopify_attributes }}>
+                <label class="foxy-pdp__variant-label">Select Variant</label>
+                <select class="foxy-pdp__variant-select" name="id" form="{{ product_form_id }}">
+                  {%- for variant in product.variants -%}
+                    {%- assign slide_idx = 0 -%}
+                    {%- if variant.featured_media -%}
+                      {%- for media in product.media -%}
+                        {%- if media.id == variant.featured_media.id -%}
+                          {%- assign slide_idx = forloop.index0 -%}
+                        {%- endif -%}
+                      {%- endfor -%}
+                    {%- endif -%}
+                    
+                    <option value="{{ variant.id }}" 
+                      {% if variant == product.selected_or_first_available_variant %}selected="selected"{% endif %}
+                      {% if variant.available == false %}disabled{% endif %}
+                      data-slide-index="{{ slide_idx }}"
+                      data-price="{{ variant.price | money | escape }}">
+                      {{ variant.title }} - {{ variant.price | money }}
+                    </option>
+                  {%- endfor -%}
+                </select>
+              </div>
+            {%- endunless -%}
+            
+          {%- when 'buy_buttons' -%}
+             <div class="foxy-pdp__form" {{ block.shopify_attributes }}>
+                {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+                  <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                  
+                  <div class="foxy-pdp__quantity-row">
+                    <input type="number" name="quantity" class="foxy-pdp__qty-input" value="1" min="1">
+                    <button type="submit" name="add" class="foxy-pdp__btn foxy-pdp__btn--add" {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}>
+                      {%- if product.selected_or_first_available_variant.available -%}
+                        {{ 'products.product.add_to_cart' | t | default: 'Add to Cart' }}
+                      {%- else -%}
+                        {{ 'products.product.sold_out' | t | default: 'Sold Out' }}
+                      {%- endif -%}
+                    </button>
+                  </div>
+                  
+                  {%- if block.settings.show_dynamic_checkout -%}
+                    {{ form | payment_button }}
+                  {%- endif -%}
+                {%- endform -%}
+             </div>
+             
+          {%- when 'promo-banner' -%}
+            <div {{ block.shopify_attributes }}>
+              {% render 'promo-banner' %}
+            </div>
+            
+          {%- when 'metadata' -%}
+            <div {{ block.shopify_attributes }}>
+              {% render 'foxy-product-meta-data',
+                _labels: block.settings.foxy_md_labels,
+                _allow_multiple: block.settings.foxy_md_allow_multiple,
+                _start_open: block.settings.foxy_md_start_open,
+                _layout: block.settings.foxy_md_layout,
+                _content_placement: block.settings.foxy_md_content_placement,
+                _icon: block.settings.foxy_md_icon,
+                _pill_borders: block.settings.foxy_md_pill_bordered,
+                _pill_internal_spacing: block.settings.foxy_md_pill_internal_spacing,
+                _pill_external_spacing: block.settings.foxy_md_pill_external_spacing,
+                _pill_rounded_borders: block.settings.foxy_md_pill_rounded_corners,
+                _pill_bg_color: block.settings.foxy_md_pill_bgcolor,
+                _pill_text_color: block.settings.foxy_md_pill_textcolor,
+                _pill_border_color: block.settings.foxy_md_pill_bordercolor
+              %}
+            </div>
+            
+          {%- when 'custom_liquid' -%}
+             <div {{ block.shopify_attributes }}>
+                {{ block.settings.custom_liquid }}
+             </div>
+
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+  </div>
+
+  <!-- LIGHTBOX CONTAINER -->
+  <div class="foxy-lightbox">
+    <button class="foxy-lightbox__close" aria-label="Close Lightbox">&times;</button>
+    <div class="foxy-lightbox__content">
+      <img src="" alt="Zoomed Product Image" class="foxy-lightbox__img">
+    </div>
+    <div class="foxy-lightbox__controls">
+      <span>Zoom Level:</span>
+      <input type="range" class="foxy-lightbox__slider" min="1" max="5" step="0.1" value="1">
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Foxy Product Layout",
+  "tag": "section",
+  "class": "section",
+  "blocks": [
+    {
+      "type": "@app"
+    },
+    {
+      "type": "vendor",
+      "name": "Vendor",
+      "limit": 1
+    },
+    {
+      "type": "title",
+      "name": "Title",
+      "limit": 1
+    },
+    {
+      "type": "price",
+      "name": "Price",
+      "limit": 1
+    },
+    {
+      "type": "description",
+      "name": "Description",
+      "limit": 1
+    },
+    {
+      "type": "variant_picker",
+      "name": "Variant Picker",
+      "limit": 1
+    },
+    {
+      "type": "buy_buttons",
+      "name": "Buy Buttons",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_dynamic_checkout",
+          "default": true,
+          "label": "Show dynamic checkout buttons"
+        }
+      ]
+    },
+    {
+      "type": "promo-banner",
+      "name": "Promo Banner",
+      "limit": 1
+    },
+    {
+      "type": "metadata",
+      "name": "Foxy Metadata Accordion",
+      "settings": [
+        {
+          "type": "text",
+          "id": "foxy_md_labels",
+          "label": "Metadata Labels",
+          "default": "Product Info, Allergy Information, Dietary Considerations, Delivery & Pickup"
+        },
+        {
+          "type": "checkbox",
+          "id": "foxy_md_allow_multiple",
+          "label": "Allow multiple panels open",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "foxy_md_start_open",
+          "label": "Start with panels open",
+          "default": true
+        },
+        {
+          "type": "select",
+          "id": "foxy_md_layout",
+          "label": "Layout",
+          "options": [
+             {"value": "vertical", "label": "Vertical"},
+             {"value": "horizontal", "label": "Horizontal"}
+          ],
+          "default": "vertical"
+        },
+        {
+          "type": "select",
+          "id": "foxy_md_content_placement",
+          "label": "Content Placement",
+          "options": [
+             {"value": "below", "label": "Below"},
+             {"value": "side", "label": "Side"}
+          ],
+          "default": "below"
+        },
+        {
+          "type": "text",
+          "id": "foxy_md_icon",
+          "label": "Dropdown Icon",
+          "default": "chevron-down-outline"
+        },
+        {
+          "type": "checkbox",
+          "id": "foxy_md_pill_bordered",
+          "label": "Pill Bordered",
+          "default": true
+        },
+        {
+          "type": "select",
+          "id": "foxy_md_pill_internal_spacing",
+          "label": "Internal Spacing",
+          "options": [
+             {"value": "small", "label": "Small"},
+             {"value": "medium", "label": "Medium"}
+          ],
+          "default": "medium"
+        },
+        {
+          "type": "select",
+          "id": "foxy_md_pill_external_spacing",
+          "label": "External Spacing",
+          "options": [
+             {"value": "small", "label": "Small"},
+             {"value": "medium", "label": "Medium"}
+          ],
+          "default": "small"
+        },
+        {
+          "type": "select",
+          "id": "foxy_md_pill_rounded_corners",
+          "label": "Rounded Corners",
+          "options": [
+             {"value": "small", "label": "Small"},
+             {"value": "medium", "label": "Medium"}
+          ],
+          "default": "medium"
+        },
+        {
+          "type": "color",
+          "id": "foxy_md_pill_bgcolor",
+          "label": "Pill Background Color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "foxy_md_pill_textcolor",
+          "label": "Pill Text Color",
+          "default": "#000000"
+        },
+        {
+          "type": "color",
+          "id": "foxy_md_pill_bordercolor",
+          "label": "Pill Border Color",
+          "default": "#000000"
+        }
+      ]
+    },
+    {
+      "type": "custom_liquid",
+      "name": "Custom Liquid",
+      "settings": [
+        {
+          "type": "liquid",
+          "id": "custom_liquid",
+          "label": "Custom Liquid"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Foxy Product Layout"
+    }
+  ]
+}
+{% endschema %}
