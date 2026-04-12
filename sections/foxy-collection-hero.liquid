@@ -1,14 +1,107 @@
-{{ 'section-foxy-collection-banner.css' | asset_url | stylesheet_tag }}
+{{ 'foxy-collection.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'foxy-collection-hero.js' | asset_url }}" type="module" defer="defer"></script>
 
-<div class="foxy-collection-banner">
-  <h1>{{ collection.title }}</h1>
-  <p>{{ collection.description }}</p>
-</div>
+<foxy-collection-hero>
+  <div class="foxy-hero-wrapper" style="position: relative;">
+    {% if section.settings.image != blank %}
+      {{ section.settings.image | image_url: width: 2000 | image_tag: class: 'foxy-hero-image hidden-mobile' }}
+    {% endif %}
+    {% if section.settings.image_mobile != blank %}
+      {{ section.settings.image_mobile | image_url: width: 800 | image_tag: class: 'foxy-hero-image hidden-desktop' }}
+    {% endif %}
+    
+    {% for block in section.blocks %}
+      {% if block.type == 'hotspot' %}
+        {% assign product = all_products[block.settings.product] %}
+        {% if product != blank %}
+          <button 
+            type="button" 
+            class="foxy-hero-hotspot" 
+            style="left: {{ block.settings.x_position }}%; top: {{ block.settings.y_position }}%;"
+            data-product-handle="{{ product.handle }}"
+            aria-label="View {{ product.title }}">
+            <span class="hotspot-inner"></span>
+          </button>
+          
+          <template id="hotspot-modal-{{ product.handle }}">
+            <div class="foxy-hotspot-modal glass-panel">
+              <div class="hotspot-modal-details">
+                <h3 class="product-title">{{ product.title }}</h3>
+                <p class="product-price">{{ product.price | money }}</p>
+                <form method="post" action="{{ routes.cart_add_url }}" data-product-form class="hotspot-add-to-cart">
+                  <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+                  <button type="submit" class="cyber-button w-full">Add to Cart</button>
+                </form>
+              </div>
+            </div>
+          </template>
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  <div class="foxy-hero-text">
+    <h1 class="collection-title">{{ collection.title }}</h1>
+    {% if collection.description != blank %}
+      <div class="collection-description">{{ collection.description }}</div>
+    {% endif %}
+  </div>
+</foxy-collection-hero>
+
 {% schema %}
 {
-  "name": "Foxy Collection Banner",
+  "name": "Foxy Collection Hero",
   "tag": "section",
-  "class": "section",
-  "settings": [{}]
+  "class": "section foxy-collection-hero-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Hero Image (Desktop)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Hero Image (Mobile)"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "hotspot",
+      "name": "Product Hotspot",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "range",
+          "id": "x_position",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Horizontal Position (Left)",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "y_position",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Vertical Position (Top)",
+          "default": 30
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Foxy Collection Hero"
+    }
+  ]
 }
 {% endschema %}
