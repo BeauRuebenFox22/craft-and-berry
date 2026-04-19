@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -9,6 +18,10 @@
         },
         "title": {
           "type": "title",
+          "settings": {}
+        },
+        "description": {
+          "type": "description",
           "settings": {}
         },
         "price": {
@@ -25,9 +38,17 @@
             "show_dynamic_checkout": true
           }
         },
-        "description": {
-          "type": "description",
-          "settings": {}
+        "related_products": {
+          "type": "related_products",
+          "settings": {
+            "heading": "You may also like",
+            "products_to_show": 4,
+            "columns_desktop": 2,
+            "image_ratio": "adapt",
+            "show_secondary_image": true,
+            "show_vendor": false,
+            "show_rating": false
+          }
         },
         "metadata": {
           "type": "metadata",
@@ -46,36 +67,20 @@
             "foxy_md_pill_textcolor": "#000000",
             "foxy_md_pill_bordercolor": "#000000"
           }
-        },
-        "related_products": {
-          "type": "related_products",
-          "settings": {}
         }
       },
       "block_order": [
         "vendor",
         "title",
+        "description",
         "price",
         "variant_picker",
         "buy_buttons",
-        "description",
         "related_products",
         "metadata"
       ],
       "settings": {}
-    },
-    // "complementary-products": {
-    //   "type": "foxy-complementary-products",
-    //   "settings": {
-    //     "heading": "People who bought also bought",
-    //     "products_to_show": 4,
-    //     "columns_desktop": 4,
-    //     "image_ratio": "square",
-    //     "show_secondary_image": true,
-    //     "show_vendor": false,
-    //     "show_rating": false
-    //   }
-    // },
+    }
   },
   "order": [
     "main"
