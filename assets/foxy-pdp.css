@@ -6,11 +6,12 @@
   --foxy-pdp-text: #f8fafc;
   --foxy-pdp-panel: rgba(20, 20, 30, 0.85);
   --foxy-pdp-border: rgba(139, 92, 246, 0.2);
-  
+
   position: relative;
   background-color: var(--foxy-pdp-bg);
   color: var(--foxy-pdp-text);
-  overflow: visible; /* Default for mobile */
+  overflow: visible;
+  /* Default for mobile */
   font-family: inherit;
 }
 
@@ -45,13 +46,16 @@
 
 @media screen and (min-width: 900px) {
   .foxy-pdp__media {
-    width: 35%; /* roughly 1/3 */
+    width: 35%;
+    /* roughly 1/3 */
     height: 100%;
     overflow-y: auto;
-    scrollbar-width: none; /* Hide scrollbar for cleaner image look */
+    scrollbar-width: none;
+    /* Hide scrollbar for cleaner image look */
     /* Add padding bottom so last image can clear nicely if desired */
     padding-bottom: 2rem;
   }
+
   .foxy-pdp__media::-webkit-scrollbar {
     display: none;
   }
@@ -68,8 +72,10 @@
 
 @media screen and (min-width: 900px) {
   .foxy-pdp__info {
-    width: 68%; /* roughly 2/3 */
-    margin-left: -3%; /* OVERLAP */
+    width: 68%;
+    /* roughly 2/3 */
+    margin-left: -3%;
+    /* OVERLAP */
     padding: 3rem 4rem;
     height: 100%;
     position: relative;
@@ -84,10 +90,11 @@
     flex-direction: column;
     justify-content: flex-start;
   }
-  
+
   .foxy-pdp__info::-webkit-scrollbar {
     width: 6px;
   }
+
   .foxy-pdp__info::-webkit-scrollbar-thumb {
     background: rgba(255, 255, 255, 0.1);
     border-radius: 4px;
@@ -124,7 +131,7 @@
   height: 100%;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.4s ease, z-index 0s;
 }
 
@@ -165,7 +172,7 @@
   height: 4px;
   flex: 1;
   max-width: 40px;
-  background: rgba(255,255,255,0.2);
+  background: rgba(255, 255, 255, 0.2);
   border-radius: 2px;
   transition: background 0.3s ease;
 }
@@ -268,7 +275,7 @@
   align-items: center;
   justify-content: center;
   background: #000;
-  border-top: 1px solid rgba(255,255,255,0.05);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
   gap: 1rem;
 }
 
@@ -297,14 +304,11 @@
   -webkit-text-fill-color: transparent;
 }
 
-.foxy-pdp__price {
+.price-item {
   font-size: 1.5rem;
-  font-weight: 500;
+  font-weight: 700;
   margin-bottom: 2rem;
-}
-
-.foxy-pdp__price .money {
-  color: var(--foxy-pdp-accent);
+  color: #fff;
 }
 
 .foxy-pdp__description {
@@ -363,8 +367,8 @@
 .foxy-pdp__qty-wrapper {
   display: flex;
   align-items: center;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   max-width: 140px;
 }
@@ -396,6 +400,7 @@
   -moz-appearance: textfield;
   appearance: textfield;
 }
+
 .foxy-pdp__qty-input::-webkit-outer-spin-button,
 .foxy-pdp__qty-input::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -450,11 +455,14 @@ iv-accordion {
     margin: 0;
     padding-bottom: 1rem;
   }
+
   .foxy-upsell-section ul.grid::-webkit-scrollbar {
     display: none;
   }
+
   .foxy-upsell-section .grid__item {
-    flex: 0 0 75%; /* mobile scroll peek width */
+    flex: 0 0 75%;
+    /* mobile scroll peek width */
     max-width: 75%;
     scroll-snap-align: center;
   }
