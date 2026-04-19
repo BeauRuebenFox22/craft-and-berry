@@ -44,6 +44,7 @@
       src="https://cdn.jsdelivr.net/npm/the-foxy-library@1.4.1/dist/intravenous/intravenous.js"
     ></script>
 
+    <script src="{{ 'foxy-events.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'constants.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'pubsub.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
@@ -282,6 +283,12 @@
       {{ 'component-discounts.css' | asset_url | stylesheet_tag }}
     {%- endif -%}
 
+    {{ 'foxy-toasts.css' | asset_url | stylesheet_tag }}
+    <script src="{{ 'foxy-toasts.js' | asset_url }}" type="module" defer="defer"></script>
+
+    {{ 'foxy-wishlist.css' | asset_url | stylesheet_tag }}
+    <script src="{{ 'foxy-wishlist.js' | asset_url }}" defer="defer"></script>
+
     {%- unless settings.type_body_font.system? -%}
       {% comment %}theme-check-disable AssetPreload{% endcomment %}
       <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>
@@ -315,7 +322,9 @@
   </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
+    <foxy-wishlist-widget></foxy-wishlist-widget>
     <iv-toast-container></iv-toast-container>
+    <foxy-toast-container></foxy-toast-container>
 
     {% if settings.enable_foxy_age_verify %}
       {% render 'foxy-age-verification' %}
@@ -332,6 +341,10 @@
     {%- endif -%}
 
     {% sections 'header-group' %}
+
+    {% if settings.enable_foxy_promo_banner %}
+      {% render 'foxy-promo-banner' %}
+    {% endif %}
 
     <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
       {{ content_for_layout }}

@@ -1,0 +1,202 @@
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+
+<foxy-complimentary
+  class="foxy-upsell-section foxy-upsell-section--inline"
+  style="display: block; padding: 2rem 0; width: 100%;"
+  data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ block.settings.products_to_show }}&intent=related"
+  data-columns="{{ block.settings.columns_desktop }}"
+>
+  {% if recommendations.performed and recommendations.products_count > 0 %}
+    <div class="foxy-complimentary__container">
+      <h2 class="foxy-pdp__related-heading" style="font-size:1.5rem; font-weight:700; margin-bottom:1.5rem;">
+        {{ block.settings.heading | default: 'You may also like' }}
+      </h2>
+      <div class="foxy-complimentary__carousel">
+        {% for recommendation in recommendations.products %}
+          <div class="foxy-complimentary__slide cols-{{ block.settings.columns_desktop }}">
+            <div class="foxy-product-card glass-panel" style="text-align: left; position: relative;">
+              <a href="{{ recommendation.url }}" class="foxy-card-image-wrapper">
+                {% if recommendation.featured_image %}
+                  {{ recommendation.featured_image | image_url: width: 400 | image_tag: loading: 'lazy' }}
+                {% else %}
+                  {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                {% endif %}
+              </a>
+              <div class="foxy-card-details">
+                <h3 class="foxy-card-title"><a href="{{ recommendation.url }}">{{ recommendation.title }}</a></h3>
+                {% if recommendation.metafields.custom.abv != blank or recommendation.metafields.custom.volume != blank %}
+                  <p class="foxy-card-meta">Stout | {{ recommendation.metafields.custom.abv | default: '8.5%' }} ABV | {{ recommendation.metafields.custom.volume | default: '12oz' }}</p>
+                {% endif %}
+                <p class="foxy-card-price">{{ recommendation.price | money }}</p>
+                <div style="display: flex; gap: 8px; align-items: center; margin-top: 12px;">
+                  <form method="post" action="{{ routes.cart_add_url }}" data-product-form class="foxy-add-to-cart-form" style="flex:1;">
+                    <input type="hidden" name="id" value="{{ recommendation.variants.first.id }}">
+                    <button type="submit" class="cyber-button w-full foxy-ajax-btn" style="background: #a855f7; color: #fff; font-weight: bold; border-radius: 8px; border: none; transition: 0.3s ease;">Add to Cart</button>
+                  </form>
+                  <foxy-wishlist-button 
+                    data-product-id="{{ recommendation.id }}"
+                    data-product-handle="{{ recommendation.handle }}"
+                    data-title="{{ recommendation.title | escape }}"
+                    data-price="{{ recommendation.price | money | escape }}"
+                    data-image="{{ recommendation.featured_image | image_url: width: 400 }}"
+                    data-url="{{ recommendation.url }}"
+                    data-variant-id="{{ recommendation.variants.first.id }}">
+                    <button aria-label="Add to wishlist" style="background:#a855f7; color:#fff; border:none; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer;">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                    </button>
+                  </foxy-wishlist-button>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="foxy-complimentary__indicators">
+        <!-- Javascript automatically calculates and places segments here -->
+      </div>
+    </div>
+  {% endif %}
+</foxy-complimentary>
+
+<style>
+  .foxy-complimentary__carousel {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding-bottom: 1rem;
+  }
+  .foxy-complimentary__carousel::-webkit-scrollbar {
+    display: none;
+  }
+  .foxy-complimentary__slide {
+    flex: 0 0 100%; /* Default mobile: 1 visible slide */
+    scroll-snap-align: start;
+    min-width: 0;
+  }
+  .foxy-complimentary__indicators {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+  }
+  .foxy-complimentary__indicator {
+    height: 4px;
+    flex: 1;
+    max-width: 40px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 2px;
+    transition: background 0.3s ease;
+  }
+  .foxy-complimentary__indicator.active {
+    background: #d8b4fe; /* Uses same brand accent for segments */
+  }
+
+  /* Tablet (Carousel 2-cards visible) */
+  @media screen and (min-width: 500px) and (max-width: 899px) {
+    .foxy-complimentary__slide { flex: 0 0 calc(50% - 0.5rem); }
+  }
+
+  /* Desktop (Grid format, No Carousel) */
+  @media screen and (min-width: 900px) {
+    .foxy-complimentary__carousel {
+      flex-wrap: wrap;
+      overflow-x: visible;
+      scroll-snap-type: none;
+    }
+    .foxy-complimentary__indicators { display: none; }
+    .foxy-complimentary__slide { margin-bottom: 1rem; }
+    
+    .foxy-complimentary__slide.cols-2 { flex: 0 0 calc(50% - 0.5rem); }
+    .foxy-complimentary__slide.cols-3 { flex: 0 0 calc(33.333% - 0.666rem); }
+    .foxy-complimentary__slide.cols-4 { flex: 0 0 calc(25% - 0.75rem); }
+    .foxy-complimentary__slide.cols-5 { flex: 0 0 calc(20% - 0.8rem); }
+  }
+</style>
+
+<script>
+  if (!customElements.get('foxy-complimentary')) {
+    customElements.define('foxy-complimentary', class FoxyComplimentary extends HTMLElement {
+      connectedCallback() {
+        // If it already rendered items via SSR, we don't need to re-fetch
+        if (this.querySelector('.foxy-complimentary__container')) return;
+
+        const url = this.dataset.url;
+        fetch(url)
+          .then(response => response.text())
+          .then(text => {
+            const html = document.createElement('div');
+            html.innerHTML = text;
+            const recommendations = html.querySelector('foxy-complimentary');
+
+            if (recommendations && recommendations.innerHTML.trim().length) {
+              this.innerHTML = recommendations.innerHTML;
+              this.initIntersectionObserver();
+            }
+          })
+          .catch(e => {
+            console.error('Error fetching complimentary products', e);
+          });
+      }
+
+      initIntersectionObserver() {
+        const carousel = this.querySelector('.foxy-complimentary__carousel');
+        const slides = this.querySelectorAll('.foxy-complimentary__slide');
+        let indicatorsContainer = this.querySelector('.foxy-complimentary__indicators');
+
+        if (!carousel || !slides.length) return;
+
+        const updateIndicators = () => {
+          if (!indicatorsContainer) return;
+          const slideWidth = slides[0].offsetWidth;
+          const carouselWidth = carousel.offsetWidth;
+          if (slideWidth === 0 || carouselWidth === 0) return;
+          
+          const visibleSlides = Math.max(1, Math.round(carouselWidth / slideWidth));
+          const numPages = Math.ceil(slides.length / visibleSlides);
+          
+          if (indicatorsContainer.children.length !== numPages && numPages > 1) {
+            indicatorsContainer.innerHTML = '';
+            for (let i = 0; i < numPages; i++) {
+              const dot = document.createElement('div');
+              dot.className = 'foxy-complimentary__indicator';
+              if (i === 0) dot.classList.add('active');
+              indicatorsContainer.appendChild(dot);
+            }
+          }
+        };
+
+        updateIndicators();
+        window.addEventListener('resize', updateIndicators);
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const slide = entry.target;
+              const index = Array.from(slides).indexOf(slide);
+              
+              const slideWidth = slides[0].offsetWidth;
+              const carouselWidth = carousel.offsetWidth;
+              const visibleSlides = Math.max(1, Math.round(carouselWidth / slideWidth));
+              const pageIndex = Math.floor(index / visibleSlides);
+
+              const indicators = this.querySelectorAll('.foxy-complimentary__indicator');
+              indicators.forEach((ind, i) => {
+                if (i === pageIndex) ind.classList.add('active');
+                else ind.classList.remove('active');
+              });
+            }
+          });
+        }, {
+          root: carousel,
+          threshold: 0.6
+        });
+
+        slides.forEach(slide => observer.observe(slide));
+      }
+    });
+  }
+</script>

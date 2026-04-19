@@ -3,7 +3,7 @@ class FoxyCollectionLayout extends HTMLElement {
     super();
     this.mobileToggle = this.querySelector('.foxy-mobile-filter-toggle');
     this.leftPanel = this.querySelector('.foxy-layout-left');
-    this.closeBtn = this.querySelector('.foxy-mobile-filter-close');
+    this.closeBtns = this.querySelectorAll('.foxy-mobile-filter-close');
     this.gridContainer = this.querySelector('foxy-collection-grid');
     this.layoutBtns = this.querySelectorAll('.grid-layout-btn');
     
@@ -17,9 +17,11 @@ class FoxyCollectionLayout extends HTMLElement {
       });
     }
 
-    if (this.closeBtn && this.leftPanel) {
-      this.closeBtn.addEventListener('click', () => {
-        this.leftPanel.classList.remove('mobile-open');
+    if (this.closeBtns.length && this.leftPanel) {
+      this.closeBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          this.leftPanel.classList.remove('mobile-open');
+        });
       });
     }
 

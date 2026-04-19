@@ -34,11 +34,25 @@ class FoxyCollectionGrid extends HTMLElement {
       if (submitBtn) {
         submitBtn.textContent = 'Added to Cart!';
         submitBtn.classList.add('success');
+        
+        let msg = form.querySelector('.foxy-form-message');
+        if (!msg) {
+          msg = document.createElement('div');
+          msg.className = 'foxy-form-message';
+          msg.style.color = 'var(--foxy-highlight)';
+          msg.style.fontSize = '13px';
+          msg.style.marginTop = '10px';
+          msg.style.fontWeight = 'bold';
+          form.appendChild(msg);
+        }
+        msg.textContent = 'Successfully added to cart!';
+        
         setTimeout(() => {
           submitBtn.disabled = false;
           submitBtn.textContent = 'Add to Cart';
           submitBtn.classList.remove('success');
-        }, 2000);
+          if (msg) msg.remove();
+        }, 3000);
       }
       
     } catch (error) {

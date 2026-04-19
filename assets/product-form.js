@@ -76,15 +76,36 @@ if (!customElements.get('product-form')) {
                 CartPerformance.measureFromMarker('add:wait-for-subscribers', startMarker);
               });
 
-              // Trigger Intravenous Toast
-              const ivToast = document.querySelector('iv-toast-container');
-              if (ivToast) {
-                const toastData = { message: 'Succesfully added product to cart!', type: 'success' };
-                if (typeof ivToast.addToast === 'function') ivToast.addToast(toastData);
-                else if (typeof ivToast.showToast === 'function') ivToast.showToast(toastData);
-                else if (typeof ivToast.push === 'function') ivToast.push(toastData);
-                else document.dispatchEvent(new CustomEvent('iv-toast', { detail: toastData }));
+              // Trigger Foxy Toast
+              document.dispatchEvent(new CustomEvent('foxy:cart:updated', { detail: response }));
+
+              this.submitButton.classList.add('success');
+              const originalText = window.variantStrings.addToCart;
+              this.submitButtonText.textContent = 'Added to Cart!';
+
+              let msg = this.querySelector('.foxy-form-message');
+              if (!msg) {
+                msg = document.createElement('div');
+                msg.className = 'foxy-form-message';
+                msg.style.color = 'var(--foxy-highlight)';
+                msg.style.fontSize = '13px';
+                msg.style.marginTop = '10px';
+                msg.style.fontWeight = 'bold';
+                msg.style.textAlign = 'center';
+                // Insert after the button
+                if (this.submitButton) {
+                  this.submitButton.parentNode.insertBefore(msg, this.submitButton.nextSibling);
+                } else {
+                  this.appendChild(msg);
+                }
               }
+              msg.textContent = 'Successfully added to cart!';
+
+              setTimeout(() => {
+                this.submitButton.classList.remove('success');
+                this.submitButtonText.textContent = originalText;
+                if (msg) msg.remove();
+              }, 3000);
             }
             this.error = false;
             const quickAddModal = this.closest('quick-add-modal');

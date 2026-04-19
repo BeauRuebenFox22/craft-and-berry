@@ -92,11 +92,25 @@ class FoxyCollectionHero extends HTMLElement {
       
       if (submitBtn) {
         submitBtn.textContent = 'Added to Cart!';
+        
+        let msg = form.querySelector('.foxy-form-message');
+        if (!msg) {
+          msg = document.createElement('div');
+          msg.className = 'foxy-form-message';
+          msg.style.color = 'var(--foxy-highlight)';
+          msg.style.fontSize = '12px';
+          msg.style.marginTop = '10px';
+          msg.style.fontWeight = 'bold';
+          form.appendChild(msg);
+        }
+        msg.textContent = 'Successfully added to cart!';
+
         setTimeout(() => {
           submitBtn.disabled = false;
           submitBtn.textContent = 'Add to Cart';
+          if (msg) msg.remove();
           this.closeAllModals();
-        }, 2000);
+        }, 3000);
       }
       
     } catch (error) {

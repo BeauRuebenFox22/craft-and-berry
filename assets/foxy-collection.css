@@ -42,7 +42,10 @@ foxy-collection-hero {
 }
 .foxy-hero-wrapper { width: 100%; height: 100vh; position: relative; display: flex; justify-content: center; align-items: center; overflow: hidden; background: #050505;}
 .foxy-hero-image { width: 100vw; height: 100vh; object-fit: cover; object-position: center; display: block; }
-@media screen and (max-width: 768px) { .hidden-mobile { display: none !important; } }
+@media screen and (max-width: 768px) { 
+  .hidden-mobile { display: none !important; } 
+  .foxy-hero-image.hidden-desktop { height: 80vh; object-position: top center; object-fit: cover; }
+}
 @media screen and (min-width: 769px) { .hidden-desktop { display: none !important; } }
 
 .foxy-hero-hotspot {
@@ -51,6 +54,28 @@ foxy-collection-hero {
   cursor: pointer; transform: translate(-50%, -50%); display: flex;
   align-items: center; justify-content: center; box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
   animation: pulse 2s infinite alternate; z-index: 10; padding: 0;
+  left: var(--hotspot-x); top: var(--hotspot-y);
+}
+@media screen and (max-width: 768px) {
+  .foxy-hero-pan-container {
+    display: flex; overflow-x: auto; overflow-y: hidden; height: 80vh; 
+    position: relative; align-items: flex-start; justify-content: flex-start;
+  }
+  .foxy-hero-pan-container::-webkit-scrollbar { display: none; }
+  .foxy-hero-image.hidden-desktop, .fallback-pan-image { 
+    height: 80vh; min-width: 150vw !important; max-width: none; object-fit: cover; flex-shrink: 0;
+  }
+  .pan-indicator { 
+    position: absolute; right: 20px; top: 50%; transform: translateY(-50%); 
+    background: rgba(0,0,0,0.5); border-radius: 50%; padding: 10px; color: #fff; 
+    pointer-events: none; animation: slideRight 2.5s infinite ease-in-out; z-index: 10;
+  }
+  @keyframes slideRight { 0% { transform: translate(0, -50%); opacity: 0; } 50% { opacity: 1; } 100% { transform: translate(15px, -50%); opacity: 0; } }
+  
+  .foxy-hero-hotspot {
+    left: var(--hotspot-x-mobile, var(--hotspot-x));
+    top: var(--hotspot-y-mobile, var(--hotspot-y));
+  }
 }
 .foxy-hero-hotspot .hotspot-inner {
   width: 12px; height: 12px; background-color: var(--foxy-highlight);
@@ -129,6 +154,8 @@ foxy-collection-hero {
   display: none; width: 100%; margin-bottom: 20px;
 }
 .foxy-filters-header { display: none; justify-content: space-between; align-items: center; padding: 16px; border-bottom: 1px solid var(--foxy-border); }
+.foxy-filters-header h3 { margin: 0; font-size: 18px; color: #fff; }
+.foxy-mobile-filter-close { background: transparent; border: none; outline: none; cursor: pointer; color: var(--foxy-highlight); padding: 4px; display: flex; align-items: center; justify-content: center; }
 
 @media screen and (max-width: 1024px) {
   .foxy-layout-container { display: block; height: auto; }
@@ -197,7 +224,14 @@ foxy-collection-filters {
 .foxy-search-bar::placeholder { color: var(--foxy-text-muted); }
 
 .foxy-facet-group { margin-bottom: 24px; }
-.foxy-facet-title { font-size: 14px; font-weight: 700; color: #fff; margin: 0 0 16px 0; letter-spacing: 1px; }
+details.foxy-facet-group summary::-webkit-details-marker { display: none; }
+details.foxy-facet-group summary { cursor: pointer; list-style: none; position: relative; padding-right: 24px;}
+details.foxy-facet-group summary::after {
+  content: "+"; position: absolute; right: 0; top: 50%; transform: translateY(-50%);
+  font-size: 20px; line-height: 1; color: var(--foxy-highlight);
+}
+details.foxy-facet-group[open] summary::after { content: "−"; }
+.foxy-facet-title { font-size: 14px; font-weight: 700; color: #fff; margin: 0 0 16px 0; letter-spacing: 1px; display: inline-block;}
 
 .foxy-facet-list { list-style: none; padding: 0; margin: 0; }
 .foxy-facet-item { margin-bottom: 12px; }
@@ -282,9 +316,14 @@ foxy-collection-grid[data-cols="3"] .foxy-product-card { width: calc(33.333% - 1
 
 @media screen and (max-width: 1024px) {
   /* Default stacked on mobile / smaller tablets */
-  foxy-collection-grid[data-cols] .foxy-product-card { width: 100% !important; flex-direction: row; }
-  foxy-collection-grid[data-cols] .foxy-card-image-wrapper { width: 40%;}
-  foxy-collection-grid[data-cols] .foxy-card-details { width: 60%; text-align: left; }
+  foxy-collection-grid[data-cols] .foxy-product-card { width: calc(50% - 12px) !important; flex-direction: column; }
+  foxy-collection-grid[data-cols] .foxy-card-image-wrapper { width: 100%; max-width: none; }
+  foxy-collection-grid[data-cols] .foxy-card-details { width: 100%; text-align: center; }
+}
+
+@media screen and (max-width: 480px) {
+  /* Go to 100% width on very small screens, or retain 50% depending on preference. Usually 50% grid is preferred if words don't break too heavily */
+  foxy-collection-grid[data-cols] .foxy-product-card { width: 100% !important; }
 }
 
 .foxy-card-image-wrapper {

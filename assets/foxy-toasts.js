@@ -53,23 +53,13 @@ class FoxyToastContainer extends HTMLElement {
     if (window.foxyCartInterceptorInitialized) return;
     window.foxyCartInterceptorInitialized = true;
 
-    const originalFetch = window.fetch;
-    window.fetch = async (...args) => {
-      const url = typeof args[0] === 'string' ? args[0] : (args[0] && args[0].url ? args[0].url : '');
-      const method = (args[1] && args[1].method) || (args[0] && args[0].method) || 'GET';
-
-      const response = await originalFetch.apply(this, args);
-      
-      // If it's a POST to /cart/add, show success toast
-      if (url.includes('/cart/add') && method.toUpperCase() === 'POST' && response.ok) {
-        this.show({
-          message: 'Succesfully added product to cart!',
-          status: 'success'
-        });
-      }
-
-      return response;
-    };
+    // Listen for custom add to cart events dispatched by our components instead of overriding fetch
+    document.addEventListener('foxy:cart:updated', () => {
+      this.show({
+        message: 'Successfully added product to cart!',
+        status: 'success'
+      });
+    });
   }
 
   show({ message, status = 'info', stackable = true, dismissable = true, duration = 15000 }) {

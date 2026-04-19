@@ -11,7 +11,9 @@
   <div class="foxy-layout-left">
     <div class="foxy-filters-header hidden-desktop">
       <h3>Filters</h3>
-      <button type="button" class="foxy-mobile-filter-close">&times;</button>
+      <button type="button" class="foxy-mobile-filter-close">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
     </div>
     
     <foxy-collection-filters>
@@ -30,8 +32,8 @@
         </div>
 
         {%- for filter in collection.filters -%}
-          <div class="foxy-facet-group">
-            <h4 class="foxy-facet-title">{{ filter.label | upcase }}</h4>
+          <details class="foxy-facet-group" {% if forloop.first %}open{% endif %}>
+            <summary class="foxy-facet-title">{{ filter.label | upcase }}</summary>
             
             {%- case filter.type -%}
               {%- when 'boolean' or 'list' -%}
@@ -76,8 +78,12 @@
                   </div>
                 </div>
             {%- endcase -%}
-          </div>
+          </details>
         {%- endfor -%}
+        
+        <div class="foxy-mobile-apply hidden-desktop" style="margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--foxy-border);">
+          <button type="button" class="cyber-button w-full foxy-mobile-filter-close">View Results</button>
+        </div>
       </form>
     </foxy-collection-filters>
   </div>
@@ -118,10 +124,24 @@
                     <p class="foxy-card-meta">Stout | {{ product.metafields.custom.abv | default: '8.5%' }} ABV | {{ product.metafields.custom.volume | default: '12oz' }}</p>
                   {% endif %}
                   <p class="foxy-card-price">{{ product.price | money }}</p>
-                  <form method="post" action="{{ routes.cart_add_url }}" data-product-form class="foxy-add-to-cart-form">
-                    <input type="hidden" name="id" value="{{ product.variants.first.id }}">
-                    <button type="submit" class="cyber-button w-full foxy-ajax-btn">Add to Cart</button>
-                  </form>
+                  <div style="display: flex; gap: 8px;">
+                    <form method="post" action="{{ routes.cart_add_url }}" data-product-form class="foxy-add-to-cart-form" style="flex:1;">
+                      <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+                      <button type="submit" class="cyber-button w-full foxy-ajax-btn">Add to Cart</button>
+                    </form>
+                    <foxy-wishlist-button 
+                      data-product-id="{{ product.id }}"
+                      data-product-handle="{{ product.handle }}"
+                      data-title="{{ product.title | escape }}"
+                      data-price="{{ product.price | money | escape }}"
+                      data-image="{{ product.featured_image | image_url: width: 400 }}"
+                      data-url="{{ product.url }}"
+                      data-variant-id="{{ product.variants.first.id }}">
+                      <button aria-label="Add to wishlist">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                      </button>
+                    </foxy-wishlist-button>
+                  </div>
                 </div>
               </div>
             {%- endfor -%}

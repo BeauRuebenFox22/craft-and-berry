@@ -162,8 +162,13 @@ class FoxyCollectionFilters extends HTMLElement {
           if(gridWrapper) gridWrapper.classList.remove('loading');
           
           // Scroll to top of grid
-          const rightPanel = document.querySelector('.foxy-custom-scrollbar');
-          if (rightPanel) rightPanel.scrollTo({top: 0, behavior: 'smooth'});
+          const gridTarget = document.getElementById('FoxyProductGridContainer');
+          if (gridTarget) {
+            gridTarget.scrollIntoView({ behavior: 'smooth' });
+          } else {
+            const rightPanel = document.querySelector('.foxy-custom-scrollbar');
+            if (rightPanel) rightPanel.scrollTo({top: 0, behavior: 'smooth'});
+          }
         }
       });
     });

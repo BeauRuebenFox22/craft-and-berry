@@ -1,16 +1,302 @@
-<iv-age-verify
-  minage="{{ settings.minimum_age }}"
-  verificationmethod="{{ settings.verification_method }}"
-  cookiedays="{{ settings.cookie_days }}"
-  verificationtitle="{{ settings.verification_title }}"
-  {% if settings.verification_image %}
-    verificationimage
-  {% endif %}
-></iv-age-verify>
+<foxy-age-verification
+  data-min-age="{{ settings.minimum_age }}"
+  data-method="{{ settings.verification_method }}"
+  data-cookie-days="{{ settings.cookie_days }}"
+>
+  <div class="foxy-age-verify__overlay" id="FoxyAgeOverlay">
+    <div class="foxy-age-verify__modal" style="padding: {{ settings.verification_padding }}px;">
+      {% if settings.verification_image %}
+        <div class="foxy-age-verify__image" style="background-image: url('{{ settings.verification_image | image_url: width: 800 }}');"></div>
+      {% endif %}
+      <div class="foxy-age-verify__content">
+        <h2 class="foxy-age-verify__title">{{ settings.verification_title }}</h2>
+        <form id="FoxyAgeForm" class="foxy-age-verify__form">
+          <!-- Dynamically output the input based on method -->
+          {%- case settings.verification_method -%}
+            {%- when 'age' -%}
+              <div class="foxy-input-wrapper">
+                <label for="age-input">Enter your age:</label>
+                <input id="age-input" name="age" type="number" min="0" required class="foxy-input">
+              </div>
+            {%- when 'date' -%}
+              <div class="foxy-input-wrapper">
+                <label for="dob-input">Enter your Date of Birth:</label>
+                <input id="dob-input" name="dob" type="date" required class="foxy-input">
+              </div>
+            {%- when 'boolean' -%}
+              <p class="foxy-age-verify__subtitle">By entering this site, you certify that you are of legal drinking age.</p>
+              <!-- Boolean just needs a submit button conceptually, maybe two buttons (Yes/No) -->
+              <input type="hidden" name="boolean" value="true">
+          {%- endcase -%}
+          
+          <div class="foxy-age-verify__actions">
+            {% if settings.verification_method == 'boolean' %}
+              <button type="button" class="cyber-button reject-btn" id="FoxyAgeRejectBtn">I am under {{ settings.minimum_age }}</button>
+              <button type="submit" class="cyber-button foxy-ajax-btn" style="background: #a855f7; color: #fff; flex: 1;">I am {{ settings.minimum_age }} or older</button>
+            {% else %}
+               <button type="submit" class="cyber-button w-full foxy-ajax-btn" style="background: #a855f7; color: #fff; width: 100%;">Verify</button>
+            {% endif %}
+          </div>
+          <p class="foxy-age-error" id="FoxyAgeError" style="display:none; color: #ef4444; margin-top: 10px; font-size: 0.9rem;">You are not old enough to enter this site.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</foxy-age-verification>
 
 <style>
-  :root {
-    --iv-age-verify-padding: {{ settings.verification_padding }};
-    --iv-age-verify-image: {{ settings.verification_image.src }};
+foxy-age-verification {
+  display: block;
+}
+
+.foxy-age-verify__overlay {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s;
+}
+
+.foxy-age-verify__overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.foxy-age-verify__modal {
+  background: rgba(20, 20, 30, 0.95);
+  border: 1px solid rgba(139, 92, 246, 0.4);
+  border-radius: 12px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.7);
+  display: flex;
+  max-width: 800px;
+  width: 90%;
+  overflow: hidden;
+  position: relative;
+  transform: translateY(20px);
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  box-sizing: border-box;
+}
+
+.foxy-age-verify__overlay.active .foxy-age-verify__modal {
+  transform: translateY(0);
+}
+
+.foxy-age-verify__image {
+  flex: 0 0 45%;
+  background-size: cover;
+  background-position: center;
+  /* if padding is severe, we can visually break out with negative margins or just let padding apply */
+}
+
+/* If the user sets padding, it applies to the .foxy-age-verify__modal.
+   We probably want padding ONLY on the content so the image hits the edges */
+.foxy-age-verify__modal {
+  padding: 0 !important; /* override inline if not applying properly to content */
+}
+
+.foxy-age-verify__content {
+  flex: 1;
+  padding: var(--iv-age-verify-padding, 40px); /* fallback */
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.foxy-age-verify__title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #fff;
+  line-height: 1.2;
+}
+
+.foxy-age-verify__subtitle {
+  color: #cbd5e1;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.foxy-input-wrapper {
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.foxy-input-wrapper label {
+  font-size: 0.95rem;
+  color: #94a3b8;
+}
+
+.foxy-input {
+  background: rgba(0,0,0,0.4);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #fff;
+  padding: 14px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  outline: none;
+  transition: border-color 0.3s;
+}
+.foxy-input:focus {
+  border-color: #a855f7;
+}
+
+.foxy-age-verify__actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 1rem;
+}
+
+.foxy-age-verify__actions button {
+  padding: 14px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.reject-btn {
+  background: transparent !important;
+  border: 1px solid rgba(255,255,255,0.2) !important;
+  color: #fff !important;
+  flex: 1;
+}
+.reject-btn:hover {
+  background: rgba(255,255,255,0.05) !important;
+  border-color: #ef4444 !important;
+  color: #ef4444 !important;
+}
+
+@media screen and (max-width: 768px) {
+  .foxy-age-verify__modal {
+    flex-direction: column;
   }
+  .foxy-age-verify__image {
+    width: 100%;
+    min-height: 250px;
+  }
+  .foxy-age-verify__content {
+    padding: 30px;
+  }
+  .foxy-age-verify__title {
+    font-size: 1.5rem;
+  }
+}
 </style>
+
+<script>
+if (!customElements.get('foxy-age-verification')) {
+  class FoxyAgeVerification extends HTMLElement {
+    constructor() {
+      super();
+      this.overlay = this.querySelector('#FoxyAgeOverlay');
+      this.form = this.querySelector('#FoxyAgeForm');
+      this.errorMsg = this.querySelector('#FoxyAgeError');
+      this.rejectBtn = this.querySelector('#FoxyAgeRejectBtn');
+      
+      this.minAge = parseInt(this.dataset.minAge) || 18;
+      this.method = this.dataset.method || 'age';
+      this.cookieDays = parseInt(this.dataset.cookieDays) || 7;
+    }
+
+    connectedCallback() {
+      this.checkVerification();
+      
+      if (this.form) {
+        this.form.addEventListener('submit', this.handleSubmit.bind(this));
+      }
+      if (this.rejectBtn) {
+        this.rejectBtn.addEventListener('click', this.handleReject.bind(this));
+      }
+    }
+
+    checkVerification() {
+      // In Shopify editor, usually we don't want to enforce block overlay, but this is an age gate.
+      if (window.Shopify && Shopify.designMode) {
+        return; // Don't block theme editor interactions
+      }
+
+      const verifiedData = localStorage.getItem('foxy_age_verified');
+      if (verifiedData) {
+        try {
+          const data = JSON.parse(verifiedData);
+          const expiryTime = data.timestamp + (this.cookieDays * 24 * 60 * 60 * 1000);
+          if (Date.now() < expiryTime) {
+            // Valid constraint applied, do not show
+            return;
+          }
+        } catch (e) {
+          // JSON parse failed, clean it
+          localStorage.removeItem('foxy_age_verified');
+        }
+      }
+      
+      // Needs verification
+      // Disable background scrolling
+      document.body.style.overflow = 'hidden';
+      this.overlay.classList.add('active');
+    }
+
+    handleSubmit(e) {
+      e.preventDefault();
+      this.errorMsg.style.display = 'none';
+      let isValid = false;
+
+      if (this.method === 'boolean') {
+        isValid = true;
+      } else if (this.method === 'age') {
+        const ageInput = this.querySelector('#age-input').value;
+        if (parseInt(ageInput) >= this.minAge) {
+          isValid = true;
+        }
+      } else if (this.method === 'date') {
+        const dobInput = this.querySelector('#dob-input').value;
+        if (dobInput) {
+          const dobDate = new Date(dobInput);
+          const today = new Date();
+          let age = today.getFullYear() - dobDate.getFullYear();
+          const m = today.getMonth() - dobDate.getMonth();
+          if (m < 0 || (m === 0 && today.getDate() < dobDate.getDate())) {
+            age--;
+          }
+          if (age >= this.minAge) {
+            isValid = true;
+          }
+        }
+      }
+
+      if (isValid) {
+        const data = { timestamp: Date.now() };
+        localStorage.setItem('foxy_age_verified', JSON.stringify(data));
+        
+        // Hide modal
+        this.overlay.classList.remove('active');
+        document.body.style.overflow = '';
+      } else {
+        this.handleReject();
+      }
+    }
+
+    handleReject() {
+      this.errorMsg.style.display = 'block';
+      // Bounce out to google safely since they failed the test.
+      setTimeout(() => {
+        window.location.href = 'https://google.com';
+      }, 2000);
+    }
+  }
+
+  customElements.define('foxy-age-verification', FoxyAgeVerification);
+}
+</script>

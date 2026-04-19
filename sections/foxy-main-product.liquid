@@ -20,15 +20,9 @@
         </div>
         
         {%- if media_count > 1 -%}
-          <button class="foxy-pdp__nav-btn foxy-pdp__nav-btn--prev" aria-label="Previous image">
-             <span style="display:inline-block; transform: rotate(90deg);">{%- render 'icon-caret' -%}</span>
-          </button>
-          <button class="foxy-pdp__nav-btn foxy-pdp__nav-btn--next" aria-label="Next image">
-             <span style="display:inline-block; transform: rotate(-90deg);">{%- render 'icon-caret' -%}</span>
-          </button>
-          <div class="foxy-pdp__dots">
+          <div class="foxy-pdp__deck-indicators">
             {%- for media in product.media -%}
-              <button class="foxy-pdp__dot{% if forloop.first %} active{% endif %}" aria-label="Go to image {{ forloop.index }}"></button>
+              <div class="foxy-pdp__deck-indicator{% if forloop.first %} active{% endif %}"></div>
             {%- endfor -%}
           </div>
         {%- endif -%}
@@ -105,7 +99,15 @@
                 {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
                   <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
                   <div class="foxy-pdp__quantity-row">
-                    {% render 'foxy-quantity-selector', value: 1 %}
+                    <div class="foxy-pdp__qty-wrapper">
+                      <button type="button" class="foxy-pdp__qty-btn" aria-label="Decrease quantity" onclick="this.nextElementSibling.stepDown()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                      </button>
+                      <input type="number" name="quantity" value="1" min="1" form="{{ product_form_id }}" class="foxy-pdp__qty-input" aria-label="Product quantity">
+                      <button type="button" class="foxy-pdp__qty-btn" aria-label="Increase quantity" onclick="this.previousElementSibling.stepUp()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                      </button>
+                    </div>
                     <button type="submit" name="add" class="foxy-pdp__btn foxy-pdp__btn--add" {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}>
                       {%- if product.selected_or_first_available_variant.available -%}
                         {{ 'products.product.add_to_cart' | t | default: 'Add to Cart' }}
@@ -113,6 +115,20 @@
                         {{ 'products.product.sold_out' | t | default: 'Sold Out' }}
                       {%- endif -%}
                     </button>
+                    <foxy-wishlist-button 
+                      class="foxy-pdp-wishlist-btn"
+                      style="margin-left:8px;"
+                      data-product-id="{{ product.id }}"
+                      data-product-handle="{{ product.handle }}"
+                      data-title="{{ product.title | escape }}"
+                      data-price="{{ product.price | money | escape }}"
+                      data-image="{{ product.featured_image | image_url: width: 400 }}"
+                      data-url="{{ product.url }}"
+                      data-variant-id="{{ product.variants.first.id }}">
+                      <button aria-label="Add to wishlist" class="foxy-pdp__btn" style="padding:0; width:50px; border-radius:50%; min-width:auto;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                      </button>
+                    </foxy-wishlist-button>
                   </div>
                   {%- if block.settings.show_dynamic_checkout -%}
                     {{ form | payment_button }}
@@ -120,12 +136,7 @@
                 {%- endform -%}
              </div>
              
-          {%- when 'promo-banner' -%}
-            <div {{ block.shopify_attributes }}>
-              {% render 'promo-banner' %}
-            </div>
-            
-          {%- when 'metadata' -%}
+           {%- when 'buy_buttons' -%}
             <div {{ block.shopify_attributes }}>
               {% render 'foxy-product-meta-data',
                 _labels: block.settings.foxy_md_labels,
@@ -149,6 +160,11 @@
                 {{ block.settings.custom_liquid }}
              </div>
 
+          {%- when 'related_products' -%}
+            <div {{ block.shopify_attributes }}>
+              {% render 'foxy-complimentary', block: block, product: product, section: section %}
+            </div>
+
         {%- endcase -%}
       {%- endfor -%}
     </div>
@@ -158,8 +174,17 @@
   <div class="foxy-lightbox">
     <button class="foxy-lightbox__close" aria-label="Close Lightbox">&times;</button>
     <div class="foxy-lightbox__content">
-      <img src="" alt="Zoomed Product Image" class="foxy-lightbox__img">
+      <img src="" width="1400" height="1400" loading="lazy" alt="Zoomed Product Image" class="foxy-lightbox__img">
     </div>
+    {%- if product.media.size > 1 -%}
+    <div class="foxy-lightbox__thumbnails">
+      {%- for media in product.media -%}
+        {%- if media.media_type == 'image' -%}
+          <img src="{{ media | image_url: width: 200 }}" width="200" height="200" loading="lazy" data-full-src="{{ media | image_url: width: 1400 }}" class="foxy-lightbox__thumbnail" alt="Thumbnail {{ forloop.index }}">
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+    {%- endif -%}
     <div class="foxy-lightbox__controls">
       <span>Zoom Level:</span>
       <input type="range" class="foxy-lightbox__slider" min="1" max="5" step="0.1" value="1">
@@ -213,11 +238,6 @@
           "label": "Show dynamic checkout buttons"
         }
       ]
-    },
-    {
-      "type": "promo-banner",
-      "name": "Promo Banner",
-      "limit": 1
     },
     {
       "type": "metadata",
@@ -331,6 +351,66 @@
           "type": "liquid",
           "id": "custom_liquid",
           "label": "Custom Liquid"
+        }
+      ]
+    },
+    {
+      "type": "related_products",
+      "name": "Related Products",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "default": "You may also like",
+          "label": "Heading"
+        },
+        {
+          "type": "range",
+          "id": "products_to_show",
+          "min": 2,
+          "max": 10,
+          "step": 1,
+          "default": 4,
+          "label": "Products to show"
+        },
+        {
+          "type": "range",
+          "id": "columns_desktop",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 2,
+          "label": "Columns on desktop"
+        },
+        {
+          "type": "select",
+          "id": "image_ratio",
+          "options": [
+            {"value": "adapt", "label": "Adapt to image"},
+            {"value": "portrait", "label": "Portrait"},
+            {"value": "square", "label": "Square"}
+          ],
+          "default": "adapt",
+          "label": "Image ratio"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_secondary_image",
+          "default": true,
+          "label": "Show second image on hover"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_vendor",
+          "default": false,
+          "label": "Show vendor"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_rating",
+          "default": false,
+          "label": "Show product rating"
         }
       ]
     }
