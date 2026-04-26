@@ -38,7 +38,7 @@
       "settings": {
         "image_2": "shopify://shop_images/20260327_142116.jpg",
         "image_overlay_opacity": 40,
-        "image_height": "medium",
+        "image_height": "large",
         "image_behavior": "none",
         "desktop_content_position": "bottom-center",
         "desktop_content_alignment": "center",
