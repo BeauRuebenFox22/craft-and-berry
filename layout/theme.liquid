@@ -350,7 +350,7 @@
       {{ content_for_layout }}
     </main>
     
-    {% if template.name == 'index' %}
+    {% if template.name == 'index' and settings.enable_opening_times_section == true %}
       {%  section 'foxy-opening-times' %}
     {% endif %}
 
