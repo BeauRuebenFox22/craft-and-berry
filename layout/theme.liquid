@@ -350,7 +350,9 @@
       {{ content_for_layout }}
     </main>
     
-    {%  section 'foxy-opening-times' %}
+    {% if template.name == 'index' %}
+      {%  section 'foxy-opening-times' %}
+    {% endif %}
 
     {% sections 'footer-group' %}
 
