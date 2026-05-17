@@ -74,6 +74,13 @@
           </span>
         </button>
       </div>
+
+      {% if settings.enable_foxy_promo_banner %}
+        <div class="cart-drawer__promo">
+          {% render 'foxy-promo-banner' %}
+        </div>
+      {% endif %}
+
       <cart-drawer-items
         {% if cart == empty %}
           class=" is-empty"

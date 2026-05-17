@@ -9,44 +9,14 @@
  */
 {
   "sections": {
-    "image_banner": {
-      "type": "image-banner",
-      "blocks": {
-        "heading": {
-          "type": "heading",
-          "settings": {
-            "heading": "<strong>Bottle Shop/Taproom  </strong>",
-            "heading_size": "hxl"
-          }
-        },
-        "button": {
-          "type": "buttons",
-          "settings": {
-            "button_label_1": "Shop Now",
-            "button_link_1": "shopify://collections/all",
-            "button_style_secondary_1": true,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
-        }
-      },
-      "block_order": [
-        "heading",
-        "button"
-      ],
+    "foxy_hero": {
+      "type": "foxy-hero",
       "settings": {
-        "image": "shopify://shop_images/20230505_150633.jpg",
-        "image_overlay_opacity": 40,
-        "image_height": "adapt",
-        "image_behavior": "none",
-        "desktop_content_position": "bottom-center",
-        "desktop_content_alignment": "center",
-        "show_text_box": false,
-        "color_scheme": "scheme-3",
-        "stack_images_on_mobile": false,
-        "mobile_content_alignment": "center",
-        "show_text_below": false
+        "subheading": "BREWER'S PICK",
+        "heading": "Heathen",
+        "text": "<p>balanced hop profile</p>",
+        "button_label": "Shop Now",
+        "button_link": "shopify:\/\/collections\/all"
       }
     },
     "rich_text": {
@@ -254,7 +224,7 @@
     }
   },
   "order": [
-    "image_banner",
+    "foxy_hero",
     "rich_text",
     "foxy_dynamic_product_carousel_GfVzJh",
     "collection_list_g4D9yc",
