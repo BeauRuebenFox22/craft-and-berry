@@ -12,11 +12,17 @@
     "foxy_hero": {
       "type": "foxy-hero",
       "settings": {
-        "subheading": "BREWER'S PICK",
-        "heading": "Heathen",
-        "text": "<p>balanced hop profile</p>",
+        "image": "shopify://shop_images/DSC0489.jpg",
+        "subheading": "",
+        "heading": "CRAFT & BERRY",
+        "text": "",
         "button_label": "Shop Now",
-        "button_link": "shopify:\/\/collections\/all"
+        "button_link": "shopify://collections/all",
+        "button_bg_color": "#9333ea",
+        "button_text_color": "#ffffff",
+        "content_alignment_horizontal": "flex-start",
+        "content_alignment_vertical": "center",
+        "image_fit": "cover"
       }
     },
     "rich_text": {
