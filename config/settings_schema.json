@@ -312,6 +312,51 @@
     ]
   },
   {
+    "name": "Enhanced Typography",
+    "settings": [
+      {
+        "id": "foxy_primary_heading_size",
+        "label": "Primary Heading Size",
+        "type": "range",
+        "unit": "px",
+        "min": 24,
+        "max": 60,
+        "step": 1,
+        "default": 32
+      },
+      {
+        "id": "foxy_secondary_heading_size",
+        "label": "Secondary Heading Size",
+        "type": "range",
+        "unit": "px",
+        "min": 20,
+        "max": 50,
+        "step": 1,
+        "default": 24
+      },
+      {
+        "id": "foxy_tertiary_heading_size",
+        "label": "Tertiary Heading Size",
+        "type": "range",
+        "unit": "px",
+        "min": 16,
+        "max": 42,
+        "step": 1,
+        "default": 18
+      },
+      {
+        "id": "foxy_body_size",
+        "label": "Body Text Size",
+        "type": "range",
+        "unit": "px",
+        "min": 16,
+        "max": 24,
+        "step": 1,
+        "default": 18
+      }
+    ]
+  },
+  {
     "name": "t:settings_schema.layout.name",
     "settings": [
       {

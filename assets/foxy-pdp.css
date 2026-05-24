@@ -66,7 +66,6 @@
   width: 100%;
   padding: 2rem;
   background-color: var(--foxy-pdp-bg);
-  z-index: 10;
   box-sizing: border-box;
 }
 
@@ -290,13 +289,13 @@
   letter-spacing: 0.1em;
   font-size: 0.8rem;
   color: #9ca3af;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 .foxy-pdp__title {
   font-size: clamp(2rem, 4vw, 3.5rem);
   font-weight: 700;
-  margin: 0 0 1rem 0;
+  margin: 0 0 2.2rem 0;
   line-height: 1.1;
   background: -webkit-linear-gradient(45deg, #d8b4fe, var(--foxy-pdp-accent));
   -webkit-background-clip: text;
@@ -304,23 +303,27 @@
   -webkit-text-fill-color: transparent;
 }
 
+.foxy-pdp__price {
+  margin-bottom: 2.2rem;
+}
+
 .price-item {
   font-size: 1.5rem;
   font-weight: 700;
-  margin-bottom: 2rem;
+  margin-bottom: 0;
   color: #fff;
 }
 
 .foxy-pdp__description {
   color: #d1d5db;
   line-height: 1.6;
-  margin-bottom: 2rem;
+  margin-bottom: 2.2rem;
   font-size: 1rem;
 }
 
 /* Variant Pickers (simplified) */
 .foxy-pdp__variants {
-  margin-bottom: 2rem;
+  margin-bottom: 2.2rem;
 }
 
 .foxy-pdp__variant-label {
@@ -349,19 +352,26 @@
 
 /* Buy Form Container */
 .foxy-pdp__form {
-  margin-bottom: 2rem;
+  margin-bottom: 2.2rem;
+}
+
+@media screen and (min-width: 900px) {
+  .foxy-pdp__form {
+    max-width: 50%;
+  }
 }
 
 .foxy-pdp__form form {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 1rem;
 }
 
 .foxy-pdp__quantity-row {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 1rem;
+  margin-bottom: 0.25rem;
 }
 
 .foxy-pdp__qty-wrapper {
@@ -370,7 +380,9 @@
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
-  max-width: 140px;
+  flex: 1;
+  max-width: 160px;
+  height: 50px;
 }
 
 .foxy-pdp__qty-btn {
@@ -431,6 +443,24 @@
   color: white;
   transform: translateY(-2px);
   box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+}
+
+.foxy-pdp__wishlist-icon-btn {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #fff !important;
+  transition: all 0.3s ease;
+}
+
+.foxy-pdp__wishlist-icon-btn:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: var(--foxy-pdp-accent) !important;
+  color: var(--foxy-pdp-accent) !important;
+  transform: translateY(-2px);
+}
+
+.foxy-pdp__payment-button {
+  margin-top: 0.5rem;
 }
 
 /* Hide shopify-specific extra links */

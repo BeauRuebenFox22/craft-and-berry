@@ -47,7 +47,7 @@
             
           {%- when 'vendor' -%}
             <div class="foxy-pdp__vendor" {{ block.shopify_attributes }}>
-              {{ product.vendor }}
+              <p>{{ product.vendor }}</p>
             </div>
             
           {%- when 'title' -%}
@@ -108,16 +108,8 @@
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                       </button>
                     </div>
-                    <button type="submit" name="add" class="foxy-pdp__btn foxy-pdp__btn--add" {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}>
-                      {%- if product.selected_or_first_available_variant.available -%}
-                        {{ 'products.product.add_to_cart' | t | default: 'Add to Cart' }}
-                      {%- else -%}
-                        {{ 'products.product.sold_out' | t | default: 'Sold Out' }}
-                      {%- endif -%}
-                    </button>
                     <foxy-wishlist-button 
                       class="foxy-pdp-wishlist-btn"
-                      style="margin-left:8px;"
                       data-product-id="{{ product.id }}"
                       data-product-handle="{{ product.handle }}"
                       data-title="{{ product.title | escape }}"
@@ -125,13 +117,24 @@
                       data-image="{{ product.featured_image | image_url: width: 400 }}"
                       data-url="{{ product.url }}"
                       data-variant-id="{{ product.variants.first.id }}">
-                      <button aria-label="Add to wishlist" class="foxy-pdp__btn" style="padding:0; width:50px; border-radius:50%; min-width:auto;">
+                      <button type="button" aria-label="Add to wishlist" class="foxy-pdp__btn foxy-pdp__wishlist-icon-btn" style="padding:0; width:50px; height:50px; border-radius:50%; min-width:auto; display:flex; align-items:center; justify-content:center;">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
                       </button>
                     </foxy-wishlist-button>
                   </div>
+                  
+                  <button type="submit" name="add" class="foxy-pdp__btn foxy-pdp__btn--add" {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}>
+                    {%- if product.selected_or_first_available_variant.available -%}
+                      {{ 'products.product.add_to_cart' | t | default: 'Add to Cart' }}
+                    {%- else -%}
+                      {{ 'products.product.sold_out' | t | default: 'Sold Out' }}
+                    {%- endif -%}
+                  </button>
+                  
                   {%- if block.settings.show_dynamic_checkout -%}
-                    {{ form | payment_button }}
+                    <div class="foxy-pdp__payment-button">
+                      {{ form | payment_button }}
+                    </div>
                   {%- endif -%}
                 {%- endform -%}
              </div>
