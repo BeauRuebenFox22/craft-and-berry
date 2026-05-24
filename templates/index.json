@@ -21,7 +21,7 @@
         "button_bg_color": "#9333ea",
         "button_text_color": "#ffffff",
         "content_alignment_horizontal": "flex-start",
-        "content_alignment_vertical": "center",
+        "content_alignment_vertical": "flex-end",
         "image_fit": "cover"
       }
     },

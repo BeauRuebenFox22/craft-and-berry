@@ -20,11 +20,15 @@
     "type_header_font": "mono",
     "heading_scale": 100,
     "type_body_font": "mono",
+<<<<<<< HEAD
     "body_scale": 100,
     "foxy_primary_heading_size": 50,
     "foxy_secondary_heading_size": 24,
     "foxy_tertiary_heading_size": 20,
     "foxy_body_size": 16,
+=======
+    "body_scale": 130,
+>>>>>>> 4c00302fd5e25e5d686ec05d9b182ae9dab20c11
     "page_width": 1500,
     "spacing_sections": 100,
     "spacing_grid_horizontal": 24,
