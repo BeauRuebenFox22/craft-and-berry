@@ -55,6 +55,37 @@
         "padding_bottom": 52
       }
     },
+    "image_with_text_WDc4Nj": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_9WQttp": {
+          "type": "heading",
+          "settings": {
+            "heading": "As featured on BBC Radio 4's \"You & Yours\".",
+            "heading_size": "h1"
+          }
+        }
+      },
+      "block_order": [
+        "heading_9WQttp"
+      ],
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "image": "shopify://shop_images/you_yours_82cf186e-2ad8-4b63-a389-c144a18a3fdd.jpg",
+        "height": "small",
+        "desktop_image_width": "small",
+        "layout": "text_first",
+        "image_behavior": "none",
+        "content_layout": "no-overlap",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "center",
+        "mobile_content_alignment": "left",
+        "section_color_scheme": "",
+        "color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
     "foxy_dynamic_product_carousel_GfVzJh": {
       "type": "foxy-dynamic-product-carousel",
       "name": "Foxy Dynamic Carousel",
@@ -232,6 +263,7 @@
   "order": [
     "foxy_hero",
     "rich_text",
+    "image_with_text_WDc4Nj",
     "foxy_dynamic_product_carousel_GfVzJh",
     "collection_list_g4D9yc",
     "collection_list_dM4mVe",
