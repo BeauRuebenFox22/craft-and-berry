@@ -227,6 +227,45 @@
         "padding_top": 52,
         "padding_bottom": 52
       }
+    },
+    "image_with_text_wN6LgK": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_GUhmEE": {
+          "type": "heading",
+          "settings": {
+            "heading": "As featured on BBC Radio 4's \"You & Yours\".",
+            "heading_size": "h1"
+          }
+        },
+        "text_M4Veex": {
+          "type": "text",
+          "settings": {
+            "text": "",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "heading_GUhmEE",
+        "text_M4Veex"
+      ],
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "image": "shopify://shop_images/bbcradio4_d4198890-40d5-471e-bf88-e16758112d85.jpg",
+        "height": "adapt",
+        "desktop_image_width": "small",
+        "layout": "text_first",
+        "image_behavior": "none",
+        "content_layout": "no-overlap",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "center",
+        "mobile_content_alignment": "left",
+        "section_color_scheme": "",
+        "color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
     }
   },
   "order": [
@@ -236,6 +275,7 @@
     "collection_list_g4D9yc",
     "collection_list_dM4mVe",
     "collage",
-    "multicolumn"
+    "multicolumn",
+    "image_with_text_wN6LgK"
   ]
 }
