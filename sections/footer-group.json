@@ -11,6 +11,10 @@
   "name": "t:sections.footer.name",
   "type": "footer",
   "sections": {
+    "1779975316dd201684": {
+      "type": "_blocks",
+      "settings": {}
+    },
     "footer": {
       "type": "footer",
       "blocks": {
@@ -50,6 +54,7 @@
     }
   },
   "order": [
+    "1779975316dd201684",
     "footer"
   ]
 }
