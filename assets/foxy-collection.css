@@ -56,6 +56,11 @@ foxy-collection-hero {
   animation: pulse 2s infinite alternate; z-index: 10; padding: 0;
   left: var(--hotspot-x); top: var(--hotspot-y);
 }
+.foxy-hero-hotspot.shopify-editor-block-selected {
+  box-shadow: 0 0 0 4px var(--foxy-highlight), 0 0 15px #fff;
+  z-index: 100;
+  transform: translate(-50%, -50%) scale(1.5);
+}
 @media screen and (max-width: 768px) {
   .foxy-hero-pan-container {
     display: flex; overflow-x: auto; overflow-y: hidden; height: 80vh; 

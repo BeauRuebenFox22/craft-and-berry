@@ -26,7 +26,8 @@
               class="foxy-hero-hotspot mobile-only-hotspot" 
               style="--hotspot-x-mobile: {{ block.settings.x_position_mobile }}%; --hotspot-y-mobile: {{ block.settings.y_position_mobile }}%;"
               data-product-handle="mobile-{{ product.handle }}"
-              aria-label="View {{ product.title }}">
+              aria-label="View {{ product.title }}"
+              {{ block.shopify_attributes }}>
               <span class="hotspot-inner"></span>
             </button>
             <template id="hotspot-modal-mobile-{{ product.handle }}">
@@ -70,7 +71,8 @@
               class="foxy-hero-hotspot desktop-only-hotspot" 
               style="--hotspot-x: {{ block.settings.x_position }}%; --hotspot-y: {{ block.settings.y_position }}%;"
               data-product-handle="desktop-{{ product.handle }}"
-              aria-label="View {{ product.title }}">
+              aria-label="View {{ product.title }}"
+              {{ block.shopify_attributes }}>
               <span class="hotspot-inner"></span>
             </button>
             
