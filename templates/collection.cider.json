@@ -1,0 +1,34 @@
+{
+  "sections": {
+    "foxy-hero": {
+      "type": "foxy-collection-hero",
+      "blocks": {
+        "hotspot_1": {
+          "type": "hotspot",
+          "settings": {
+            "product": "",
+            "x_position": 50,
+            "y_position": 50,
+            "x_position_mobile": 50,
+            "y_position_mobile": 50
+          }
+        }
+      },
+      "block_order": [
+        "hotspot_1"
+      ],
+      "settings": {
+        "image": "",
+        "image_mobile": ""
+      }
+    },
+    "foxy-main": {
+      "type": "foxy-collection-main",
+      "settings": {}
+    }
+  },
+  "order": [
+    "foxy-hero",
+    "foxy-main"
+  ]
+}
