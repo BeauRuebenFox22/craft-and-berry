@@ -45,10 +45,16 @@
     width: 100%;
     overflow: hidden;
   }
-
+ 
   .foxy-hero--100vh {
-    height: calc(100vh + 250px);
+    height: 100vh;
     min-height: 600px;
+  }
+
+  @media screen and (min-width: 1024px) {
+    .foxy-hero--100vh {
+      height: calc(100vh + 350px);  
+    }
   }
 
   .foxy-hero__image {
