@@ -1,14 +1,195 @@
-{{ 'section-foxy-collection-banner.css' | asset_url | stylesheet_tag }}
+{{ 'foxy-collection.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'foxy-collection-hero.js' | asset_url }}" type="module" defer="defer"></script>
 
-<div class="foxy-collection-banner">
-  <h1>{{ collection.title }}</h1>
-  <p>{{ collection.description }}</p>
-</div>
+<foxy-collection-hero>
+  <div class="foxy-hero-wrapper" style="position: relative;">
+    {% if section.settings.image != blank %}
+      {{ section.settings.image | image_url: width: 2000 | image_tag: class: 'foxy-hero-image hidden-mobile' }}
+    {% endif %}
+    
+    <div class="foxy-hero-pan-container hidden-desktop">
+      <div class="pan-indicator">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+      </div>
+      {% if section.settings.image_mobile != blank %}
+        {{ section.settings.image_mobile | image_url: width: 800 | image_tag: class: 'foxy-hero-image' }}
+      {% elsif section.settings.image != blank %}
+        {{ section.settings.image | image_url: width: 1200 | image_tag: class: 'foxy-hero-image fallback-pan-image' }}
+      {% endif %}
+      
+      {% for block in section.blocks %}
+        {% if block.type == 'hotspot' %}
+          {% assign product = all_products[block.settings.product] %}
+          {% if product != blank %}
+            <button 
+              type="button" 
+              class="foxy-hero-hotspot mobile-only-hotspot" 
+              style="--hotspot-x-mobile: {{ block.settings.x_position_mobile }}%; --hotspot-y-mobile: {{ block.settings.y_position_mobile }}%;"
+              data-product-handle="mobile-{{ product.handle }}"
+              aria-label="View {{ product.title }}"
+              {{ block.shopify_attributes }}>
+              <span class="hotspot-inner"></span>
+            </button>
+            <template id="hotspot-modal-mobile-{{ product.handle }}">
+              <div class="foxy-hotspot-modal glass-panel">
+                <div class="hotspot-modal-details">
+                  <h3 class="product-title">{{ product.title }}</h3>
+                  <p class="product-price">{{ product.price | money }}</p>
+                  <div style="display: flex; gap: 8px;">
+                    <form method="post" action="{{ routes.cart_add_url }}" data-product-form class="hotspot-add-to-cart" style="flex:1;">
+                      <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+                      <button type="submit" class="cyber-button w-full">Add to Cart</button>
+                    </form>
+                    <foxy-wishlist-button 
+                      data-product-id="{{ product.id }}"
+                      data-product-handle="{{ product.handle }}"
+                      data-title="{{ product.title | escape }}"
+                      data-price="{{ product.price | money | escape }}"
+                      data-image="{{ product.featured_image | image_url: width: 400 }}"
+                      data-url="{{ product.url }}"
+                      data-variant-id="{{ product.variants.first.id }}">
+                      <button aria-label="Add to wishlist">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                      </button>
+                    </foxy-wishlist-button>
+                  </div>
+                </div>
+              </div>
+            </template>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    <div class="foxy-hero-desktop-container hidden-mobile">
+      {% for block in section.blocks %}
+        {% if block.type == 'hotspot' %}
+          {% assign product = all_products[block.settings.product] %}
+          {% if product != blank %}
+            <button 
+              type="button" 
+              class="foxy-hero-hotspot desktop-only-hotspot" 
+              style="--hotspot-x: {{ block.settings.x_position }}%; --hotspot-y: {{ block.settings.y_position }}%;"
+              data-product-handle="desktop-{{ product.handle }}"
+              aria-label="View {{ product.title }}"
+              {{ block.shopify_attributes }}>
+              <span class="hotspot-inner"></span>
+            </button>
+            
+            <template id="hotspot-modal-desktop-{{ product.handle }}">
+              <div class="foxy-hotspot-modal glass-panel">
+                <div class="hotspot-modal-details">
+                  <h3 class="product-title">{{ product.title }}</h3>
+                  <p class="product-price">{{ product.price | money }}</p>
+                  <div style="display: flex; gap: 8px;">
+                    <form method="post" action="{{ routes.cart_add_url }}" data-product-form class="hotspot-add-to-cart" style="flex:1;">
+                      <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+                      <button type="submit" class="cyber-button w-full">Add to Cart</button>
+                    </form>
+                    <foxy-wishlist-button 
+                      data-product-id="{{ product.id }}"
+                      data-product-handle="{{ product.handle }}"
+                      data-title="{{ product.title | escape }}"
+                      data-price="{{ product.price | money | escape }}"
+                      data-image="{{ product.featured_image | image_url: width: 400 }}"
+                      data-url="{{ product.url }}"
+                      data-variant-id="{{ product.variants.first.id }}">
+                      <button aria-label="Add to wishlist">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                      </button>
+                    </foxy-wishlist-button>
+                  </div>
+                </div>
+              </div>
+            </template>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="foxy-hero-text">
+    <h1 class="collection-title">{{ collection.title }}</h1>
+    {% if collection.description != blank %}
+      <div class="collection-description">{{ collection.description }}</div>
+    {% endif %}
+  </div>
+</foxy-collection-hero>
+
 {% schema %}
 {
-  "name": "Foxy Collection Banner",
+  "name": "Foxy Collection Hero",
   "tag": "section",
-  "class": "section",
-  "settings": [{}]
+  "class": "section foxy-collection-hero-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Hero Image (Desktop)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Hero Image (Mobile)"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "hotspot",
+      "name": "Product Hotspot",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "range",
+          "id": "x_position",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Horizontal Position (Left)",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "y_position",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Vertical Position (Top)",
+          "default": 30
+        },
+        {
+          "type": "range",
+          "id": "x_position_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Horizontal Position (Left) Mobile",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "y_position_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Vertical Position (Top) Mobile",
+          "default": 30
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Foxy Collection Hero"
+    }
+  ]
 }
 {% endschema %}

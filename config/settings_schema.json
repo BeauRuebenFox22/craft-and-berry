@@ -11,6 +11,10 @@
     "name": "Shop Discounts",
     "settings": [
       {
+        "type": "header",
+        "content": "Discount Codes"
+      },
+      {
         "type": "checkbox",
         "id": "enable_discounts",
         "label": "Enable Discounts",
@@ -18,54 +22,59 @@
         "default": true
       },
       {
-        "type": "checkbox",
-        "id": "enable_discount_bar",
-        "label": "Enable Discount Bar",
-        "info": "This shows how close a customer is, to hitting a threshold to qualify for a discount.",
-        "default": false
+        "type": "header",
+        "content": "Promo Banner"
       },
+      {
+        "type": "checkbox",
+        "id": "enable_foxy_promo_banner",
+        "label": "Enable Foxy Promo Banner",
+        "info": "Show the promo banner globally beneath the header",
+        "default": true
+      },      
       {
         "type": "number",
         "id": "discount_threshold",
         "label": "Discount Threshold",
         "info": "Set the threshold to qualify for you active discount, the amount needs to match with that set in your discount.",
         "default": 100,
-        "visible_if": "{{ settings.enable_discount_bar }}"
-      },
-      {
-        "type": "header",
-        "content": "Promo Banner"
+        "visible_if": "{{ settings.enable_foxy_promo_banner }}"
       },
       {
         "type": "color",
         "id": "promo_banner_bg_color",
         "label": "Promo banner background",
-        "default": "#fbbf24"
+        "default": "#fbbf24",
+        "visible_if": "{{ settings.enable_foxy_promo_banner }}"
       },
       {
         "type": "color",
         "id": "promo_banner_text_color",
         "label": "Promo banner text color",
-        "default": "#FFFFFF"
+        "default": "#FFFFFF",
+        "visible_if": "{{ settings.enable_foxy_promo_banner }}"
       },
       {
         "type": "number",
         "id": "promo_banner_threshold",
         "label": "Promo threshold (store currency)",
         "info": "Amount a customer needs to spend in order to unlock the promotion (e.g. 50 = $50).",
-        "default": 50
+        "default": 50,
+        "visible_if": "{{ settings.enable_foxy_promo_banner }}"
       },
       {
         "type": "text",
         "id": "promo_banner_msg",
         "label": "Promo banner message",
-        "default": "Enjoy a special reward when you reach the cart threshold."
+        "default": "Enjoy a special reward when you reach the cart threshold.",
+        "visible_if": "{{ settings.enable_foxy_promo_banner }}"
       },
       {
         "type": "text",
         "id": "promo_banner_complete_text",
         "label": "Promo complete message",
-        "default": "You have unlocked this promotion!"
+        "default": "You have unlocked this promotion!",
+        "visible_if": "{{ settings.enable_foxy_promo_banner }}"
       }
     ]
   },
@@ -299,6 +308,51 @@
         "unit": "%",
         "label": "t:settings_schema.typography.settings.body_scale.label",
         "default": 100
+      }
+    ]
+  },
+  {
+    "name": "Enhanced Typography",
+    "settings": [
+      {
+        "id": "foxy_primary_heading_size",
+        "label": "Primary Heading Size",
+        "type": "range",
+        "unit": "px",
+        "min": 24,
+        "max": 60,
+        "step": 1,
+        "default": 32
+      },
+      {
+        "id": "foxy_secondary_heading_size",
+        "label": "Secondary Heading Size",
+        "type": "range",
+        "unit": "px",
+        "min": 20,
+        "max": 50,
+        "step": 1,
+        "default": 24
+      },
+      {
+        "id": "foxy_tertiary_heading_size",
+        "label": "Tertiary Heading Size",
+        "type": "range",
+        "unit": "px",
+        "min": 16,
+        "max": 42,
+        "step": 1,
+        "default": 18
+      },
+      {
+        "id": "foxy_body_size",
+        "label": "Body Text Size",
+        "type": "range",
+        "unit": "px",
+        "min": 16,
+        "max": 24,
+        "step": 1,
+        "default": 18
       }
     ]
   },

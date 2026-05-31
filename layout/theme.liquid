@@ -44,6 +44,7 @@
       src="https://cdn.jsdelivr.net/npm/the-foxy-library@1.4.1/dist/intravenous/intravenous.js"
     ></script>
 
+    <script src="{{ 'foxy-events.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'constants.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'pubsub.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
@@ -236,6 +237,11 @@
         --variant-pills-shadow-horizontal-offset: {{ settings.variant_pills_shadow_horizontal_offset }}px;
         --variant-pills-shadow-vertical-offset: {{ settings.variant_pills_shadow_vertical_offset }}px;
         --variant-pills-shadow-blur-radius: {{ settings.variant_pills_shadow_blur }}px;
+
+        --font-primary-heading-size: {{ settings.foxy_primary_heading_size }}px;
+        --font-secondary-heading-size: {{ settings.foxy_secondary_heading_size }}px;
+        --font-tertiary-heading-size: {{ settings.foxy_tertiary_heading_size }}px;
+        --font-body-size: {{ settings.foxy_body_size }}px;
       }
 
       *,
@@ -282,6 +288,12 @@
       {{ 'component-discounts.css' | asset_url | stylesheet_tag }}
     {%- endif -%}
 
+    {{ 'foxy-toasts.css' | asset_url | stylesheet_tag }}
+    <script src="{{ 'foxy-toasts.js' | asset_url }}" type="module" defer="defer"></script>
+
+    {{ 'foxy-wishlist.css' | asset_url | stylesheet_tag }}
+    <script src="{{ 'foxy-wishlist.js' | asset_url }}" defer="defer"></script>
+
     {%- unless settings.type_body_font.system? -%}
       {% comment %}theme-check-disable AssetPreload{% endcomment %}
       <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>
@@ -315,7 +327,9 @@
   </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
+    <foxy-wishlist-widget></foxy-wishlist-widget>
     <iv-toast-container></iv-toast-container>
+    <foxy-toast-container></foxy-toast-container>
 
     {% if settings.enable_foxy_age_verify %}
       {% render 'foxy-age-verification' %}
@@ -333,14 +347,15 @@
 
     {% sections 'header-group' %}
 
+
     <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
       {{ content_for_layout }}
     </main>
 
-    {% if settings.enable_opening_times_section %}
-      {% section 'foxy-opening-times' %}
+    {% if template.name == 'index' and settings.enable_opening_times_section == true %}
+      {%  section 'foxy-opening-times' %}
     {% endif %}
-
+    
     {% sections 'footer-group' %}
 
     <ul hidden>

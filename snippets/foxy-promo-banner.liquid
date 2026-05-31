@@ -1,9 +1,4 @@
-<div
-  class="promo-banner"
-  style="background-color: {{ promo_bg | default: settings.promo_banner_bg_color }}; color: {{ promo_text_color | default: settings.promo_banner_text_color }};"
-  data-promo-banner-threshold="{{ promo_threshold | default: settings.promo_banner_threshold }}"
-  data-promo-banner-complete-text="{{ promo_complete_text | default: settings.promo_banner_complete_text }}"
->
+<div class="promo-banner" data-promo-banner-threshold="{{ promo_threshold | default: settings.promo_banner_threshold }}" data-promo-banner-complete-text="{{ promo_complete_text | default: settings.promo_banner_complete_text }}">
   <div class="promo-banner-inner">
     <div class="promo-banner-msg">
       {{ promo_message | default: settings.promo_banner_msg }}
@@ -17,20 +12,14 @@
   </div>
 </div>
 
-{% comment %}
-  Inline styles for promo progress banner.
-  TODO: move to dedicated asset once design is finalized.
-{% endcomment %}
 <style id="promo-banner-styles">
+
   .promo-banner {
-    color: var(--color-foreground, #111827);
-    padding: 0.85rem 1.25rem;
-    border-radius: 999px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
     max-width: 100%;
+    background: var(--foxy-pdp-panel, rgba(20, 20, 30, .85));
+    border-bottom: 1px solid var(--foxy-border, rgba(147, 51, 234, 0.4));
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    color: var(--foxy-text, #ffffff);
   }
 
   .promo-banner-inner {
@@ -38,11 +27,13 @@
     flex-direction: column;
     gap: 0.5rem;
     width: 100%;
-    padding: 1.25rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1.25rem 20px;
   }
 
   .promo-banner-msg {
-    font-size: 1.05rem;
+    font-size: 1.5rem!important;
     font-weight: 500;
     text-align: center;
   }
@@ -56,9 +47,11 @@
   .promo-banner-progress-bar-outer {
     position: relative;
     width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
     height: 6px;
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.35);
+    background: rgba(255, 255, 255, 0.1);
     overflow: hidden;
   }
 
@@ -70,19 +63,21 @@
     bottom: 0;
     width: var(--promo-progress);
     max-width: 100%;
-    background: linear-gradient(90deg, #f97316, #ec4899);
+    background: var(--foxy-highlight, #9333ea);
+    box-shadow: 0 0 10px var(--foxy-highlight-glow, rgba(147, 51, 234, 0.6));
     border-radius: inherit;
     transition: width 200ms ease-out;
   }
 
   .promo-banner-progress-text {
-    font-size: 0.9rem;
+    font-size: 1.5rem!important;
     text-align: center;
     opacity: 0.9;
   }
 
   .promo-banner.promo-banner--complete .promo-banner-progress-bar-inner {
     background: linear-gradient(90deg, #22c55e, #14b8a6);
+    box-shadow: 0 0 10px rgba(34, 197, 94, 0.6);
   }
 
   .promo-banner.promo-banner--complete .promo-banner-progress-text {
@@ -90,11 +85,6 @@
   }
 </style>
 
-{% comment %}
-  Inline script for promo progress banner.
-  Uses cart API (/cart.js) and cartUpdate pub/sub event to stay in sync.
-  TODO: move to dedicated asset once behavior is stable.
-{% endcomment %}
 <script>
   (function () {
     if (window.__promoBannerInitialized) return;
@@ -122,7 +112,8 @@
       } catch (e) {}
 
       var value = (cents / 100).toFixed(2);
-      return value;
+      var symbol = '{{ cart.currency.symbol | default: "$" }}';
+      return symbol + value;
     }
 
     function updateBannerForCart(banner, cart) {

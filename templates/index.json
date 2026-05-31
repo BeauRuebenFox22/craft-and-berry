@@ -9,44 +9,20 @@
  */
 {
   "sections": {
-    "image_banner": {
-      "type": "image-banner",
-      "blocks": {
-        "heading": {
-          "type": "heading",
-          "settings": {
-            "heading": "<strong>Bottle Shop/Taproom  </strong>",
-            "heading_size": "hxl"
-          }
-        },
-        "button": {
-          "type": "buttons",
-          "settings": {
-            "button_label_1": "Shop Now",
-            "button_link_1": "shopify://collections/all",
-            "button_style_secondary_1": true,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
-        }
-      },
-      "block_order": [
-        "heading",
-        "button"
-      ],
+    "foxy_hero": {
+      "type": "foxy-hero",
       "settings": {
-        "image": "shopify://shop_images/20230505_150633.jpg",
-        "image_overlay_opacity": 40,
-        "image_height": "adapt",
-        "image_behavior": "none",
-        "desktop_content_position": "bottom-center",
-        "desktop_content_alignment": "center",
-        "show_text_box": false,
-        "color_scheme": "scheme-3",
-        "stack_images_on_mobile": false,
-        "mobile_content_alignment": "center",
-        "show_text_below": false
+        "image": "shopify://shop_images/IMG_0668.jpg",
+        "subheading": "",
+        "heading": "CRAFT & BERRY",
+        "text": "",
+        "button_label": "Shop Now",
+        "button_link": "shopify://collections/all",
+        "button_bg_color": "#9333ea",
+        "button_text_color": "#ffffff",
+        "content_alignment_horizontal": "flex-start",
+        "content_alignment_vertical": "flex-end",
+        "image_fit": "cover"
       }
     },
     "rich_text": {
@@ -62,7 +38,7 @@
         "text": {
           "type": "text",
           "settings": {
-            "text": "<p>Craft & Berry</p><p> Combines the best aspects of a bottle shop and a taproom. With six<br/>keg lines featuring ever-changing craft beers, over 400 different cans and<br/>bottles, and a selection of 70 artisan<br/>gins, rum, and vodka, there’s always<br/>something new to discover. The venue’s online shop provides access to live stock availability and the latest additions,<br/>including craft and real ale beer boxes, tonics, and snacks</p><p>. Situated at 369 Eccelsall Road, Sheffield, Craft & Berry is a<br/>beloved spot for locals and visitors alike. The welcoming atmosphere,<br/>knowledgeable staff, and extensive selection make it a go-to destination for<br/>anyone looking to explore the world of craft beer and artisan spirits.<br/></p>"
+            "text": "<p>Craft & Berry</p><p> Combines the best aspects of a bottle shop and a taproom. With six<br/>keg lines featuring ever-changing craft beers, over 400 different cans and<br/>bottles, and a selection of 70 artisan<br/>gins, rum, and vodka, there’s always<br/>something new to discover. The venue’s online shop provides access to live stock availability and the latest additions,<br/>including craft and real ale beer boxes, tonics, and snacks. Situated at 369 Ecclesall Road, Sheffield, Craft & Berry is a beloved spot for locals and visitors alike. The welcoming atmosphere,<br/>knowledgeable staff, and extensive selection make it a go-to destination for<br/>anyone looking to explore the world of craft beer and artisan spirits.<br/></p>"
           }
         }
       },
@@ -225,7 +201,7 @@
           "settings": {
             "image": "shopify://shop_images/1000003940.jpg",
             "title": "<strong>Sam | Bar Manager</strong>",
-            "text": "<p>\"I started  several years ago working at Craft & Berry  , and have since worked my way up to Bar Manager, I have a product knowledge and passion that's hard to match\" </p>",
+            "text": "<p>\"I started  several years ago working at Craft & Berry, and have since worked my way up to Bar Manager, I have a product knowledge and passion that's hard to match\" </p>",
             "link_label": "",
             "link": ""
           }
@@ -251,15 +227,55 @@
         "padding_top": 52,
         "padding_bottom": 52
       }
+    },
+    "image_with_text_wN6LgK": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_GUhmEE": {
+          "type": "heading",
+          "settings": {
+            "heading": "As featured on BBC Radio 4's \"You & Yours\".",
+            "heading_size": "h1"
+          }
+        },
+        "text_M4Veex": {
+          "type": "text",
+          "settings": {
+            "text": "",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "heading_GUhmEE",
+        "text_M4Veex"
+      ],
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "image": "shopify://shop_images/bbcradio4_d4198890-40d5-471e-bf88-e16758112d85.jpg",
+        "height": "adapt",
+        "desktop_image_width": "small",
+        "layout": "text_first",
+        "image_behavior": "none",
+        "content_layout": "overlap",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "left",
+        "mobile_content_alignment": "left",
+        "section_color_scheme": "",
+        "color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
     }
   },
   "order": [
-    "image_banner",
+    "foxy_hero",
     "rich_text",
     "foxy_dynamic_product_carousel_GfVzJh",
     "collection_list_g4D9yc",
     "collection_list_dM4mVe",
     "collage",
-    "multicolumn"
+    "multicolumn",
+    "image_with_text_wN6LgK"
   ]
 }

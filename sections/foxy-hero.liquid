@@ -1,0 +1,256 @@
+<div class="foxy-hero foxy-hero--100vh" id="FoxyHero-{{ section.id }}">
+  <style>
+    #FoxyHero-{{ section.id }} .foxy-hero__image {
+      object-fit: {{ section.settings.image_fit }};
+    }
+  </style>
+  {%- if section.settings.image != blank -%}
+    {{ section.settings.image | image_url: width: 3840 | image_tag:
+      loading: 'eager',
+      class: 'foxy-hero__image',
+      widths: '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840'
+    }}
+  {%- else -%}
+    <div class="foxy-hero__image foxy-hero__image--placeholder"></div>
+  {%- endif -%}
+
+  <div class="foxy-hero__overlay"></div>
+
+  <div class="foxy-hero__content page-width" style="justify-content: {{ section.settings.content_alignment_horizontal }}; align-items: {{ section.settings.content_alignment_vertical }}; text-align: {% if section.settings.content_alignment_horizontal == 'flex-start' %}left{% elsif section.settings.content_alignment_horizontal == 'flex-end' %}right{% else %}center{% endif %};">
+    <div class="foxy-hero__text-box">
+      {%- if section.settings.subheading != blank -%}
+        <p class="foxy-hero__subheading">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h1 class="foxy-hero__heading">{{ section.settings.heading }}</h1>
+      {%- endif -%}
+      {%- if section.settings.text != blank -%}
+        <div class="foxy-hero__text">{{ section.settings.text }}</div>
+      {%- endif -%}
+      {%- if section.settings.button_label != blank -%}
+        <a href="{{ section.settings.button_link }}" class="foxy-button foxy-hero__button" style="background: {{ section.settings.button_bg_color }}; color: {{ section.settings.button_text_color }};">
+          {{ section.settings.button_label }}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+<style>
+  .foxy-hero {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Align to the right as per design */
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .foxy-hero--100vh {
+    height: calc(100vh + 250px);
+    min-height: 600px;
+  }
+
+  .foxy-hero__image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-position: center;
+    z-index: 1;
+    transform: scale(1.05); /* Slight zoom for subtle animation */
+    animation: zoomOut 10s ease-out forwards;
+  }
+
+  @keyframes zoomOut {
+    from { transform: scale(1.05); }
+    to { transform: scale(1); }
+  }
+
+  .foxy-hero__image--placeholder {
+    background-color: #111;
+    background-image: linear-gradient(45deg, #111 25%, #222 25%, #222 50%, #111 50%, #111 75%, #222 75%, #222 100%);
+    background-size: 20px 20px;
+  }
+
+  .foxy-hero__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0) 100%);
+    z-index: 2;
+  }
+
+  .foxy-hero__content {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    display: flex;
+    height: 100%;
+    padding: 0 40px;
+  }
+
+  .foxy-hero__text-box {
+    max-width: 600px;
+    text-align: inherit;
+    color: #fff;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    margin-bottom: 50px;
+  }
+
+  .foxy-hero__subheading {
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #a1a1aa;
+    margin-bottom: 10px;
+  }
+
+  .foxy-hero__heading {
+    font-family: var(--font-heading-family);
+    font-size: 4rem;
+    line-height: 1.1;
+    margin: 0 0 20px 0;
+    letter-spacing: 1px;
+    background: linear-gradient(90deg, #fff, #d4d4d8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .foxy-hero__text {
+    font-size: 1.2rem;
+    line-height: 1.5;
+    color: #d4d4d8;
+    margin-bottom: 30px;
+  }
+
+  .foxy-hero__button {
+    text-decoration: none;
+    display: inline-block;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: opacity 0.2s ease, box-shadow 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .foxy-hero__button:hover {
+    opacity: 0.9;
+    box-shadow: 0 0 15px rgba(255,255,255,0.2);
+  }
+
+  @media screen and (max-width: 768px) {
+    .foxy-hero__heading {
+      font-size: 2.5rem;
+    }
+    .foxy-hero__text {
+      font-size: 1rem;
+    }
+    .foxy-hero__content {
+      justify-content: center;
+      text-align: center;
+      padding: 0 20px;
+    }
+    .foxy-hero__overlay {
+      background: rgba(0,0,0,0.6);
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Foxy Hero",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background Image"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "BREWER'S PICK"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Brewer's Name"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Heathen (AP)<br>balanced hop profile</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Button Background Color",
+      "default": "#9333ea"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment_horizontal",
+      "label": "Horizontal Content Alignment",
+      "options": [
+        { "value": "flex-start", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "flex-end", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment_vertical",
+      "label": "Vertical Content Alignment",
+      "options": [
+        { "value": "flex-start", "label": "Top" },
+        { "value": "center", "label": "Center" },
+        { "value": "flex-end", "label": "Bottom" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "image_fit",
+      "label": "Image Fit",
+      "options": [
+        { "value": "cover", "label": "Cover" },
+        { "value": "contain", "label": "Contain" },
+        { "value": "fill", "label": "Fill" }
+      ],
+      "default": "cover"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Foxy Hero"
+    }
+  ]
+}
+{% endschema %}

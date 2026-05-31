@@ -1,0 +1,36 @@
+{% render 'foxy-promo-banner', 
+  promo_threshold: section.settings.promo_threshold,
+  promo_message: section.settings.promo_message,
+  promo_complete_text: section.settings.promo_complete_text
+%}
+
+{% schema %}
+{
+  "name": "Promo Banner",
+  "settings": [
+    {
+      "type": "text",
+      "id": "promo_message",
+      "label": "Promo Message",
+      "default": "Free shipping on orders over £50!"
+    },
+    {
+      "type": "number",
+      "id": "promo_threshold",
+      "label": "Promo Threshold",
+      "default": 50
+    },
+    {
+      "type": "text",
+      "id": "promo_complete_text",
+      "label": "Promo Complete Text",
+      "default": "You have unlocked free shipping!"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Promo Banner"
+    }
+  ]
+}
+{% endschema %}

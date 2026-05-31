@@ -1,0 +1,195 @@
+foxy-header {
+  display: block;
+  position: sticky;
+  top: 0;
+  z-index: 250;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: background 0.3s ease, border-color 0.3s ease;
+  background: rgba(15, 15, 20, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+foxy-header.foxy-header--transparent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: #000;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+foxy-header.foxy-header--transparent.is-scrolled {
+  position: fixed;
+  background: #000;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.foxy-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.foxy-header__left {
+  flex: 1;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.foxy-header__center {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+  min-width: 0;
+  padding: 0 15px;
+}
+
+/* Promo Banner overrides for Header */
+.foxy-header__center .promo-banner {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  padding: 0;
+  width: 100%;
+}
+
+.foxy-header__center .promo-banner-inner {
+  padding: 0;
+  gap: 4px;
+  width: 100%;
+}
+
+.foxy-header__center .promo-banner-msg {
+  font-size: 0.85rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.foxy-header__center .promo-banner-progress-text {
+  font-size: 0.75rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.foxy-header__right {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.foxy-header__burger {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border-radius: 8px;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.foxy-header__burger:hover {
+  background: rgba(147, 51, 234, 0.2);
+  border-color: rgba(147, 51, 234, 0.5);
+  box-shadow: 0 0 15px rgba(147, 51, 234, 0.3);
+}
+
+.foxy-header__logo-link {
+  text-decoration: none;
+  color: #fff;
+}
+
+.foxy-header__logo {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.foxy-header__logo-text {
+  font-family: var(--font-heading-family);
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.foxy-header__icon {
+  color: #fff;
+  opacity: 0.8;
+  transition: opacity 0.2s ease, color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  position: relative;
+  padding: 0.5rem;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.foxy-header__icon:hover {
+  opacity: 1;
+  color: #c084fc;
+  border-color: rgba(147, 51, 234, 0.3);
+  background: rgba(147, 51, 234, 0.1);
+}
+
+.cart-count-bubble {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: #e11d48;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: bold;
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.cart-count-bubble.hidden {
+  display: none;
+}
+
+@media screen and (max-width: 749px) {
+  .foxy-header__right {
+    gap: 0.5rem;
+  }
+
+  .foxy-header__icon {
+    padding: 0.4rem;
+  }
+
+  .foxy-header__logo-text {
+    font-size: 1.5rem;
+  }
+
+  .foxy-header__center {
+    padding: 0 5px;
+  }
+
+  .foxy-header__center .promo-banner-msg {
+    font-size: 0.7rem;
+  }
+
+  .foxy-header__center .promo-banner-progress-text {
+    font-size: 0.6rem;
+  }
+}

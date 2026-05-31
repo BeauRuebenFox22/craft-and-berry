@@ -1,0 +1,660 @@
+<foxy-menu-drawer class="foxy-menu" id="FoxyMenuDrawer" aria-hidden="true">
+  <div class="foxy-menu__overlay"></div>
+  <div class="foxy-menu__panel">
+    <div class="foxy-menu__header">
+      <button type="button" class="foxy-menu__close" aria-label="Close menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+      <h2 class="foxy-menu__title">{{ section.settings.title }}</h2>
+    </div>
+
+    <div class="foxy-menu__content">
+      
+      <!-- Left Column: Surfaces -->
+      <div class="foxy-menu__surfaces">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'your_pick' -%}
+              {%- assign product = all_products[block.settings.product] -%}
+              <div class="foxy-surface foxy-surface--pick" {{ block.shopify_attributes }}>
+                <div class="foxy-surface__header">
+                  <h3>{{ block.settings.heading }}</h3>
+                  {% if customer %}
+                    <p class="foxy-surface__subtext">Personalized for {{ customer.first_name | default: customer.name }}</p>
+                  {% endif %}
+                </div>
+                {%- if product != empty -%}
+                  <div class="foxy-surface__product">
+                    <img src="{{ product.featured_image | image_url: width: 300 }}" alt="{{ product.title }}" loading="lazy" class="foxy-surface__product-image">
+                    <form method="post" action="/cart/add">
+                      <input type="hidden" name="id" value="{{ product.variants.first.id }}" />
+                      <button type="submit" class="foxy-button foxy-button--primary foxy-button--full">ADD TO CART</button>
+                    </form>
+                  </div>
+                {%- endif -%}
+              </div>
+
+            {%- when 'facts' -%}
+              <div class="foxy-surface foxy-surface--facts" {{ block.shopify_attributes }}>
+                <div class="foxy-fact">
+                  <div class="foxy-fact__icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"></path><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                  </div>
+                  <p><strong>Fact 1:</strong> {{ block.settings.fact_1 }}</p>
+                </div>
+                <div class="foxy-fact">
+                  <div class="foxy-fact__icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"></path><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                  </div>
+                  <p><strong>Fact 2:</strong> {{ block.settings.fact_2 }}</p>
+                </div>
+              </div>
+
+            {%- when 'discoveries' -%}
+              {%- assign collection = collections[block.settings.collection] -%}
+              <div class="foxy-surface foxy-surface--discoveries" {{ block.shopify_attributes }}>
+                <h3 class="foxy-surface__heading">{{ block.settings.heading }}</h3>
+                <div class="foxy-slider">
+                  {%- for product in collection.products limit: 4 -%}
+                    <a href="{{ product.url }}" class="foxy-slider__item">
+                      <img src="{{ product.featured_image | image_url: width: 150 }}" alt="{{ product.title }}" loading="lazy">
+                    </a>
+                  {%- endfor -%}
+                </div>
+                <a href="{{ collection.url }}" class="foxy-surface__link">Personalized Recommendations</a>
+              </div>
+          {%- endcase -%}
+        {%- endfor -%}
+
+        {%- if section.settings.show_newsletter -%}
+          <div class="foxy-surface foxy-surface--newsletter">
+            <h3 class="foxy-surface__heading">THE CELLAR NEWSLETTER</h3>
+            <p class="foxy-surface__subtext" style="margin-bottom: 15px;">Sign up to get our latest news sent to your inbox.</p>
+            {% form 'customer', class: 'foxy-newsletter-form' %}
+              <input type="hidden" name="contact[tags]" value="newsletter">
+              <div class="foxy-newsletter-input-wrapper">
+                <input type="email" name="contact[email]" placeholder="Enter your email address" required>
+                <button type="submit" aria-label="Subscribe">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </button>
+              </div>
+            {% endform %}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <!-- Right Column: Navigation -->
+      <div class="foxy-menu__nav">
+        <ul class="foxy-nav-list">
+          {%- for link in linklists[section.settings.menu].links -%}
+            <li class="foxy-nav-list__item {% if link.links != blank %}has-dropdown{% endif %}">
+              <a href="{{ link.url }}" class="foxy-nav-list__link">{{ link.title }}</a>
+              {%- if link.links != blank -%}
+                <button class="foxy-nav-list__toggle">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </button>
+                <ul class="foxy-nav-sublist">
+                  {%- for childlink in link.links -%}
+                    <li><a href="{{ childlink.url }}" class="foxy-nav-sublist__link">{{ childlink.title }}</a></li>
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    </div>
+  </div>
+</foxy-menu-drawer>
+
+<style>
+  .foxy-menu__panel h1,
+  .foxy-menu__panel h2,
+  .foxy-menu__panel h3,
+  .foxy-menu__panel h4,
+  .foxy-menu__panel h5,
+  .foxy-menu__panel h6 {
+    color: #ffffff !important;
+  }
+
+  .foxy-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    pointer-events: none;
+    visibility: hidden;
+  }
+
+  .foxy-menu[aria-hidden="false"] {
+    pointer-events: auto;
+    visibility: visible;
+  }
+
+  .foxy-menu__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .foxy-menu[aria-hidden="false"] .foxy-menu__overlay {
+    opacity: 1;
+  }
+
+  .foxy-menu__panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    max-width: 900px;
+    height: 100vh;
+    background: rgba(15, 15, 20, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-left: 1px solid rgba(255,255,255,0.05);
+    box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+    overflow-y: auto;
+  }
+
+  .foxy-menu[aria-hidden="false"] .foxy-menu__panel {
+    transform: translateX(0);
+  }
+
+  .foxy-menu__close {
+    background: transparent;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    transition: transform 0.2s ease, color 0.2s ease;
+    padding: 10px;
+    margin-right: 15px;
+  }
+  
+  .foxy-menu__close:hover {
+    transform: rotate(90deg);
+    color: #c084fc;
+  }
+
+  .foxy-menu__header {
+    display: flex;
+    align-items: center;
+    padding: 40px 40px 20px;
+  }
+
+  .foxy-menu__title {
+    font-size: 2rem;
+    font-weight: 300;
+    letter-spacing: 1px;
+    margin: 0;
+    font-family: var(--font-heading-family);
+  }
+
+  .foxy-menu__content {
+    display: flex;
+    flex: 1;
+    padding: 0 40px 40px;
+    gap: 60px;
+  }
+
+  @media screen and (max-width: 768px) {
+    .foxy-menu__content {
+      flex-direction: column;
+      gap: 30px;
+      padding: 0 20px 20px;
+    }
+    .foxy-menu__header {
+      padding: 80px 20px 20px;
+    }
+    .foxy-menu__nav {
+      order: -1;
+    }
+  }
+
+  /* Left Column: Surfaces */
+  .foxy-menu__surfaces {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .foxy-surface {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 20px;
+    transition: border-color 0.3s ease;
+  }
+
+  .foxy-surface:hover {
+    border-color: rgba(147, 51, 234, 0.4);
+  }
+
+  .foxy-surface--pick {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .foxy-surface--pick::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, #9333ea, #c084fc);
+  }
+
+  .foxy-surface__header h3 {
+    margin: 0 0 5px 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .foxy-surface__subtext {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #a1a1aa;
+    font-style: italic;
+  }
+
+  .foxy-surface__product {
+    margin-top: 15px;
+    text-align: center;
+  }
+
+  .foxy-surface__product-image {
+    max-width: 120px;
+    height: auto;
+    margin-bottom: 15px;
+    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));
+    transition: transform 0.3s ease;
+  }
+
+  .foxy-surface__product:hover .foxy-surface__product-image {
+    transform: scale(1.05);
+  }
+
+  .foxy-button--primary {
+    background: linear-gradient(90deg, #9333ea, #c084fc);
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: opacity 0.2s ease, box-shadow 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .foxy-button--full {
+    width: 100%;
+  }
+
+  .foxy-button--primary:hover {
+    opacity: 0.9;
+    box-shadow: 0 0 15px rgba(147, 51, 234, 0.5);
+  }
+
+  .foxy-surface--facts {
+    display: flex;
+    gap: 15px;
+    background: transparent;
+    border: none;
+    padding: 0;
+  }
+
+  .foxy-fact {
+    flex: 1;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 15px;
+    font-size: 0.85rem;
+    color: #d4d4d8;
+  }
+
+  .foxy-fact__icon {
+    margin-bottom: 8px;
+  }
+  
+  .foxy-fact p {
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  .foxy-surface--discoveries .foxy-surface__heading,
+  .foxy-surface--newsletter .foxy-surface__heading {
+    margin: 0 0 15px 0;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .foxy-slider {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.2) transparent;
+  }
+  
+  .foxy-slider::-webkit-scrollbar {
+    height: 4px;
+  }
+  .foxy-slider::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.2);
+    border-radius: 4px;
+  }
+
+  .foxy-slider__item {
+    flex: 0 0 auto;
+    width: 80px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 8px;
+    padding: 10px;
+    transition: background 0.2s ease;
+  }
+
+  .foxy-slider__item:hover {
+    background: rgba(255,255,255,0.1);
+  }
+
+  .foxy-slider__item img {
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5));
+  }
+
+  .foxy-surface__link {
+    display: inline-block;
+    margin-top: 15px;
+    color: #c084fc;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s ease;
+  }
+
+  .foxy-surface__link:hover {
+    color: #d8b4fe;
+    text-decoration: underline;
+  }
+
+  /* Right Column: Navigation */
+  .foxy-menu__nav {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .foxy-nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 30px 0;
+  }
+
+  .foxy-nav-list__item {
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .foxy-nav-list__link {
+    display: block;
+    padding: 15px 0;
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.4rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: color 0.2s ease, padding-left 0.2s ease;
+  }
+
+  .foxy-nav-list__link:hover {
+    color: #c084fc;
+    padding-left: 10px;
+  }
+
+  .foxy-nav-list__item.has-dropdown {
+    position: relative;
+  }
+
+  .foxy-nav-list__toggle {
+    position: absolute;
+    right: 0;
+    top: 12px;
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    padding: 10px;
+    transition: transform 0.3s ease;
+  }
+
+  .foxy-nav-list__item.is-open .foxy-nav-list__toggle {
+    transform: rotate(180deg);
+  }
+
+  .foxy-nav-sublist {
+    list-style: none;
+    padding: 0 0 15px 20px;
+    margin: 0;
+    display: none;
+  }
+
+  .foxy-nav-list__item.is-open .foxy-nav-sublist {
+    display: block;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .foxy-nav-sublist__link {
+    display: block;
+    padding: 8px 0;
+    color: #a1a1aa;
+    text-decoration: none;
+    font-size: 1.35rem;
+    transition: color 0.2s ease;
+  }
+
+  .foxy-nav-sublist__link:hover {
+    color: #fff;
+  }
+
+
+
+  .foxy-newsletter-input-wrapper {
+    position: relative;
+    display: flex;
+  }
+
+  .foxy-newsletter-input-wrapper input {
+    width: 100%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: #fff;
+    padding: 10px 40px 10px 15px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.3s ease;
+  }
+
+  .foxy-newsletter-input-wrapper input:focus {
+    border-color: #c084fc;
+  }
+
+  .foxy-newsletter-input-wrapper button {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #c084fc;
+    color: #000;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+  }
+
+  .foxy-newsletter-input-wrapper button:hover {
+    opacity: 0.8;
+  }
+</style>
+
+<script>
+  if (!customElements.get('foxy-menu-drawer')) {
+    customElements.define('foxy-menu-drawer', class extends HTMLElement {
+      constructor() {
+        super();
+        this.closeBtn = this.querySelector('.foxy-menu__close');
+        this.overlay = this.querySelector('.foxy-menu__overlay');
+        this.toggles = this.querySelectorAll('.foxy-nav-list__toggle');
+        
+        if (this.closeBtn) this.closeBtn.addEventListener('click', () => this.close());
+        if (this.overlay) this.overlay.addEventListener('click', () => this.close());
+        
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && this.getAttribute('aria-hidden') === 'false') {
+            this.close();
+          }
+        });
+
+        this.toggles.forEach(toggle => {
+          toggle.addEventListener('click', (e) => {
+            const item = e.currentTarget.closest('.foxy-nav-list__item');
+            item.classList.toggle('is-open');
+          });
+        });
+      }
+
+      toggle() {
+        if (this.getAttribute('aria-hidden') === 'true') {
+          this.open();
+        } else {
+          this.close();
+        }
+      }
+
+      open() {
+        this.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      }
+
+      close() {
+        this.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      }
+    });
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Foxy Menu Drawer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Menu Title",
+      "default": "COMMUNITY CELLAR: Explore & Personalize"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Main Navigation"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_newsletter",
+      "label": "Show Newsletter Signup",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "your_pick",
+      "name": "Your Pick",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "YOUR PICK"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        }
+      ]
+    },
+    {
+      "type": "facts",
+      "name": "Beer Facts",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "fact_1",
+          "label": "Fact 1",
+          "default": "Mosaic Hops are Citra's cousin selected for their profile."
+        },
+        {
+          "type": "textarea",
+          "id": "fact_2",
+          "label": "Fact 2",
+          "default": "Our Pale Session & Malts profiles are selected for their profile."
+        }
+      ]
+    },
+    {
+      "type": "discoveries",
+      "name": "Recent Discoveries",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "RECENT DISCOVERIES"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Foxy Menu Drawer"
+    }
+  ]
+}
+{% endschema %}

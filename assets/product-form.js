@@ -67,7 +67,7 @@ if (!customElements.get('product-form')) {
             }
 
             const startMarker = CartPerformance.createStartingMarker('add:wait-for-subscribers');
-            if (!this.error)
+            if (!this.error) {
               publish(PUB_SUB_EVENTS.cartUpdate, {
                 source: 'product-form',
                 productVariantId: formData.get('id'),
@@ -75,6 +75,38 @@ if (!customElements.get('product-form')) {
               }).then(() => {
                 CartPerformance.measureFromMarker('add:wait-for-subscribers', startMarker);
               });
+
+              // Trigger Foxy Toast
+              document.dispatchEvent(new CustomEvent('foxy:cart:updated', { detail: response }));
+
+              this.submitButton.classList.add('success');
+              const originalText = window.variantStrings.addToCart;
+              this.submitButtonText.textContent = 'Added to Cart!';
+
+              let msg = this.querySelector('.foxy-form-message');
+              if (!msg) {
+                msg = document.createElement('div');
+                msg.className = 'foxy-form-message';
+                msg.style.color = 'var(--foxy-highlight)';
+                msg.style.fontSize = '13px';
+                msg.style.marginTop = '10px';
+                msg.style.fontWeight = 'bold';
+                msg.style.textAlign = 'center';
+                // Insert after the button
+                if (this.submitButton) {
+                  this.submitButton.parentNode.insertBefore(msg, this.submitButton.nextSibling);
+                } else {
+                  this.appendChild(msg);
+                }
+              }
+              msg.textContent = 'Successfully added to cart!';
+
+              setTimeout(() => {
+                this.submitButton.classList.remove('success');
+                this.submitButtonText.textContent = originalText;
+                if (msg) msg.remove();
+              }, 3000);
+            }
             this.error = false;
             const quickAddModal = this.closest('quick-add-modal');
             if (quickAddModal) {
