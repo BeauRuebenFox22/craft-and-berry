@@ -27,8 +27,8 @@
         "hotspot_1"
       ],
       "settings": {
-        "image": "",
-        "image_mobile": ""
+        "image": "shopify://shop_images/IMG_0678.jpg",
+        "image_mobile": "shopify://shop_images/IMG_0678.jpg"
       }
     },
     "foxy-main": {
