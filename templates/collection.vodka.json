@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "foxy-hero": {
@@ -18,8 +27,8 @@
         "hotspot_1"
       ],
       "settings": {
-        "image": "",
-        "image_mobile": ""
+        "image": "shopify://shop_images/1000020512.jpg",
+        "image_mobile": "shopify://shop_images/1000020512.jpg"
       }
     },
     "foxy-main": {
