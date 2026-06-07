@@ -11,9 +11,24 @@
   "sections": {
     "foxy-hero": {
       "type": "foxy-collection-hero",
+      "blocks": {
+        "hotspot_1": {
+          "type": "hotspot",
+          "settings": {
+            "product": "",
+            "x_position": 50,
+            "y_position": 50,
+            "x_position_mobile": 50,
+            "y_position_mobile": 50
+          }
+        }
+      },
+      "block_order": [
+        "hotspot_1"
+      ],
       "settings": {
-        "image": "shopify://shop_images/1000020511.jpg",
-        "image_mobile": "shopify://shop_images/1000020511.jpg"
+        "image": "shopify://shop_images/1000020512.jpg",
+        "image_mobile": "shopify://shop_images/1000020512.jpg"
       }
     },
     "foxy-main": {

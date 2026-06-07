@@ -1,0 +1,396 @@
+.foxy-search-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.foxy-search-title {
+  font-size: 3rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+}
+
+.foxy-search-input-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.foxy-search-input {
+  flex: 1;
+  width: 100%;
+  padding: 1.5rem 2rem 1.5rem 4rem;
+  border-radius: 30px;
+  border: 2px solid #fff;
+  background-color: transparent;
+  color: #fff;
+  font-size: 1.6rem;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.foxy-search-input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.foxy-search-input:focus {
+  border-color: #a855f7;
+  box-shadow: 0 0 15px rgba(168, 85, 247, 0.5);
+}
+
+.foxy-search-icon {
+  position: absolute;
+  left: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2rem;
+  height: 2rem;
+  color: rgba(255,255,255,0.6);
+  pointer-events: none;
+}
+
+.foxy-search-icon svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
+
+.foxy-search-share-btn {
+  white-space: nowrap;
+}
+
+/* Cellar View Styles */
+.template-search {
+  background-color: #0b0a0a; /* Dark background matching PLP */
+  color: #fff;
+}
+
+.foxy-cellar-view {
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.foxy-cellar-view.hidden {
+  display: none;
+}
+
+.foxy-cellar-view.foxy-fade-out {
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+}
+
+.foxy-search-results-view {
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.foxy-search-results-view.foxy-fade-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.foxy-search-results-view.hidden {
+  display: none;
+}
+
+/* Search Results Grid - Clean Markup */
+.foxy-search-results-grid {
+  display: grid;
+  grid-template-columns: 1fr; /* Stack on mobile */
+  gap: 2rem 0; /* Vertical gap, no horizontal gap/margin on mobile */
+  width: 100%;
+}
+
+@media screen and (min-width: 750px) {
+  .foxy-search-results-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2x2 on tablet */
+    gap: 2rem; /* Apply margin/gap */
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .foxy-search-results-grid {
+    grid-template-columns: repeat(3, 1fr); /* Changed to 3 columns */
+  }
+}
+
+/* Ensure product card behaves nicely in the new grid */
+.foxy-search-results-grid .foxy-product-card {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* Critical: Stop Shopify image_tag from forcing the card wider than its grid cell */
+.foxy-search-results-grid .foxy-product-card img {
+  max-width: 100% !important;
+  height: auto !important;
+  object-fit: contain;
+}
+
+.foxy-cellar-section {
+  margin-bottom: 4rem;
+}
+
+.foxy-cellar-heading {
+  font-size: 1.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 2rem;
+}
+
+.foxy-cellar-heading--explore {
+  margin-top: 4rem;
+}
+
+/* Vibe Grid (Horizontal scroll on mobile) */
+.foxy-vibe-grid {
+  display: flex;
+  gap: 2rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 1rem;
+}
+
+.foxy-vibe-grid::-webkit-scrollbar {
+  height: 6px;
+}
+
+.foxy-vibe-grid::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+.foxy-vibe-grid::-webkit-scrollbar-thumb {
+  background: #a855f7;
+  border-radius: 10px;
+}
+
+.foxy-vibe-card {
+  flex: 0 0 80%;
+  max-width: 300px;
+  background-color: #1a1a1c; /* Lighter dark background to pop */
+  border-radius: 12px;
+  padding: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-decoration: none;
+  color: #fff;
+  scroll-snap-align: start;
+  transition: transform 0.3s ease;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.foxy-vibe-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(168, 85, 247, 0.5);
+}
+
+.foxy-vibe-info h3 {
+  font-size: 2.2rem;
+  margin: 0 0 1.5rem 0;
+  color: #fff;
+}
+
+.foxy-vibe-btn {
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  padding: 0.5rem 1.5rem;
+  border-radius: 20px;
+  border: 1px solid #a855f7;
+  color: #a855f7;
+  background: rgba(168, 85, 247, 0.1);
+}
+
+.foxy-vibe-img {
+  width: 80px;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Desktop layout for vibe grid */
+@media screen and (min-width: 750px) {
+  .foxy-vibe-grid {
+    flex-wrap: nowrap;
+  }
+  .foxy-vibe-card {
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: none;
+  }
+}
+
+/* Bottom section 2-column on desktop */
+@media screen and (min-width: 990px) {
+  .foxy-cellar-bottom-stack {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+}
+
+/* Best Sellers */
+.foxy-bestsellers-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+@media screen and (min-width: 750px) {
+  .foxy-bestsellers-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Brewery Card */
+.foxy-brewery-card {
+  background-color: #1a1a1a;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+@media screen and (min-width: 750px) {
+  .foxy-brewery-card {
+    flex-direction: row;
+  }
+}
+
+.foxy-brewery-content {
+  padding: 3rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.foxy-brewery-content h3 {
+  font-size: 2.6rem;
+  margin: 0 0 1rem 0;
+  color: #fff;
+}
+
+.foxy-brewery-content p {
+  color: rgba(255,255,255,0.7);
+  font-size: 1.4rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.foxy-brewery-btn {
+  align-self: flex-start;
+  background-color: #a855f7;
+  color: #fff;
+}
+
+.foxy-brewery-images {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 2rem;
+  background: rgba(255,255,255,0.02);
+  gap: 2rem;
+}
+
+.foxy-brewery-logo {
+  max-width: 100px;
+  height: auto;
+  object-fit: contain;
+}
+
+.foxy-brewery-feature {
+  max-width: 200px;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* Simple Custom Product Card for Best Sellers (since we are building it in JS) */
+.foxy-simple-card {
+  background: #111;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  text-decoration: none;
+  color: #fff;
+}
+
+.foxy-simple-badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: rgba(0,0,0,0.8);
+  color: #fff;
+  font-size: 1rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 4px;
+  z-index: 1;
+  text-transform: uppercase;
+}
+
+.foxy-simple-image {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: contain;
+  margin-bottom: 1rem;
+}
+
+.foxy-simple-title {
+  font-size: 1.4rem;
+  margin: 0 0 0.5rem 0;
+}
+
+.foxy-simple-price {
+  font-size: 1.2rem;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 1.5rem;
+}
+
+.foxy-simple-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: auto;
+}
+
+.foxy-simple-qty {
+  display: flex;
+  align-items: center;
+  background: rgba(255,255,255,0.1);
+  border-radius: 4px;
+  padding: 0 1rem;
+  gap: 1rem;
+}
+
+.foxy-simple-qty span {
+  font-size: 1.4rem;
+}
+
+.foxy-simple-add {
+  flex: 1;
+  background: #a855f7;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 0.8rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.foxy-spinner {
+  display: block;
+  margin: 0 auto;
+}
