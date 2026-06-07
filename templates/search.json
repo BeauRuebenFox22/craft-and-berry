@@ -1,18 +1,72 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
       "type": "main-search",
+      "blocks": {
+        "foxy_brewery_of_week_Viq8Dq": {
+          "type": "foxy_brewery_of_week",
+          "settings": {
+            "title": "Brew York",
+            "text": "Founded in 2016, Brew York is an award-winning UK craft brewery based in York, England. Famous for its imaginative recipes and vibrant pop-culture branding, they produce a massive variety of cask, keg, and canned beers.",
+            "link": "https://craftnberry.co.uk/collections/brew-york",
+            "logo_image": "shopify://shop_images/brew_york_logo.png",
+            "feature_image": "shopify://shop_images/20260528_132933.jpg"
+          }
+        },
+        "foxy_best_seller_i4FPJd": {
+          "type": "foxy_best_seller",
+          "settings": {}
+        },
+        "foxy_vibe_collection_4nntyz": {
+          "type": "foxy_vibe_collection",
+          "settings": {
+            "collection": "beer-1"
+          }
+        },
+        "foxy_vibe_collection_3HJCwn": {
+          "type": "foxy_vibe_collection",
+          "settings": {
+            "collection": "gin-emporium"
+          }
+        },
+        "foxy_vibe_collection_rNt4pC": {
+          "type": "foxy_vibe_collection",
+          "settings": {
+            "collection": "vodka"
+          }
+        },
+        "foxy_vibe_collection_pJQJ8P": {
+          "type": "foxy_vibe_collection",
+          "settings": {
+            "collection": "liqueur"
+          }
+        }
+      },
+      "block_order": [
+        "foxy_brewery_of_week_Viq8Dq",
+        "foxy_best_seller_i4FPJd",
+        "foxy_vibe_collection_4nntyz",
+        "foxy_vibe_collection_3HJCwn",
+        "foxy_vibe_collection_rNt4pC",
+        "foxy_vibe_collection_pJQJ8P"
+      ],
       "settings": {
         "columns_desktop": 4,
+        "columns_mobile": "2",
         "image_ratio": "adapt",
+        "image_shape": "default",
         "show_secondary_image": false,
         "show_vendor": false,
         "show_rating": false,
-        "enable_filtering": true,
-        "enable_sorting": true,
-        "article_show_date": true,
-        "article_show_author": false,
-        "columns_mobile": "2",
         "padding_top": 36,
         "padding_bottom": 36
       }
