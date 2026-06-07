@@ -2,52 +2,9 @@
 {{ 'component-card.css' | asset_url | stylesheet_tag }}
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
 {{ 'component-search.css' | asset_url | stylesheet_tag }}
+{{ 'foxy-search.css' | asset_url | stylesheet_tag }}
 
-{%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
-  {{ 'component-facets.css' | asset_url | stylesheet_tag }}
-  <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
-{%- endif -%}
-
-{% if section.settings.image_shape == 'blob' %}
-  {{ 'mask-blobs.css' | asset_url | stylesheet_tag }}
-{%- endif -%}
-
-<script src="{{ 'main-search.js' | asset_url }}" defer="defer"></script>
-
-<style>
-  .template-search__header {
-    margin-bottom: 3rem;
-  }
-
-  .template-search__search {
-    margin: 0 auto 3.5rem;
-    max-width: 74.1rem;
-  }
-
-  .template-search__search .search {
-    margin-top: 3rem;
-  }
-
-  .template-search--empty {
-    padding-bottom: 18rem;
-  }
-
-  @media screen and (min-width: 750px) {
-    .template-search__header {
-      margin-bottom: 5rem;
-    }
-  }
-
-  .search__button .icon {
-    height: 1.8rem;
-  }
-</style>
-
-{%- liquid
-  assign sort_by = search.sort_by | default: search.default_sort_by
-  assign terms = search.terms | escape
-  assign search_url = '?q=' | append: terms | append: '&options%5Bprefix%5D=last&sort_by=' | append: sort_by
--%}
+<script src="{{ 'foxy-search.js' | asset_url }}" defer="defer"></script>
 
 {%- style -%}
   .section-{{ section.id }}-padding {
@@ -63,275 +20,161 @@
   }
 {%- endstyle -%}
 
-{% paginate search.results by 24 %}
-  <div class="template-search{% unless search.performed and search.results_count > 0 %} template-search--empty{% endunless %} section-{{ section.id }}-padding">
-    <div class="template-search__header page-width{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
-      <h1 class="h2 center">
-        {%- if search.performed -%}
-          {{- 'templates.search.title' | t -}}
-        {%- else -%}
-          {{- 'general.search.search' | t -}}
-        {%- endif -%}
-      </h1>
-      <div class="template-search__search">
-        {%- if settings.predictive_search_enabled -%}
-          <predictive-search data-loading-text="{{ 'accessibility.loading' | t }}">
-        {%- endif -%}
-        <main-search>
-          <form action="{{ routes.search_url }}" method="get" role="search" class="search">
-            <div class="field">
-              <input
-                class="search__input field__input"
-                id="Search-In-Template"
-                type="search"
-                name="q"
-                value="{{ search.terms | escape }}"
-                placeholder="{{ 'general.search.search' | t }}"
-                {%- if settings.predictive_search_enabled -%}
-                  role="combobox"
-                  aria-expanded="false"
-                  aria-owns="predictive-search-results"
-                  aria-controls="predictive-search-results"
-                  aria-haspopup="listbox"
-                  aria-autocomplete="list"
-                  autocorrect="off"
-                  autocomplete="off"
-                  autocapitalize="off"
-                  spellcheck="false"
-                {%- endif -%}
-              >
-              <label class="field__label" for="Search-In-Template">{{ 'general.search.search' | t }}</label>
-              <input name="options[prefix]" type="hidden" value="last">
-
-              {%- if settings.predictive_search_enabled -%}
-                <div class="predictive-search predictive-search--search-template" tabindex="-1" data-predictive-search>
-                  {%- render 'loading-spinner', class: 'predictive-search__loading-state' -%}
-                </div>
-
-                <span class="predictive-search-status visually-hidden" role="status" aria-hidden="true"></span>
-              {%- endif -%}
-
-              <button
-                type="reset"
-                class="reset__button field__button{% if search.terms == blank %} hidden{% endif %}"
-                aria-label="{{ 'general.search.reset' | t }}"
-              >
-                <span class="svg-wrapper">
-                  {{- 'icon-reset.svg' | inline_asset_content -}}
-                </span>
-              </button>
-              <button type="submit" class="search__button field__button" aria-label="{{ 'general.search.search' | t }}">
-                <span class="svg-wrapper">
-                  {{- 'icon-search.svg' | inline_asset_content -}}
-                </span>
-              </button>
-            </div>
-          </form>
-        </main-search>
-        {%- if settings.predictive_search_enabled -%}
-          </predictive-search>
-        {%- endif -%}
-      </div>
-      {%- if search.performed -%}
-        {%- unless section.settings.enable_filtering or section.settings.enable_sorting -%}
-          {%- if search.results_count > 0 -%}
-            <p role="status">
-              {{ 'templates.search.results_with_count_and_term' | t: terms: search.terms, count: search.results_count }}
-            </p>
-          {%- endif -%}
-        {%- endunless -%}
-        {%- if search.results_count == 0 and search.filters == empty -%}
-          <p role="status">{{ 'templates.search.no_results' | t: terms: search.terms }}</p>
-        {%- endif -%}
-      {%- endif -%}
-    </div>
-    {%- if search.performed -%}
-      {%- if section.settings.enable_sorting
-        and section.settings.filter_type == 'vertical'
-        and search.filters != empty
-      -%}
-        <facet-filters-form class="facets facets-vertical-sort page-width small-hide">
-          <form class="facets-vertical-form" id="FacetSortForm">
-            <div class="facet-filters sorting caption">
-              <div class="facet-filters__field">
-                <h2 class="facet-filters__label caption-large text-body">
-                  <label for="SortBy">{{ 'products.facets.sort_by_label' | t }}</label>
-                </h2>
-                <div class="select">
-                  {%- assign sort_by = search.sort_by | default: search.default_sort_by -%}
-                  <select
-                    name="sort_by"
-                    class="facet-filters__sort select__select caption-large"
-                    id="SortBy"
-                    aria-describedby="a11y-refresh-page-message"
-                  >
-                    {%- for option in search.sort_options -%}
-                      <option
-                        value="{{ option.value | escape }}"
-                        {% if option.value == sort_by %}
-                          selected="selected"
-                        {% endif %}
-                      >
-                        {{ option.name | escape }}
-                      </option>
-                    {%- endfor -%}
-                  </select>
-                  <span class="svg-wrapper">
-                    {{- 'icon-caret.svg' | inline_asset_content -}}
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            <div class="product-count-vertical light" role="status">
-              <h2 class="product-count__text text-body">
-                <span id="ProductCountDesktop">
-                  {%- if search.results_count -%}
-                    {{ 'templates.search.results_with_count' | t: terms: search.terms, count: search.results_count }}
-                  {%- elsif search.products_count == search.all_products_count -%}
-                    {{ 'products.facets.product_count_simple' | t: count: search.products_count }}
-                  {%- else -%}
-                    {{
-                      'products.facets.product_count'
-                      | t: product_count: search.products_count, count: search.all_products_count
-                    }}
-                  {%- endif -%}
-                </span>
-              </h2>
-              {%- render 'loading-spinner' -%}
-            </div>
-          </form>
-        </facet-filters-form>
-      {%- endif -%}
-      <div
-        {% if section.settings.filter_type == 'vertical' %}
-          class="facets-vertical page-width"
-        {% endif %}
-      >
-        {%- if search.filters != empty -%}
-          {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
-            <aside
-              aria-labelledby="verticalTitle"
-              class="facets-wrapper{% unless section.settings.enable_filtering %} facets-wrapper--no-filters{% endunless %}{% if section.settings.filter_type != 'vertical' %} page-width{% endif %}"
-              id="main-search-filters"
-              data-id="{{ section.id }}"
-            >
-              {% render 'facets',
-                results: search,
-                enable_filtering: section.settings.enable_filtering,
-                enable_sorting: section.settings.enable_sorting,
-                filter_type: section.settings.filter_type,
-                paginate: paginate
-              %}
-            </aside>
-          {%- endif -%}
-        {%- endif -%}
-        <div class="product-grid-container" id="ProductGridContainer">
-          {%- if search.results.size == 0 and search.filters != empty -%}
-            <div
-              class="template-search__results collection collection--empty{% if section.settings.filter_type != 'vertical' %} page-width{% endif %}"
-              id="product-grid"
-              data-id="{{ section.id }}"
-            >
-              <div class="loading-overlay gradient"></div>
-              <div class="title-wrapper center">
-                <h2 class="title title--primary">
-                  {{ 'sections.collection_template.empty' | t -}}
-                  <br>
-                  {{
-                    'sections.collection_template.use_fewer_filters_html'
-                    | t: link: search_url, class: 'underlined-link link'
-                  }}
-                </h2>
-              </div>
-            </div>
-          {%- else -%}
-            <div
-              class="template-search__results collection{% if section.settings.filter_type != 'vertical' %} page-width{% endif %}"
-              id="product-grid"
-              data-id="{{ section.id }}"
-            >
-              <div class="loading-overlay gradient"></div>
-              <ul
-                class="grid product-grid  grid--{{ section.settings.columns_mobile }}-col-tablet-down grid--{{ section.settings.columns_desktop }}-col-desktop"
-                role="list"
-              >
-                {%- assign skip_card_product_styles = false -%}
-                {%- for item in search.results -%}
-                  {% assign lazy_load = false %}
-                  {%- if forloop.index > 2 -%}
-                    {%- assign lazy_load = true -%}
-                  {%- endif -%}
-
-                  <li
-                    class="grid__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
-                    {% if settings.animations_reveal_on_scroll %}
-                      data-cascade
-                    {% endif %}
-                  >
-                    {%- case item.object_type -%}
-                      {%- when 'product' -%}
-                        {%- capture product_settings -%}{%- if section.settings.product_show_vendor -%}vendor,{%- endif -%}title,price{%- endcapture -%}
-                        {% render 'card-product',
-                          card_product: item,
-                          media_aspect_ratio: section.settings.image_ratio,
-                          image_shape: section.settings.image_shape,
-                          show_secondary_image: section.settings.show_secondary_image,
-                          show_vendor: section.settings.show_vendor,
-                          show_rating: section.settings.show_rating,
-                          lazy_load: lazy_load,
-                          skip_styles: skip_card_product_styles
-                        %}
-                        {%- assign skip_card_product_styles = true -%}
-                      {%- when 'article' -%}
-                        {% render 'article-card',
-                          article: item,
-                          show_image: true,
-                          show_date: section.settings.article_show_date,
-                          show_author: section.settings.article_show_author,
-                          show_badge: true,
-                          media_aspect_ratio: 1,
-                          lazy_load: lazy_load
-                        %}
-                      {%- when 'page' -%}
-                        <div class="article-card-wrapper card-wrapper underline-links-hover">
-                          <div
-                            class="card card--card card--text ratio color-{{ settings.blog_card_color_scheme }}"
-                            style="--ratio-percent: 100%;"
-                          >
-                            <div class="card__content">
-                              <div class="card__information">
-                                <h3 class="card__heading">
-                                  <a href="{{ item.url }}" class="full-unstyled-link">
-                                    {{ item.title | truncate: 50 | escape }}
-                                  </a>
-                                </h3>
-                              </div>
-                              <div class="card__badge {{ settings.badge_position }}">
-                                <span class="badge color-{{ settings.color_schemes | first }}">
-                                  {{- 'templates.search.page' | t -}}
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                    {%- endcase -%}
-                  </li>
-                {%- endfor -%}
-              </ul>
-              {%- if paginate.pages > 1 -%}
-                {% render 'pagination', paginate: paginate %}
-              {%- endif -%}
-            </div>
-          {%- endif -%}
+<foxy-main-search data-section-id="{{ section.id }}">
+  <div class="template-search section-{{ section.id }}-padding">
+    
+    <div class="foxy-search-header page-width">
+      <h1 class="h2 center foxy-search-title">SEARCH OUR CELLAR</h1>
+      <form action="{{ routes.search_url }}" method="get" role="search" class="foxy-search-form">
+        <div class="foxy-search-input-wrapper">
+          <span class="svg-wrapper foxy-search-icon">
+            {{- 'icon-search.svg' | inline_asset_content -}}
+          </span>
+          <input 
+            type="search" 
+            name="q"
+            class="foxy-search-input" 
+            placeholder="Search for Gins, Ales, Breweries, or Notes..."
+            value="{{ search.terms | escape }}"
+            autocomplete="off"
+          >
+          <div class="foxy-search-share-wrapper hidden">
+            <button type="button" class="button button--tertiary foxy-search-share-btn">Share Results</button>
+          </div>
         </div>
+      </form>
+    </div>
+
+    {% comment %} Default Cellar View {% endcomment %}
+    <div class="foxy-cellar-view page-width {% if search.performed and search.terms != blank %}hidden{% endif %}">
+      
+      {% comment %} FIND YOUR VIBE {% endcomment %}
+      {% assign vibe_blocks = section.blocks | where: 'type', 'foxy_vibe_collection' %}
+      {% if vibe_blocks.size > 0 %}
+        <div class="foxy-cellar-section">
+          <h2 class="foxy-cellar-heading">FIND YOUR VIBE</h2>
+          <div class="foxy-vibe-grid">
+            {% for block in vibe_blocks %}
+              {% assign coll = collections[block.settings.collection] %}
+              {% if coll != blank %}
+                <a href="{{ coll.url }}" class="foxy-vibe-card" {{ block.shopify_attributes }}>
+                  <div class="foxy-vibe-info">
+                    <h3>{{ coll.title }}</h3>
+                    <span class="foxy-vibe-btn">explore</span>
+                  </div>
+                  {% if block.settings.image != blank %}
+                    {{ block.settings.image | image_url: width: 300 | image_tag: class: 'foxy-vibe-img', loading: 'lazy' }}
+                  {% endif %}
+                </a>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+
+      <div class="foxy-cellar-heading foxy-cellar-heading--explore">OR EXPLORE BY...</div>
+
+      <div class="foxy-cellar-bottom-stack">
+        {% comment %} BEST SELLERS {% endcomment %}
+        {% assign best_seller_block = section.blocks | where: 'type', 'foxy_best_seller' | first %}
+        {% if best_seller_block %}
+          <div class="foxy-cellar-section foxy-cellar-bestsellers" {{ best_seller_block.shopify_attributes }}>
+            <h2 class="foxy-cellar-heading">BEST SELLERS</h2>
+            <div class="foxy-bestsellers-container">
+              <div class="foxy-loading-gif hidden">
+                <svg width="40" height="40" viewBox="0 0 50 50" class="foxy-spinner"><circle cx="25" cy="25" r="20" fill="none" stroke="#7e3af2" stroke-width="4" stroke-dasharray="31.4 31.4" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="1s" repeatCount="indefinite"/></circle></svg>
+              </div>
+              <div class="foxy-bestsellers-grid"></div>
+            </div>
+          </div>
+        {% endif %}
+
+        {% comment %} BREWERY OF THE WEEK {% endcomment %}
+        {% assign brewery_block = section.blocks | where: 'type', 'foxy_brewery_of_week' | first %}
+        {% if brewery_block %}
+          <div class="foxy-cellar-section foxy-cellar-brewery" {{ brewery_block.shopify_attributes }}>
+            <h2 class="foxy-cellar-heading">BREWERY OF THE WEEK</h2>
+            <div class="foxy-brewery-card">
+              <div class="foxy-brewery-content">
+                <h3>{{ brewery_block.settings.title }}</h3>
+                <p>{{ brewery_block.settings.text }}</p>
+                {% if brewery_block.settings.link != blank %}
+                  <a href="{{ brewery_block.settings.link }}" class="button button--primary foxy-brewery-btn">Shop the Collection</a>
+                {% endif %}
+              </div>
+              <div class="foxy-brewery-images">
+                {% if brewery_block.settings.logo_image != blank %}
+                  {{ brewery_block.settings.logo_image | image_url: width: 200 | image_tag: class: 'foxy-brewery-logo' }}
+                {% endif %}
+                {% if brewery_block.settings.feature_image != blank %}
+                  {{ brewery_block.settings.feature_image | image_url: width: 400 | image_tag: class: 'foxy-brewery-feature' }}
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        {% endif %}
       </div>
-    {%- endif -%}
+    </div>
+
+    {% comment %} Search Results View {% endcomment %}
+    <div class="foxy-search-results-view page-width {% unless search.performed and search.terms != blank %}hidden{% endunless %}">
+      <div class="product-grid-container" id="ProductGridContainer">
+        {%- if search.results.size == 0 and search.performed and search.terms != blank -%}
+          <div class="foxy-search-results-grid foxy-search-empty" data-id="{{ section.id }}">
+            <div class="title-wrapper center" style="text-align: center; width: 100%; padding: 4rem 0;">
+              <h2 class="title title--primary" style="color: #fff;">
+                {{ 'templates.search.no_results' | t: terms: search.terms }}
+              </h2>
+            </div>
+          </div>
+        {%- else -%}
+          <div class="foxy-search-results-grid" data-id="{{ section.id }}">
+            {%- for item in search.results -%}
+              {%- case item.object_type -%}
+                {%- when 'product' -%}
+                  <div class="foxy-product-card glass-panel text-center">
+                    <a href="{{ item.url }}" class="foxy-card-image-wrapper">
+                      {% if item.featured_image %}
+                        {{ item.featured_image | image_url: width: 400 | image_tag: loading: 'lazy' }}
+                      {% else %}
+                        {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                      {% endif %}
+                    </a>
+                    <div class="foxy-card-details">
+                      <h3 class="foxy-card-title"><a href="{{ item.url }}">{{ item.title }}</a></h3>
+                      {% if item.metafields.custom.abv != blank or item.metafields.custom.volume != blank %}
+                        <p class="foxy-card-meta">Stout | {{ item.metafields.custom.abv | default: '8.5%' }} ABV | {{ item.metafields.custom.volume | default: '12oz' }}</p>
+                      {% endif %}
+                      <p class="foxy-card-price">{{ item.price | money }}</p>
+                      <div style="display: flex; gap: 8px;">
+                        <form method="post" action="{{ routes.cart_add_url }}" data-product-form class="foxy-add-to-cart-form" style="flex:1;">
+                          <input type="hidden" name="id" value="{{ item.variants.first.id }}">
+                          <button type="submit" class="cyber-button w-full foxy-ajax-btn">Add to Cart</button>
+                        </form>
+                        <foxy-wishlist-button 
+                          data-product-id="{{ item.id }}"
+                          data-product-handle="{{ item.handle }}"
+                          data-title="{{ item.title | escape }}"
+                          data-price="{{ item.price | money | escape }}"
+                          data-image="{{ item.featured_image | image_url: width: 400 }}"
+                          data-url="{{ item.url }}"
+                          data-variant-id="{{ item.variants.first.id }}">
+                          <button aria-label="Add to wishlist" class="foxy-pdp__btn foxy-pdp__wishlist-icon-btn" style="padding:0; width:50px; height:50px; border-radius:50%; min-width:auto; display:flex; align-items:center; justify-content:center;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                          </button>
+                        </foxy-wishlist-button>
+                      </div>
+                    </div>
+                  </div>
+              {%- endcase -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+
   </div>
-{% endpaginate %}
-{% if section.settings.image_shape == 'arch' %}
-  {{ 'mask-arch.svg' | inline_asset_content }}
-{%- endif -%}
+</foxy-main-search>
 
 {% schema %}
 {
@@ -449,59 +292,6 @@
     },
     {
       "type": "header",
-      "content": "t:sections.main-collection-product-grid.settings.header__1.content"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_filtering",
-      "default": true,
-      "label": "t:sections.main-collection-product-grid.settings.enable_filtering.label",
-      "info": "t:sections.main-collection-product-grid.settings.enable_filtering.info"
-    },
-    {
-      "type": "select",
-      "id": "filter_type",
-      "options": [
-        {
-          "value": "horizontal",
-          "label": "t:sections.main-collection-product-grid.settings.filter_type.options__1.label"
-        },
-        {
-          "value": "vertical",
-          "label": "t:sections.main-collection-product-grid.settings.filter_type.options__2.label"
-        },
-        {
-          "value": "drawer",
-          "label": "t:sections.main-collection-product-grid.settings.filter_type.options__3.label"
-        }
-      ],
-      "default": "horizontal",
-      "label": "t:sections.main-collection-product-grid.settings.filter_type.label"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_sorting",
-      "default": true,
-      "label": "t:sections.main-collection-product-grid.settings.enable_sorting.label"
-    },
-    {
-      "type": "header",
-      "content": "t:sections.main-search.settings.header__2.content"
-    },
-    {
-      "type": "checkbox",
-      "id": "article_show_date",
-      "default": true,
-      "label": "t:sections.main-search.settings.article_show_date.label"
-    },
-    {
-      "type": "checkbox",
-      "id": "article_show_author",
-      "default": false,
-      "label": "t:sections.main-search.settings.article_show_author.label"
-    },
-    {
-      "type": "header",
       "content": "t:sections.all.padding.section_padding_heading"
     },
     {
@@ -523,6 +313,64 @@
       "unit": "px",
       "label": "t:sections.all.padding.padding_bottom",
       "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "foxy_vibe_collection",
+      "name": "Vibe Collection",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Custom Image"
+        }
+      ]
+    },
+    {
+      "type": "foxy_best_seller",
+      "name": "Best Sellers",
+      "limit": 1,
+      "settings": []
+    },
+    {
+      "type": "foxy_brewery_of_week",
+      "name": "Brewery of the Week",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Brewery Name"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Description"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+        {
+          "type": "image_picker",
+          "id": "logo_image",
+          "label": "Logo Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "feature_image",
+          "label": "Feature Image"
+        }
+      ]
     }
   ]
 }
