@@ -104,7 +104,7 @@
     </div>
 
     <foxy-collection-grid id="FoxyProductGridContainer" data-cols="3">
-      {%- paginate collection.products by 9 -%}
+      {%- paginate collection.products by 12 -%}
         <div class="foxy-grid-wrapper foxy-custom-scrollbar" id="FoxyProductGrid">
           {%- if collection.products.size == 0 -%}
             <p class="foxy-no-products">No products found matching your filters.</p>

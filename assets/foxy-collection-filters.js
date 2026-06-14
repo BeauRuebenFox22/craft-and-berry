@@ -13,6 +13,11 @@ class FoxyCollectionFilters extends HTMLElement {
       this.form.addEventListener('change', this.handleFilterChange.bind(this));
       this.form.addEventListener('submit', (e) => {
         e.preventDefault();
+        const searchInput = this.form.querySelector('input[name="q"]');
+        if (searchInput && searchInput.value.trim() !== '') {
+          window.location.href = `/search?q=${encodeURIComponent(searchInput.value.trim())}`;
+          return;
+        }
         this.handleFilterChange();
       });
     }
@@ -36,9 +41,9 @@ class FoxyCollectionFilters extends HTMLElement {
     
     const searchParams = new URLSearchParams(formData);
 
-    // Remove empty params to keep URL clean
+    // Remove empty params to keep URL clean, and ignore 'q' for AJAX pagination/filtering
     for(const [key, value] of Array.from(searchParams.entries())) {
-      if (!value) {
+      if (!value || key === 'q') {
         searchParams.delete(key);
       }
     }
@@ -150,13 +155,6 @@ class FoxyCollectionFilters extends HTMLElement {
             document.querySelector('#FoxyProductGridContainer').innerHTML = newGrid.innerHTML;
           }
           
-          const newPagination = newHtml.querySelector('#FoxyPaginationData');
-          if(newPagination) {
-            document.querySelector('#FoxyPaginationData')?.remove();
-            document.body.appendChild(newPagination.cloneNode(true));
-          } else {
-            document.querySelector('#FoxyPaginationData')?.remove();
-          }
           this.renderPaginationButtons();
           
           if(gridWrapper) gridWrapper.classList.remove('loading');
@@ -164,10 +162,12 @@ class FoxyCollectionFilters extends HTMLElement {
           // Scroll to top of grid
           const gridTarget = document.getElementById('FoxyProductGridContainer');
           if (gridTarget) {
-            gridTarget.scrollIntoView({ behavior: 'smooth' });
-          } else {
-            const rightPanel = document.querySelector('.foxy-custom-scrollbar');
-            if (rightPanel) rightPanel.scrollTo({top: 0, behavior: 'smooth'});
+            gridTarget.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+          
+          const rightPanel = document.querySelector('.foxy-custom-scrollbar');
+          if (rightPanel) {
+            rightPanel.scrollTo({ top: 0, behavior: 'smooth' });
           }
         }
       });
