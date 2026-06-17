@@ -11,68 +11,9 @@
   "sections": {
     "foxy-hero": {
       "type": "foxy-collection-hero",
-      "blocks": {
-        "hotspot_TkfmQH": {
-          "type": "hotspot",
-          "settings": {
-            "product": "verdant-brewing-co-putty-2026",
-            "x_position": 80,
-            "y_position": 65,
-            "x_position_mobile": 85,
-            "y_position_mobile": 75
-          }
-        },
-        "hotspot_jBAFDe": {
-          "type": "hotspot",
-          "settings": {
-            "product": "vault-city-giant-rhubarb-custard",
-            "x_position": 65,
-            "y_position": 35,
-            "x_position_mobile": 70,
-            "y_position_mobile": 40
-          }
-        },
-        "hotspot_DYdWtQ": {
-          "type": "hotspot",
-          "settings": {
-            "product": "pollys-brew-co-floret-krush",
-            "x_position": 50,
-            "y_position": 50,
-            "x_position_mobile": 50,
-            "y_position_mobile": 55
-          }
-        },
-        "hotspot_8CWXUD": {
-          "type": "hotspot",
-          "settings": {
-            "product": "up-front-brewing-das-ist-techno-sex",
-            "x_position": 30,
-            "y_position": 40,
-            "x_position_mobile": 30,
-            "y_position_mobile": 35
-          }
-        },
-        "hotspot_rcNrwW": {
-          "type": "hotspot",
-          "settings": {
-            "product": "tartarus-beers-piasa",
-            "x_position": 15,
-            "y_position": 50,
-            "x_position_mobile": 15,
-            "y_position_mobile": 50
-          }
-        }
-      },
-      "block_order": [
-        "hotspot_TkfmQH",
-        "hotspot_jBAFDe",
-        "hotspot_DYdWtQ",
-        "hotspot_8CWXUD",
-        "hotspot_rcNrwW"
-      ],
       "settings": {
-        "image": "shopify://shop_images/DSC0243.jpg",
-        "image_mobile": "shopify://shop_images/DSC0243.jpg"
+        "image": "shopify://shop_images/DSC0731.jpg",
+        "image_mobile": "shopify://shop_images/DSC0731.jpg"
       }
     },
     "foxy-main": {
