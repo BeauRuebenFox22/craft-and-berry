@@ -16,20 +16,21 @@
       </button>
     </div>
     
-    <foxy-collection-filters>
-      <form id="FoxyFacetFiltersForm">
+    <foxy-collection-filters data-collection-handle="{{ collection.handle }}">
+      <form id="FoxySearchForm" style="padding: 24px 24px 0 24px;">
+        <!-- Search Input fake facet / search params -->
+        <div class="foxy-facet-search" style="margin-bottom: 12px;">
+          <div class="search-input-wrapper">
+            <svg viewBox="0 0 24 24" class="search-icon"><path fill="currentColor" d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+            <input type="text" name="q" placeholder="SEARCH OUR CELLAR" value="" class="foxy-search-bar" />
+          </div>
+        </div>
+      </form>
+
+      <form id="FoxyFacetFiltersForm" style="padding-top: 12px;">
         {%- if collection.current_vendor or collection.current_type -%}
           <input type="hidden" name="q" value="{{ collection.current_vendor }}{{ collection.current_type }}">
         {%- endif -%}
-
-        <!-- Search Input fake facet / search params -->
-        <div class="foxy-facet-search">
-          <input type="search" name="filter.v.price.gte" disabled class="hidden" /> <!-- Placeholder to avoid empty form submit issues if needed, actually we just use standard name="" params -->
-          <div class="search-input-wrapper">
-            <svg viewBox="0 0 24 24" class="search-icon"><path fill="currentColor" d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-            <input type="text" name="q" placeholder="SEARCH OUR CELLAR" value="{{ search.terms | escape }}" class="foxy-search-bar" />
-          </div>
-        </div>
 
         {%- for filter in collection.filters -%}
           <details class="foxy-facet-group" {% if forloop.first %}open{% endif %}>
