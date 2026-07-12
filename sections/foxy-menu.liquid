@@ -28,7 +28,9 @@
                     <img src="{{ product.featured_image | image_url: width: 300 }}" alt="{{ product.title }}" loading="lazy" class="foxy-surface__product-image">
                     <form method="post" action="/cart/add">
                       <input type="hidden" name="id" value="{{ product.variants.first.id }}" />
-                      <button type="submit" class="foxy-button foxy-button--primary foxy-button--full">ADD TO CART</button>
+                      <button type="submit" class="foxy-button foxy-button--primary foxy-button--full" {% unless product.available %}disabled style="opacity: 0.5; cursor: not-allowed;"{% endunless %}>
+                        {% if product.available %}ADD TO CART{% else %}OUT OF STOCK{% endif %}
+                      </button>
                     </form>
                   </div>
                 {%- endif -%}

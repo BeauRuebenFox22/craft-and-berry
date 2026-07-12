@@ -31,7 +31,9 @@
                 <div style="display: flex; gap: 8px; align-items: center; margin-top: 12px;">
                   <form method="post" action="{{ routes.cart_add_url }}" data-product-form class="foxy-add-to-cart-form" style="flex:1;">
                     <input type="hidden" name="id" value="{{ recommendation.variants.first.id }}">
-                    <button type="submit" class="cyber-button w-full foxy-ajax-btn" style="background: #a855f7; color: #fff; font-weight: bold; border-radius: 8px; border: none; transition: 0.3s ease;">Add to Cart</button>
+                    <button type="submit" class="cyber-button w-full foxy-ajax-btn" style="background: #a855f7; color: #fff; font-weight: bold; border-radius: 8px; border: none; transition: 0.3s ease;" {% unless recommendation.available %}disabled style="opacity: 0.5; cursor: not-allowed;"{% endunless %}>
+                      {% if recommendation.available %}Add to Cart{% else %}Out of Stock{% endif %}
+                    </button>
                   </form>
                   <foxy-wishlist-button 
                     data-product-id="{{ recommendation.id }}"

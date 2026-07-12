@@ -38,7 +38,9 @@
                   <div style="display: flex; gap: 8px;">
                     <form method="post" action="{{ routes.cart_add_url }}" data-product-form class="hotspot-add-to-cart" style="flex:1;">
                       <input type="hidden" name="id" value="{{ product.variants.first.id }}">
-                      <button type="submit" class="cyber-button w-full">Add to Cart</button>
+                      <button type="submit" class="cyber-button w-full" {% unless product.available %}disabled style="opacity: 0.5; cursor: not-allowed;"{% endunless %}>
+                        {% if product.available %}Add to Cart{% else %}Out of Stock{% endif %}
+                      </button>
                     </form>
                     <foxy-wishlist-button 
                       data-product-id="{{ product.id }}"
@@ -84,7 +86,9 @@
                   <div style="display: flex; gap: 8px;">
                     <form method="post" action="{{ routes.cart_add_url }}" data-product-form class="hotspot-add-to-cart" style="flex:1;">
                       <input type="hidden" name="id" value="{{ product.variants.first.id }}">
-                      <button type="submit" class="cyber-button w-full">Add to Cart</button>
+                      <button type="submit" class="cyber-button w-full" {% unless product.available %}disabled style="opacity: 0.5; cursor: not-allowed;"{% endunless %}>
+                        {% if product.available %}Add to Cart{% else %}Out of Stock{% endif %}
+                      </button>
                     </form>
                     <foxy-wishlist-button 
                       data-product-id="{{ product.id }}"
