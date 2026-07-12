@@ -1,6 +1,5 @@
 class FoxyAbvRange extends HTMLElement {
-  constructor() {
-    super();
+  connectedCallback() {
     this.checkboxes = Array.from(this.querySelectorAll('input[type="checkbox"]'));
     this.rangeInput = this.querySelector('.foxy-abv-range-input');
     this.minLabel = this.querySelector('.foxy-abv-min-label');
@@ -74,7 +73,7 @@ class FoxyAbvRange extends HTMLElement {
 
       // Dispatch a change event on the form to trigger the standard filter update
       if (this.form) {
-        this.form.dispatchEvent(new Event('input', { bubbles: true }));
+        this.form.dispatchEvent(new Event('change', { bubbles: true }));
       }
     });
   }

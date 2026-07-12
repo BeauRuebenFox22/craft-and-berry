@@ -18,7 +18,7 @@
     </div>
 
     <foxy-collection-filters>
-      <form id="FoxyFacetFiltersForm">
+      <form id="FoxyCollectionFacetFiltersForm">
         {%- if collection.current_vendor or collection.current_type -%}
           <input type="hidden" name="q" value="{{ collection.current_vendor }}{{ collection.current_type }}">
         {%- endif -%}

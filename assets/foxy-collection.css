@@ -203,13 +203,19 @@ foxy-collection-filters {
   flex-direction: column;
   height: 100%;
 }
-#FoxyFacetFiltersForm {
+foxy-collection-filters {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+}
+#FoxyCollectionFacetFiltersForm {
   flex: 1;
   overflow-y: auto;
   padding: 24px;
 }
-#FoxyFacetFiltersForm::-webkit-scrollbar { width: 4px; }
-#FoxyFacetFiltersForm::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); }
+#FoxyCollectionFacetFiltersForm::-webkit-scrollbar { width: 4px; }
+#FoxyCollectionFacetFiltersForm::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); }
 
 .foxy-facet-search { margin-bottom: 24px; }
 .search-input-wrapper {

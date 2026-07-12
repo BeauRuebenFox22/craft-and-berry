@@ -1,7 +1,6 @@
 class FoxyCollectionFilters extends HTMLElement {
-  constructor() {
-    super();
-    this.form = this.querySelector('#FoxyFacetFiltersForm');
+  connectedCallback() {
+    this.form = this.querySelector('#FoxyCollectionFacetFiltersForm');
     this.sortSelect = document.querySelector('#FoxySortBy');
     
     this.bindEvents();

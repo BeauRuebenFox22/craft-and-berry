@@ -142,6 +142,7 @@ class FoxyMainSearch extends HTMLElement {
               id
               handle
               title
+              availableForSale
               featuredImage {
                 url
                 altText
@@ -214,7 +215,7 @@ class FoxyMainSearch extends HTMLElement {
             <div style="display: flex; gap: 8px; margin-top:auto;">
               <form method="post" action="/cart/add" data-product-form class="foxy-add-to-cart-form" style="flex:1;">
                 <input type="hidden" name="id" value="${rawVariantId}">
-                <button type="submit" class="cyber-button w-full foxy-ajax-btn" style="background: #a855f7; color: #fff; border: none; border-radius: 4px; padding: 0.8rem; cursor: pointer; width:100%;">Add to Cart</button>
+                <button type="submit" class="cyber-button w-full foxy-ajax-btn" ${!node.availableForSale ? 'disabled style="background: #555; color: #fff; border: none; border-radius: 4px; padding: 0.8rem; cursor: not-allowed; width:100%; opacity:0.5;"' : 'style="background: #a855f7; color: #fff; border: none; border-radius: 4px; padding: 0.8rem; cursor: pointer; width:100%;"'} >${node.availableForSale ? 'Add to Cart' : 'Out of Stock'}</button>
               </form>
               <foxy-wishlist-button 
                 data-product-id="${rawProductId}"
