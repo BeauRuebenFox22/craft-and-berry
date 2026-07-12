@@ -1,6 +1,7 @@
 <script src="{{ 'foxy-collection-layout.js' | asset_url }}" type="module" defer="defer"></script>
 <script src="{{ 'foxy-collection-filters.js' | asset_url }}" type="module" defer="defer"></script>
 <script src="{{ 'foxy-collection-grid.js' | asset_url }}" type="module" defer="defer"></script>
+<script src="{{ 'foxy-abv-range.js' | asset_url }}" type="module" defer="defer"></script>
 
 <foxy-collection-layout class="foxy-layout-container" id="FoxyCollectionLayout">
   
@@ -15,7 +16,7 @@
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
       </button>
     </div>
-    
+
     <foxy-collection-filters>
       <form id="FoxyFacetFiltersForm">
         {%- if collection.current_vendor or collection.current_type -%}
@@ -32,53 +33,149 @@
         </div>
 
         {%- for filter in collection.filters -%}
-          <details class="foxy-facet-group" {% if forloop.first %}open{% endif %}>
-            <summary class="foxy-facet-title">{{ filter.label | upcase }}</summary>
-            
-            {%- case filter.type -%}
-              {%- when 'boolean' or 'list' -%}
-                <ul class="foxy-facet-list">
+          {%- assign filter_label_downcase = filter.label | downcase -%}
+          {%- if filter_label_downcase == 'dietary preferences' or filter.param_name == 'filter.v.t.shopify.dietary-preferences' -%}
+            <details class="foxy-facet-group" {% if forloop.first %}open{% endif %}>
+              <summary class="foxy-facet-title">DIET</summary>
+              <ul class="foxy-facet-list">
+                {%- assign gf_value = nil -%}
+                {%- assign veg_value = nil -%}
+                {%- assign vegan_value = nil -%}
+                
+                {%- for value in filter.values -%}
+                  {%- assign val_label_downcase = value.label | downcase -%}
+                  {%- if val_label_downcase == 'gluten-free' or val_label_downcase == 'gluten free' -%}
+                    {%- assign gf_value = value -%}
+                  {%- elsif val_label_downcase == 'vegetarian' -%}
+                    {%- assign veg_value = value -%}
+                  {%- elsif val_label_downcase == 'vegan' -%}
+                    {%- assign vegan_value = value -%}
+                  {%- endif -%}
+                {%- endfor -%}
+
+                {%- if gf_value -%}
+                  <li class="foxy-facet-item">
+                    <label class="foxy-checkbox-label">
+                      <input type="checkbox"
+                        name="{{ gf_value.param_name }}"
+                        value="{{ gf_value.value }}"
+                        {% if gf_value.active %}checked{% endif %}
+                        {% if gf_value.count == 0 and gf_value.active == false %}disabled{% endif %}
+                      >
+                      <span class="foxy-checkbox-custom"></span>
+                      <span class="foxy-checkbox-text">Gluten Free ({{ gf_value.count }})</span>
+                    </label>
+                  </li>
+                {%- endif -%}
+
+                {%- if veg_value -%}
+                  <li class="foxy-facet-item">
+                    <label class="foxy-checkbox-label">
+                      <input type="checkbox"
+                        name="{{ veg_value.param_name }}"
+                        value="{{ veg_value.value }}"
+                        {% if veg_value.active %}checked{% endif %}
+                        {% if veg_value.count == 0 and veg_value.active == false %}disabled{% endif %}
+                      >
+                      <span class="foxy-checkbox-custom"></span>
+                      <span class="foxy-checkbox-text">Vegetarian ({{ veg_value.count }})</span>
+                    </label>
+                  </li>
+                {%- endif -%}
+
+                {%- if vegan_value -%}
+                  <li class="foxy-facet-item">
+                    <label class="foxy-checkbox-label">
+                      <input type="checkbox"
+                        name="{{ vegan_value.param_name }}"
+                        value="{{ vegan_value.value }}"
+                        {% if vegan_value.active %}checked{% endif %}
+                        {% if vegan_value.count == 0 and vegan_value.active == false %}disabled{% endif %}
+                      >
+                      <span class="foxy-checkbox-custom"></span>
+                      <span class="foxy-checkbox-text">Vegan ({{ vegan_value.count }})</span>
+                    </label>
+                  </li>
+                {%- endif -%}
+              </ul>
+            </details>
+          {%- elsif filter_label_downcase == 'abv' -%}
+            <details class="foxy-facet-group" {% if forloop.first %}open{% endif %}>
+              <summary class="foxy-facet-title">ABV</summary>
+              <foxy-abv-range>
+                <div class="foxy-abv-slider-container" style="padding: 10px 0;">
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                    <span class="foxy-abv-min-label">0%</span>
+                    <span class="foxy-abv-max-label"></span>
+                  </div>
+                  <input type="range" class="foxy-abv-range-input" min="0" max="0" step="1" value="0" style="width: 100%;">
+                </div>
+                <ul class="foxy-facet-list foxy-abv-hidden-list" style="display: none;">
                   {%- for value in filter.values -%}
                     <li class="foxy-facet-item">
                       <label class="foxy-checkbox-label">
                         <input type="checkbox"
                           name="{{ value.param_name }}"
                           value="{{ value.value }}"
+                          data-numeric-value="{{ value.value }}"
                           {% if value.active %}checked{% endif %}
                           {% if value.count == 0 and value.active == false %}disabled{% endif %}
                         >
-                        <span class="foxy-checkbox-custom"></span>
-                        <span class="foxy-checkbox-text">{{ value.label | escape }} ({{ value.count }})</span>
                       </label>
                     </li>
                   {%- endfor -%}
                 </ul>
+              </foxy-abv-range>
+            </details>
+          {%- else -%}
+            <details class="foxy-facet-group" {% if forloop.first %}open{% endif %}>
+              <summary class="foxy-facet-title">{{ filter.label | upcase }}</summary>
+              
+              {%- case filter.type -%}
+                {%- when 'boolean' or 'list' -%}
+                  <ul class="foxy-facet-list">
+                    {%- for value in filter.values -%}
+                      <li class="foxy-facet-item">
+                        <label class="foxy-checkbox-label">
+                          <input type="checkbox"
+                            name="{{ value.param_name }}"
+                            value="{{ value.value }}"
+                            {% if value.active %}checked{% endif %}
+                            {% if value.count == 0 and value.active == false %}disabled{% endif %}
+                          >
+                          <span class="foxy-checkbox-custom"></span>
+                          <span class="foxy-checkbox-text">{{ value.label | escape }} ({{ value.count }})</span>
+                        </label>
+                      </li>
+                    {%- endfor -%}
+                  </ul>
 
-              {%- when 'price_range' -%}
-                <div class="foxy-price-range">
-                  <div class="foxy-price-slider">
-                    <input type="range" 
-                      name="{{ filter.min_value.param_name }}"
-                      min="0" 
-                      max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
-                      step="1"
-                      value="{% if filter.min_value.value %}{{ filter.min_value.value | money_without_currency | replace: ',', '' }}{% else %}0{% endif %}"
-                    >
-                    <input type="range" 
-                      name="{{ filter.max_value.param_name }}"
-                      min="0" 
-                      max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
-                      step="1"
-                      value="{% if filter.max_value.value %}{{ filter.max_value.value | money_without_currency | replace: ',', '' }}{% else %}{{ filter.range_max | money_without_currency | replace: ',', '' }}{% endif %}"
-                    >
+                {%- when 'price_range' -%}
+                  <div class="foxy-price-range">
+                    <div class="foxy-price-slider">
+                      <input type="range" 
+                        name="{{ filter.min_value.param_name }}"
+                        min="0" 
+                        max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                        step="1"
+                        value="{% if filter.min_value.value %}{{ filter.min_value.value | money_without_currency | replace: ',', '' }}{% else %}0{% endif %}"
+                      >
+                      <input type="range" 
+                        name="{{ filter.max_value.param_name }}"
+                        min="0" 
+                        max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                        step="1"
+                        value="{% if filter.max_value.value %}{{ filter.max_value.value | money_without_currency | replace: ',', '' }}{% else %}{{ filter.range_max | money_without_currency | replace: ',', '' }}{% endif %}"
+                      >
+                    </div>
+                    <div class="foxy-price-inputs">
+                      <span>{{ cart.currency.symbol }}{% if filter.min_value.value %}{{ filter.min_value.value | money_without_currency | replace: ',', '' }}{% else %}0{% endif %}</span>
+                      <span>{{ cart.currency.symbol }}{% if filter.max_value.value %}{{ filter.max_value.value | money_without_currency | replace: ',', '' }}{% else %}{{ filter.range_max | money_without_currency | replace: ',', '' }}{% endif %}</span>
+                    </div>
                   </div>
-                  <div class="foxy-price-inputs">
-                    <span>{{ cart.currency.symbol }}{% if filter.min_value.value %}{{ filter.min_value.value | money_without_currency | replace: ',', '' }}{% else %}0{% endif %}</span>
-                    <span>{{ cart.currency.symbol }}{% if filter.max_value.value %}{{ filter.max_value.value | money_without_currency | replace: ',', '' }}{% else %}{{ filter.range_max | money_without_currency | replace: ',', '' }}{% endif %}</span>
-                  </div>
-                </div>
-            {%- endcase -%}
-          </details>
+              {%- endcase -%}
+            </details>
+          {%- endif -%}
         {%- endfor -%}
         
         <div class="foxy-mobile-apply hidden-desktop" style="margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--foxy-border);">
@@ -127,7 +224,9 @@
                   <div style="display: flex; gap: 8px;">
                     <form method="post" action="{{ routes.cart_add_url }}" data-product-form class="foxy-add-to-cart-form" style="flex:1;">
                       <input type="hidden" name="id" value="{{ product.variants.first.id }}">
-                      <button type="submit" class="cyber-button w-full foxy-ajax-btn">Add to Cart</button>
+                      <button type="submit" class="cyber-button w-full foxy-ajax-btn" {% unless product.available %}disabled style="opacity: 0.5; cursor: not-allowed;"{% endunless %}>
+                        {% if product.available %}Add to Cart{% else %}Out of Stock{% endif %}
+                      </button>
                     </form>
                     <foxy-wishlist-button 
                       data-product-id="{{ product.id }}"

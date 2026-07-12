@@ -149,7 +149,9 @@
                       <div style="display: flex; gap: 8px;">
                         <form method="post" action="{{ routes.cart_add_url }}" data-product-form class="foxy-add-to-cart-form" style="flex:1;">
                           <input type="hidden" name="id" value="{{ item.variants.first.id }}">
-                          <button type="submit" class="cyber-button w-full foxy-ajax-btn">Add to Cart</button>
+                          <button type="submit" class="cyber-button w-full foxy-ajax-btn" {% unless item.available %}disabled style="opacity: 0.5; cursor: not-allowed;"{% endunless %}>
+                            {% if item.available %}Add to Cart{% else %}Out of Stock{% endif %}
+                          </button>
                         </form>
                         <foxy-wishlist-button 
                           data-product-id="{{ item.id }}"
