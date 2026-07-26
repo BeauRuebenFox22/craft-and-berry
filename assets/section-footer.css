@@ -535,20 +535,24 @@
     gap: 2rem !important;
     margin: 0 !important;
     max-width: calc(66.666% - 0.666rem) !important;
+    align-items: stretch !important;
   }
   
   .footer-block.grid__item {
     flex: 1 1 calc(50% - 1rem) !important;
     max-width: calc(50% - 1rem) !important;
     margin: 0 !important;
+    height: 100% !important;
+    align-self: stretch !important;
   }
 
   .footer-block--newsletter {
     flex: 1 !important;
     margin-top: 0 !important;
     max-width: calc(33.333% - 1.333rem) !important;
-    width: auto !important;
-    height: auto !important;
+    width: 100% !important;
+    height: 100% !important;
+    align-self: stretch !important;
   }
 }
 
@@ -559,7 +563,9 @@
   border-radius: 16px !important;
   padding: 2.2rem !important;
   transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease !important;
-  box-sizing: border-box;
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: column !important;
 }
 
 .footer-block:hover {
@@ -578,7 +584,7 @@
   position: relative;
   padding-bottom: 0.75rem;
   margin-bottom: 1.5rem !important;
-  font-size: 1.1rem !important;
+  font-size: 1.35rem !important;
   display: inline-block;
 }
 
@@ -611,7 +617,7 @@
   transition: color 0.2s ease, padding-left 0.2s ease !important;
   display: inline-block !important;
   padding: 0.4rem 0 !important;
-  font-size: 0.95rem !important;
+  font-size: 1.15rem !important;
 }
 
 .footer-block__details-content .list-menu__item--link:hover {
@@ -625,10 +631,10 @@
   background: rgba(255, 255, 255, 0.02) !important;
   border: 1px solid rgba(255, 255, 255, 0.06) !important;
   border-radius: 16px !important;
-  padding: 3rem !important;
-  margin-top: 3rem !important;
+  padding: 2.2rem !important;
   display: flex !important;
   flex-direction: column !important;
+  justify-content: space-between !important;
   align-items: center !important;
   text-align: center !important;
   width: 100% !important;
@@ -645,10 +651,14 @@
 .footer-block__newsletter {
   text-align: center !important;
   margin-right: 0 !important;
+  width: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
 }
 
 .footer-block__newsletter .footer-block__heading {
-  font-size: 1.6rem !important;
+  font-size: 1.75rem !important;
   font-weight: 700 !important;
   background: -webkit-linear-gradient(45deg, #d8b4fe, #a855f7) !important;
   -webkit-background-clip: text !important;
@@ -663,9 +673,14 @@
   display: none !important;
 }
 
+.footer-block__newsletter .footer__newsletter {
+  width: 100% !important;
+}
+
 .footer-block__newsletter .newsletter-form__field-wrapper {
   margin: 0 auto !important;
-  max-width: 400px !important;
+  width: 100% !important;
+  max-width: 100% !important;
 }
 
 .footer-block__newsletter .field {
@@ -675,19 +690,26 @@
   overflow: hidden !important;
   height: 50px !important;
   display: flex !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  position: relative !important;
 }
 
 .footer-block__newsletter .field__input {
   color: #ffffff !important;
   padding-left: 1.5rem !important;
   background: transparent !important;
-  font-size: 0.95rem !important;
+  font-size: 1.1rem !important;
   border: none !important;
+  flex: 1 1 auto !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
 }
 
 .footer-block__newsletter .field__label {
   left: 1.5rem !important;
   color: rgba(255, 255, 255, 0.4) !important;
+  font-size: 1.1rem !important;
 }
 
 .footer-block__newsletter .field__button {
@@ -742,7 +764,7 @@
 /* Brand block styling */
 .footer-block__brand-info .rte {
   color: rgba(255, 255, 255, 0.6) !important;
-  font-size: 0.95rem !important;
+  font-size: 1.15rem !important;
   line-height: 1.6 !important;
 }
 
@@ -765,7 +787,7 @@
 .footer__copyright {
   margin: 0 auto !important;
   color: rgba(255, 255, 255, 0.4) !important;
-  font-size: 0.85rem !important;
+  font-size: 0.95rem !important;
   width: 100% !important;
   text-align: center !important;
   display: flex !important;
@@ -799,6 +821,7 @@
   color: rgba(255, 255, 255, 0.6) !important;
   transition: color 0.2s ease !important;
   text-decoration: none !important;
+  font-size: 0.95rem !important;
 }
 
 .copyright__content a:hover {
@@ -816,5 +839,6 @@
   
   .footer-block--newsletter {
     padding: 2rem !important;
+    margin-top: 2rem !important;
   }
 }
