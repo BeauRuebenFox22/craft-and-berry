@@ -440,7 +440,7 @@
   },
   "platform_customizations": {
     "custom_css": [
-      ".activator-nudge {bottom: 80px !important;}"
+      ".activator-nudge .activator-nudge--right {bottom: 80px !important;}"
     ]
   }
 }
