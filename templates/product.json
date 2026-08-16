@@ -38,6 +38,10 @@
             "show_dynamic_checkout": true
           }
         },
+        "essential_loyalty_product_placement_RHfXLX": {
+          "type": "shopify://apps/essential-loyalty/blocks/product-placement/bb1b2244-edbc-4be2-b271-04fde65a5c2f",
+          "settings": {}
+        },
         "related_products": {
           "type": "related_products",
           "settings": {
@@ -76,6 +80,7 @@
         "price",
         "variant_picker",
         "buy_buttons",
+        "essential_loyalty_product_placement_RHfXLX",
         "related_products",
         "metadata"
       ],
