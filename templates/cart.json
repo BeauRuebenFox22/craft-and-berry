@@ -12,6 +12,7 @@
     "cart-items": {
       "type": "main-cart-items",
       "settings": {
+        "color_scheme": "",
         "padding_top": 36,
         "padding_bottom": 36
       }
@@ -36,7 +37,11 @@
         "subtotal",
         "buttons"
       ],
-      "settings": {}
+      "settings": {
+        "color_scheme": "",
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
     },
     "featured-collection": {
       "type": "featured-collection",
@@ -45,17 +50,40 @@
         "products_to_show": 4,
         "title": "Featured collection",
         "heading_size": "h2",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
         "columns_desktop": 4,
+        "enable_desktop_slider": false,
+        "full_width": false,
         "show_view_all": true,
+        "view_all_style": "solid",
         "color_scheme": "scheme-1",
         "image_ratio": "square",
+        "image_shape": "default",
         "show_secondary_image": false,
         "show_vendor": false,
         "show_rating": false,
+        "quick_add": "none",
         "columns_mobile": "2",
         "swipe_on_mobile": false,
         "padding_top": 36,
         "padding_bottom": 36
+      }
+    },
+    "17868869119c94e958": {
+      "type": "apps",
+      "blocks": {
+        "essential_loyalty_cart_placement_jX9CmT": {
+          "type": "shopify://apps/essential-loyalty/blocks/cart-placement/bb1b2244-edbc-4be2-b271-04fde65a5c2f",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "essential_loyalty_cart_placement_jX9CmT"
+      ],
+      "settings": {
+        "include_margins": true
       }
     }
   },
@@ -63,6 +91,7 @@
     "cart-items",
     "cart-discounts",
     "cart-footer",
-    "featured-collection"
+    "featured-collection",
+    "17868869119c94e958"
   ]
 }
