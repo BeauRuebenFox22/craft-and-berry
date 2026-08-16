@@ -437,5 +437,10 @@
         }
       }
     }
+  },
+  "platform_customizations": {
+    "custom_css": [
+      ".activator-nudge {bottom: 80px !important;}"
+    ]
   }
 }
