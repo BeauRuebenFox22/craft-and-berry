@@ -439,8 +439,6 @@
     }
   },
   "platform_customizations": {
-    "custom_css": [
-      ".activator-nudge .activator-nudge--right {bottom: 80px !important;}"
-    ]
+    "custom_css": []
   }
 }
