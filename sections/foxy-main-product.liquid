@@ -66,6 +66,11 @@
                 {{ product.description }}
               </div>
             {%- endif -%}
+
+          {%- when 'chips' -%}
+            <div {{ block.shopify_attributes }}>
+              {%- render 'foxy-chips', product: product -%}
+            </div>
             
           {%- when 'variant_picker' -%}
             {%- unless product.has_only_default_variant -%}
@@ -222,6 +227,11 @@
     {
       "type": "description",
       "name": "Description",
+      "limit": 1
+    },
+    {
+      "type": "chips",
+      "name": "Product Chips",
       "limit": 1
     },
     {

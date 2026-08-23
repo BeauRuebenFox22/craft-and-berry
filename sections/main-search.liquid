@@ -146,6 +146,7 @@
                         <p class="foxy-card-meta">Stout | {{ item.metafields.custom.abv | default: '8.5%' }} ABV | {{ item.metafields.custom.volume | default: '12oz' }}</p>
                       {% endif %}
                       <p class="foxy-card-price">{{ item.price | money }}</p>
+                      {% render 'foxy-chips', product: item %}
                       <div style="display: flex; gap: 8px;">
                         <form method="post" action="{{ routes.cart_add_url }}" data-product-form class="foxy-add-to-cart-form" style="flex:1;">
                           <input type="hidden" name="id" value="{{ item.variants.first.id }}">

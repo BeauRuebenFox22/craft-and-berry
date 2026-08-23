@@ -24,6 +24,10 @@
           "type": "description",
           "settings": {}
         },
+        "chips": {
+          "type": "chips",
+          "settings": {}
+        },
         "price": {
           "type": "price",
           "settings": {}
@@ -77,6 +81,7 @@
         "vendor",
         "title",
         "description",
+        "chips",
         "price",
         "variant_picker",
         "buy_buttons",

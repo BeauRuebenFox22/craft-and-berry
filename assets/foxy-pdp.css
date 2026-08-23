@@ -314,11 +314,16 @@
   color: #fff;
 }
 
+.foxy-pdp__description,
+.foxy-pdp__description p,
+.foxy-pdp__description span {
+  font-size: 1.6rem !important;
+  color: #d1d5db !important;
+  line-height: 1.7 !important;
+}
+
 .foxy-pdp__description {
-  color: #d1d5db;
-  line-height: 1.6;
   margin-bottom: 2.2rem;
-  font-size: 1rem;
 }
 
 /* Variant Pickers (simplified) */

@@ -3645,3 +3645,50 @@ button,
 a {
   font-size: var(--font-body-size) !important;
 }
+
+/* Foxy Chips Component */
+.foxy-chips-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 0.8rem 0;
+  width: 100%;
+  justify-content: flex-start;
+}
+
+.foxy-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.06em !important;
+  padding: 0.4rem 0.8rem !important;
+  border-radius: 100px !important;
+  line-height: 1 !important;
+  border: 1px solid currentColor !important;
+  white-space: nowrap !important;
+}
+
+/* Diet Variant Colors */
+.foxy-chip--vegan {
+  color: #10b981 !important; /* Green */
+  background-color: rgba(16, 185, 129, 0.08) !important;
+}
+
+.foxy-chip--vegetarian {
+  color: #f59e0b !important; /* Amber */
+  background-color: rgba(245, 158, 11, 0.08) !important;
+}
+
+.foxy-chip--gluten-free {
+  color: #06b6d4 !important; /* Cyan */
+  background-color: rgba(6, 182, 212, 0.08) !important;
+}
+
+/* ABV Color */
+.foxy-chip--abv {
+  color: #a78bfa !important; /* Purple */
+  background-color: rgba(167, 139, 250, 0.08) !important;
+}

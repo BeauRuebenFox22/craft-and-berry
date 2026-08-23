@@ -412,3 +412,204 @@ cart-drawer-items::-webkit-scrollbar-track-piece {
     margin-left: 0;
   }
 }
+
+/* ==========================================================================
+   Fox Navigation Drawer Matching Styles for Cart Drawer
+   ========================================================================== */
+
+/* Outer inner container styling */
+.drawer__inner {
+  background: rgba(15, 15, 20, 0.95) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border-left: 1px solid rgba(255, 255, 255, 0.05) !important;
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5) !important;
+  color: #ffffff !important;
+  width: 100% !important;
+  max-width: 900px !important; /* Identical width to navigation drawer */
+}
+
+/* Background overlay filter */
+.cart-drawer__overlay {
+  background: rgba(0, 0, 0, 0.6) !important;
+  backdrop-filter: blur(4px) !important;
+  -webkit-backdrop-filter: blur(4px) !important;
+}
+
+/* Header style overrides */
+.drawer__header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+  padding: 40px 40px 20px !important;
+  margin-bottom: 20px !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  display: flex !important;
+}
+
+.drawer__heading {
+  font-size: 2.2rem !important;
+  font-weight: 300 !important;
+  letter-spacing: 1px !important;
+  text-transform: uppercase !important;
+  font-family: var(--font-heading-family) !important;
+  color: #ffffff !important;
+  margin: 0 !important;
+}
+
+/* Close button style matching nav close */
+.drawer__close {
+  color: #ffffff !important;
+  transition: transform 0.2s ease, color 0.2s ease !important;
+  top: 30px !important;
+  right: 20px !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 10px !important;
+  cursor: pointer !important;
+  position: absolute !important;
+  width: auto !important;
+  height: auto !important;
+  min-width: unset !important;
+  min-height: unset !important;
+}
+
+.drawer__close:hover {
+  transform: rotate(90deg) !important;
+  color: #c084fc !important; /* Violet glow hover */
+}
+
+/* Cart main contents padding */
+.drawer__contents {
+  padding: 0 40px !important;
+}
+
+/* Cart List Row overrides */
+.cart-drawer .cart-item {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+  padding: 20px 0 !important;
+}
+
+.cart-drawer .cart-item__details * {
+  color: #ffffff !important;
+}
+
+.cart-drawer .cart-item__name {
+  font-size: 1.6rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.5px !important;
+  font-family: inherit !important;
+}
+
+/* Quantity selector blocks */
+.cart-drawer quantity-input,
+.cart-drawer .quantity {
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 8px !important;
+  min-height: 3.5rem !important;
+}
+
+.cart-drawer quantity-input input,
+.cart-drawer .quantity__input {
+  color: #ffffff !important;
+  background: transparent !important;
+  font-size: 1.4rem !important;
+}
+
+.cart-drawer quantity-input button,
+.cart-drawer .quantity__button {
+  color: #ffffff !important;
+  transition: color 0.2s ease !important;
+}
+
+.cart-drawer quantity-input button:hover,
+.cart-drawer .quantity__button:hover {
+  color: #c084fc !important;
+}
+
+/* Prices */
+.cart-drawer .cart-item__totals *,
+.cart-drawer .totals * {
+  color: #ffffff !important;
+}
+
+/* Empty drawer text and warning wrapper */
+.drawer__inner-empty {
+  background: rgba(15, 15, 20, 0.95) !important;
+  color: #ffffff !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 40px !important;
+}
+
+.cart-drawer__warnings .cart__empty-text {
+  color: #ffffff !important;
+}
+
+.cart-drawer__warnings .button {
+  background: var(--foxy-highlight, #8b5cf6) !important;
+  color: #ffffff !important;
+  border: 1px solid var(--foxy-highlight, #8b5cf6) !important;
+  border-radius: 100px !important;
+  padding: 12px 24px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  font-size: 1.2rem !important;
+  letter-spacing: 1px !important;
+  transition: all 0.2s ease !important;
+}
+
+.cart-drawer__warnings .button:hover {
+  background: #ffffff !important;
+  color: #000000 !important;
+  border-color: #ffffff !important;
+  box-shadow: 0 0 15px var(--foxy-highlight-glow, rgba(139, 92, 246, 0.5)) !important;
+}
+
+/* Footer layout rules */
+.drawer__footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
+  padding: 30px 40px !important;
+  background: rgba(10, 10, 15, 0.5) !important;
+}
+
+.cart-drawer .tax-note {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* checkout button styled as Cyber Button */
+.cart-drawer .cart__checkout-button {
+  background: var(--foxy-highlight, #8b5cf6) !important;
+  color: #ffffff !important;
+  border: 1px solid var(--foxy-highlight, #8b5cf6) !important;
+  padding: 12px 24px !important;
+  font-size: 1.4rem !important;
+  font-weight: 600 !important;
+  border-radius: 100px !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  width: 100% !important;
+  max-width: none !important;
+  height: auto !important;
+}
+
+.cart-drawer .cart__checkout-button:hover {
+  background: #ffffff !important;
+  color: #000000 !important;
+  border-color: #ffffff !important;
+  box-shadow: 0 0 15px var(--foxy-highlight-glow, rgba(139, 92, 246, 0.5)) !important;
+}
+
+/* Trash / Delete buttons */
+.cart-drawer cart-remove-button a,
+.cart-drawer .cart-item__remove-button {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.cart-drawer cart-remove-button a:hover,
+.cart-drawer .cart-item__remove-button:hover {
+  color: #ff4a4a !important;
+}
+

@@ -2,6 +2,7 @@
 <script src="{{ 'foxy-collection-filters.js' | asset_url }}" type="module" defer="defer"></script>
 <script src="{{ 'foxy-collection-grid.js' | asset_url }}" type="module" defer="defer"></script>
 <script src="{{ 'foxy-abv-range.js' | asset_url }}" type="module" defer="defer"></script>
+<script src="{{ 'foxy-price-range.js' | asset_url }}" type="module" defer="defer"></script>
 
 <foxy-collection-layout class="foxy-layout-container" id="FoxyCollectionLayout">
   
@@ -104,11 +105,11 @@
               <summary class="foxy-facet-title">ABV</summary>
               <foxy-abv-range>
                 <div class="foxy-abv-slider-container" style="padding: 10px 0;">
-                  <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                  <input type="range" class="foxy-abv-range-input" min="0" max="0" step="1" value="0" style="width: 100%;">
+                  <div style="display: flex; justify-content: space-between; margin-top: 8px;">
                     <span class="foxy-abv-min-label">0%</span>
                     <span class="foxy-abv-max-label"></span>
                   </div>
-                  <input type="range" class="foxy-abv-range-input" min="0" max="0" step="1" value="0" style="width: 100%;">
                 </div>
                 <ul class="foxy-facet-list foxy-abv-hidden-list" style="display: none;">
                   {%- for value in filter.values -%}
@@ -151,7 +152,7 @@
                   </ul>
 
                 {%- when 'price_range' -%}
-                  <div class="foxy-price-range">
+                  <foxy-price-range class="foxy-price-range">
                     <div class="foxy-price-slider">
                       <input type="range" 
                         name="{{ filter.min_value.param_name }}"
@@ -172,7 +173,7 @@
                       <span>{{ cart.currency.symbol }}{% if filter.min_value.value %}{{ filter.min_value.value | money_without_currency | replace: ',', '' }}{% else %}0{% endif %}</span>
                       <span>{{ cart.currency.symbol }}{% if filter.max_value.value %}{{ filter.max_value.value | money_without_currency | replace: ',', '' }}{% else %}{{ filter.range_max | money_without_currency | replace: ',', '' }}{% endif %}</span>
                     </div>
-                  </div>
+                  </foxy-price-range>
               {%- endcase -%}
             </details>
           {%- endif -%}
@@ -221,6 +222,7 @@
                     <p class="foxy-card-meta">Stout | {{ product.metafields.custom.abv | default: '8.5%' }} ABV | {{ product.metafields.custom.volume | default: '12oz' }}</p>
                   {% endif %}
                   <p class="foxy-card-price">{{ product.price | money }}</p>
+                  {% render 'foxy-chips', product: product %}
                   <div style="display: flex; gap: 8px;">
                     <form method="post" action="{{ routes.cart_add_url }}" data-product-form class="foxy-add-to-cart-form" style="flex:1;">
                       <input type="hidden" name="id" value="{{ product.variants.first.id }}">

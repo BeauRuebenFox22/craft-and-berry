@@ -1,0 +1,60 @@
+{% comment %}
+  Renders product chips (new_diet and new_abv).
+  Usage:
+  {% render 'foxy-chips', product: product %}
+{% endcomment %}
+
+{%- liquid
+  assign new_diets = product.metafields.custom.new_diet.value
+  assign new_abv = product.metafields.custom.new_abv.value | default: product.metafields.custom.new_abv
+
+  assign is_vegan_bool = true
+  if product.metafields.custom.vegan != null
+    assign is_vegan_val = product.metafields.custom.vegan.value | default: product.metafields.custom.vegan
+    if is_vegan_val == false or is_vegan_val == 'false' or is_vegan_val == 0
+      assign is_vegan_bool = false
+    endif
+  elsif product.metafields.custom_fields.vegan != null
+    assign is_vegan_val = product.metafields.custom_fields.vegan.value | default: product.metafields.custom_fields.vegan
+    if is_vegan_val == false or is_vegan_val == 'false' or is_vegan_val == 0
+      assign is_vegan_bool = false
+    endif
+  endif
+
+  assign has_diets = false
+  if new_diets != blank
+    assign has_diets = true
+  endif
+
+  assign has_abv = false
+  if new_abv != blank
+    assign has_abv = true
+  endif
+-%}
+
+{%- if has_diets or has_abv -%}
+  <div class="foxy-chips-container">
+    {%- if has_diets -%}
+      {%- for diet in new_diets -%}
+        {%- assign show_diet = true -%}
+        {%- assign diet_downcase = diet | downcase | strip -%}
+        {%- if diet_downcase == 'vegan' and is_vegan_bool == false -%}
+          {%- assign show_diet = false -%}
+        {%- endif -%}
+
+        {%- if show_diet -%}
+          <span class="foxy-chip foxy-chip--diet foxy-chip--{{ diet_downcase | replace: ' ', '-' }}">
+            {{- diet -}}
+          </span>
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endif -%}
+
+    {%- if has_abv -%}
+      <span class="foxy-chip foxy-chip--abv">
+        {{- new_abv -}}
+        {%- unless new_abv contains '%' -%}% ABV{%- endunless -%}
+      </span>
+    {%- endif -%}
+  </div>
+{%- endif -%}
