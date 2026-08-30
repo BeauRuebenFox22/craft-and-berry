@@ -79,7 +79,7 @@ class FoxyCollectionFilters extends HTMLElement {
 
   renderPaginationButtons() {
     // Find the pagination data script
-    const paginationDataEl = document.querySelector('#FoxyPaginationData');
+    const paginationDataEl = document.querySelector('#FoxyProductGridContainer #FoxyPaginationData');
     const paginationContainer = document.querySelector('.foxy-pagination-wrapper');
     
     if (!paginationContainer) return;
@@ -149,13 +149,6 @@ class FoxyCollectionFilters extends HTMLElement {
             document.querySelector('#FoxyProductGridContainer').innerHTML = newGrid.innerHTML;
           }
           
-          const newPagination = newHtml.querySelector('#FoxyPaginationData');
-          if(newPagination) {
-            document.querySelector('#FoxyPaginationData')?.remove();
-            document.body.appendChild(newPagination.cloneNode(true));
-          } else {
-            document.querySelector('#FoxyPaginationData')?.remove();
-          }
           this.renderPaginationButtons();
           
           if(gridWrapper) gridWrapper.classList.remove('loading');
