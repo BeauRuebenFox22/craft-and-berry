@@ -1,6 +1,7 @@
 <section class="foxy-pdp color-scheme-background" id="FoxyProduct-{{ section.id }}" data-section="{{ section.id }}" data-product-id="{{ product.id }}">
   {{ 'foxy-pdp.css' | asset_url | stylesheet_tag }}
   <script src="{{ 'foxy-pdp.js' | asset_url }}" defer></script>
+  <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
 
   <div class="foxy-pdp__container">
     <!-- MEDIA CAROUSEL (LEFT) -->
@@ -76,72 +77,123 @@
             {%- unless product.has_only_default_variant -%}
               <div class="foxy-pdp__variants" {{ block.shopify_attributes }}>
                 <label class="foxy-pdp__variant-label">Select Variant</label>
-                <select class="foxy-pdp__variant-select" name="id" form="{{ product_form_id }}">
-                  {%- for variant in product.variants -%}
-                    {%- assign slide_idx = 0 -%}
-                    {%- if variant.featured_media -%}
-                      {%- for media in product.media -%}
-                        {%- if media.id == variant.featured_media.id -%}
-                          {%- assign slide_idx = forloop.index0 -%}
-                        {%- endif -%}
-                      {%- endfor -%}
-                    {%- endif -%}
-                    
-                    <option value="{{ variant.id }}" 
-                      {% if variant == product.selected_or_first_available_variant %}selected="selected"{% endif %}
-                      {% if variant.available == false %}disabled{% endif %}
-                      data-slide-index="{{ slide_idx }}"
-                      data-price="{{ variant.price | money | escape }}">
-                      {{ variant.title }} - {{ variant.price | money }}
-                    </option>
-                  {%- endfor -%}
-                </select>
+                {%- assign is_gift_card = false -%}
+                {%- assign type_downcase = product.type | downcase -%}
+                {%- assign handle_downcase = product.handle | downcase -%}
+                {%- assign title_downcase = product.title | downcase -%}
+                {%- if product.gift_card or type_downcase contains 'gift' or handle_downcase contains 'gift-card' or title_downcase contains 'gift card' -%}
+                  {%- assign is_gift_card = true -%}
+                {%- endif -%}
+
+                {%- if is_gift_card -%}
+                  <div class="foxy-chips-container foxy-chips-container--variant-picker" role="radiogroup" aria-label="Select Gift Card Amount">
+                    {%- for variant in product.variants -%}
+                      {%- assign slide_idx = 0 -%}
+                      {%- if variant.featured_media -%}
+                        {%- for media in product.media -%}
+                          {%- if media.id == variant.featured_media.id -%}
+                            {%- assign slide_idx = forloop.index0 -%}
+                          {%- endif -%}
+                        {%- endfor -%}
+                      {%- endif -%}
+                      {%- assign chip_title = variant.title -%}
+                      {%- unless chip_title contains '$' or chip_title contains '£' or chip_title contains '€' -%}
+                        {%- assign chip_title = variant.price | money -%}
+                      {%- endunless -%}
+                      {%- assign is_selected = false -%}
+                      {%- if variant == product.selected_or_first_available_variant -%}
+                        {%- assign is_selected = true -%}
+                      {%- endif -%}
+                      <button type="button"
+                        class="foxy-chip foxy-chip--gift-card{% if is_selected %} active{% endif %}{% if variant.available == false %} disabled{% endif %}"
+                        data-variant-id="{{ variant.id }}"
+                        data-price="{{ variant.price | money | escape }}"
+                        data-available="{{ variant.available }}"
+                        data-slide-index="{{ slide_idx }}"
+                        aria-checked="{% if is_selected %}true{% else %}false{% endif %}"
+                        {% if variant.available == false %}disabled{% endif %}>
+                        {{ chip_title }}
+                      </button>
+                    {%- endfor -%}
+                  </div>
+                {%- else -%}
+                  <select class="foxy-pdp__variant-select" name="id" form="{{ product_form_id }}">
+                    {%- for variant in product.variants -%}
+                      {%- assign slide_idx = 0 -%}
+                      {%- if variant.featured_media -%}
+                        {%- for media in product.media -%}
+                          {%- if media.id == variant.featured_media.id -%}
+                            {%- assign slide_idx = forloop.index0 -%}
+                          {%- endif -%}
+                        {%- endfor -%}
+                      {%- endif -%}
+                      
+                      <option value="{{ variant.id }}" 
+                        {% if variant == product.selected_or_first_available_variant %}selected="selected"{% endif %}
+                        {% if variant.available == false %}disabled{% endif %}
+                        data-slide-index="{{ slide_idx }}"
+                        data-price="{{ variant.price | money | escape }}">
+                        {{ variant.title }} - {{ variant.price | money }}
+                      </option>
+                    {%- endfor -%}
+                  </select>
+                {%- endif -%}
               </div>
             {%- endunless -%}
             
           {%- when 'buy_buttons' -%}
              <div class="foxy-pdp__form" {{ block.shopify_attributes }}>
-                {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
-                  <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-                  <div class="foxy-pdp__quantity-row">
-                    <div class="foxy-pdp__qty-wrapper">
-                      <button type="button" class="foxy-pdp__qty-btn" aria-label="Decrease quantity" onclick="this.nextElementSibling.stepDown()">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                      </button>
-                      <input type="number" name="quantity" value="1" min="1" form="{{ product_form_id }}" class="foxy-pdp__qty-input" aria-label="Product quantity">
-                      <button type="button" class="foxy-pdp__qty-btn" aria-label="Increase quantity" onclick="this.previousElementSibling.stepUp()">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                      </button>
-                    </div>
-                    <foxy-wishlist-button 
-                      class="foxy-pdp-wishlist-btn"
-                      data-product-id="{{ product.id }}"
-                      data-product-handle="{{ product.handle }}"
-                      data-title="{{ product.title | escape }}"
-                      data-price="{{ product.price | money | escape }}"
-                      data-image="{{ product.featured_image | image_url: width: 400 }}"
-                      data-url="{{ product.url }}"
-                      data-variant-id="{{ product.variants.first.id }}">
-                      <button type="button" aria-label="Add to wishlist" class="foxy-pdp__btn foxy-pdp__wishlist-icon-btn" style="padding:0; width:50px; height:50px; border-radius:50%; min-width:auto; display:flex; align-items:center; justify-content:center;">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                      </button>
-                    </foxy-wishlist-button>
+                <product-form class="product-form">
+                  <div class="product-form__error-message-wrapper" role="alert" hidden>
+                    <span class="product-form__error-message"></span>
                   </div>
-                  
-                  <button type="submit" name="add" class="foxy-pdp__btn foxy-pdp__btn--add" {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}>
-                    {%- if product.selected_or_first_available_variant.available -%}
-                      {{ 'products.product.add_to_cart' | t | default: 'Add to Cart' }}
-                    {%- else -%}
-                      {{ 'products.product.sold_out' | t | default: 'Sold Out' }}
-                    {%- endif -%}
-                  </button>
-                  
-                  {%- if block.settings.show_dynamic_checkout -%}
-                    <div class="foxy-pdp__payment-button">
-                      {{ form | payment_button }}
+                  {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+                    <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                    <div class="foxy-pdp__quantity-row">
+                      <div class="foxy-pdp__qty-wrapper">
+                        <button type="button" class="foxy-pdp__qty-btn" aria-label="Decrease quantity" onclick="this.nextElementSibling.stepDown()">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                        </button>
+                        <input type="number" name="quantity" value="1" min="1" form="{{ product_form_id }}" class="foxy-pdp__qty-input" aria-label="Product quantity">
+                        <button type="button" class="foxy-pdp__qty-btn" aria-label="Increase quantity" onclick="this.previousElementSibling.stepUp()">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                        </button>
+                      </div>
+                      <foxy-wishlist-button 
+                        class="foxy-pdp-wishlist-btn"
+                        data-product-id="{{ product.id }}"
+                        data-product-handle="{{ product.handle }}"
+                        data-title="{{ product.title | escape }}"
+                        data-price="{{ product.selected_or_first_available_variant.price | money | escape }}"
+                        data-image="{{ product.featured_image | image_url: width: 400 }}"
+                        data-url="{{ product.url }}"
+                        data-variant-id="{{ product.selected_or_first_available_variant.id }}">
+                        <button type="button" aria-label="Add to wishlist" class="foxy-pdp__btn foxy-pdp__wishlist-icon-btn" style="padding:0; width:50px; height:50px; border-radius:50%; min-width:auto; display:flex; align-items:center; justify-content:center;">
+                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                        </button>
+                      </foxy-wishlist-button>
                     </div>
-                  {%- endif -%}
-                {%- endform -%}
+                    
+                    <button type="submit" name="add" class="foxy-pdp__btn foxy-pdp__btn--add" {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}>
+                      <span>
+                        {%- if product.selected_or_first_available_variant.available -%}
+                          {{ 'products.product.add_to_cart' | t | default: 'Add to Cart' }}
+                        {%- else -%}
+                          {{ 'products.product.sold_out' | t | default: 'Sold Out' }}
+                        {%- endif -%}
+                      </span>
+                      <div class="loading__spinner hidden">
+                        <svg aria-hidden="true" focusable="false" class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg"><circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle></svg>
+                      </div>
+                    </button>
+                    
+                    {%- if block.settings.show_dynamic_checkout -%}
+                      <div class="foxy-pdp__payment-button">
+                        {{ form | payment_button }}
+                      </div>
+                    {%- endif -%}
+                  {%- endform -%}
+                </product-form>
              </div>
              
            {%- when 'buy_buttons' -%}

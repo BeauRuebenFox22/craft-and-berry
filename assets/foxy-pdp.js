@@ -246,41 +246,139 @@ class FoxyPDP {
 
   initVariantHandling() {
     const variantSelect = document.querySelector('.foxy-pdp__variant-select');
-    if (!variantSelect) return;
+    const giftCardChips = document.querySelectorAll('.foxy-chip--gift-card');
 
-    variantSelect.addEventListener('change', (e) => {
-      const variantId = e.target.value;
-      const option = e.target.options[e.target.selectedIndex];
-      
-      // Update Price if embedded in option datasets
+    if (!variantSelect && giftCardChips.length === 0) return;
+
+    const updateVariantState = (variantId, price, available, slideIndex, targetChip) => {
+      // 1. Update chip active states & ARIA
+      if (giftCardChips.length > 0) {
+        giftCardChips.forEach(chip => {
+          const isSelected = targetChip ? (chip === targetChip) : (chip.dataset.variantId === String(variantId));
+          chip.classList.toggle('active', isSelected);
+          chip.setAttribute('aria-checked', isSelected ? 'true' : 'false');
+        });
+      }
+
+      // 2. Update select element if present
+      if (variantSelect && variantSelect.value !== String(variantId)) {
+        variantSelect.value = variantId;
+      }
+
+      // 3. Update hidden form input(s)
+      const formInputs = document.querySelectorAll('form[data-type="add-to-cart-form"] input[name="id"], input[name="id"]');
+      formInputs.forEach(input => {
+        input.value = variantId;
+      });
+
+      // 4. Update Price display
       const priceElement = document.querySelector('.foxy-pdp__price');
-      if (priceElement && option.dataset.price) {
-        priceElement.innerHTML = option.dataset.price;
-      }
-      
-      // Update hidden input
-      const hiddenInput = document.querySelector('input[name="id"]');
-      if (hiddenInput) {
-        hiddenInput.value = variantId;
+      if (priceElement && price) {
+        const priceItem = priceElement.querySelector('.price-item') || priceElement;
+        priceItem.innerHTML = price;
       }
 
-      // Update URL without reload
+      // 5. Update Wishlist button
+      const wishlistBtn = document.querySelector('foxy-wishlist-button');
+      if (wishlistBtn) {
+        wishlistBtn.setAttribute('data-variant-id', variantId);
+        if (price) wishlistBtn.setAttribute('data-price', price);
+        if (wishlistBtn.productData) {
+          wishlistBtn.productData.variant_id = String(variantId);
+          if (price) wishlistBtn.productData.price = price;
+        }
+      }
+
+      // 6. Update Add to Cart Button state
+      const addBtn = document.querySelector('.foxy-pdp__btn--add');
+      if (addBtn) {
+        const isAvailable = available === true || available === 'true' || available === undefined;
+        const labelText = isAvailable 
+          ? ((window.variantStrings && window.variantStrings.addToCart) || 'Add to Cart')
+          : ((window.variantStrings && window.variantStrings.soldOut) || 'Sold Out');
+
+        if (isAvailable) {
+          addBtn.removeAttribute('disabled');
+          addBtn.removeAttribute('aria-disabled');
+        } else {
+          addBtn.setAttribute('disabled', 'disabled');
+          addBtn.setAttribute('aria-disabled', 'true');
+        }
+
+        const btnSpan = addBtn.querySelector('span');
+        if (btnSpan) {
+          btnSpan.textContent = labelText;
+        } else {
+          addBtn.textContent = labelText;
+        }
+      }
+
+      // 7. Update URL search param without reload
       if (history.replaceState) {
         const url = new URL(window.location);
         url.searchParams.set('variant', variantId);
         window.history.replaceState({}, '', url.toString());
       }
 
-      // Find matching image to slide to
-      const slideIndex = parseInt(option.dataset.slideIndex);
-      if (!isNaN(slideIndex) && this.slides[slideIndex]) {
-        const slideWidth = this.slides[0].clientWidth;
-        this.carousel.scrollTo({
-          left: slideWidth * slideIndex,
-          behavior: 'smooth'
-        });
+      // 8. Update slide / image if variant has featured media
+      if (slideIndex !== undefined && slideIndex !== null && slideIndex !== '') {
+        const idx = parseInt(slideIndex, 10);
+        if (!isNaN(idx) && this.slides && this.slides[idx]) {
+          this.currentIndex = idx;
+          if (window.innerWidth >= 900) {
+            const slideWidth = this.slides[0].clientWidth;
+            if (this.carousel) {
+              this.carousel.scrollTo({
+                left: slideWidth * idx,
+                behavior: 'smooth'
+              });
+            }
+          } else {
+            this.updateDeck();
+          }
+        }
       }
-    });
+    };
+
+    // Attach click listeners to chips
+    if (giftCardChips.length > 0) {
+      giftCardChips.forEach(chip => {
+        chip.addEventListener('click', (e) => {
+          e.preventDefault();
+          if (chip.classList.contains('disabled') || chip.hasAttribute('disabled')) return;
+          const variantId = chip.dataset.variantId;
+          const price = chip.dataset.price;
+          const available = chip.dataset.available;
+          const slideIndex = chip.dataset.slideIndex;
+          updateVariantState(variantId, price, available, slideIndex, chip);
+        });
+      });
+    }
+
+    // Attach change listener to select dropdown
+    if (variantSelect) {
+      variantSelect.addEventListener('change', (e) => {
+        const variantId = e.target.value;
+        const option = e.target.options[e.target.selectedIndex];
+        const price = option.dataset.price;
+        const available = !option.disabled;
+        const slideIndex = option.dataset.slideIndex;
+        updateVariantState(variantId, price, available, slideIndex, null);
+      });
+    }
+
+    // On load: check URL parameter ?variant=
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlVariantId = urlParams.get('variant');
+    if (urlVariantId) {
+      const activeChip = Array.from(giftCardChips).find(c => c.dataset.variantId === urlVariantId);
+      if (activeChip) {
+        activeChip.click();
+      } else if (variantSelect) {
+        variantSelect.value = urlVariantId;
+        variantSelect.dispatchEvent(new Event('change'));
+      }
+    }
   }
 }
 
